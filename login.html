@@ -54,32 +54,343 @@
         font-family: "Raleway", sans-serif;
       }
 
-      /* =================================
-         PAGE ENTRANCE
-      ================================= */
+      /* =========================================================
+        LOGIN — INDEX-CONSISTENT MOTION
+      ========================================================= */
 
-      .login-reveal {
+      :root {
+        --login-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* =========================================================
+        LEFT HERO CONTENT
+      ========================================================= */
+
+      .login-hero-piece {
         opacity: 0;
-        transform: translateY(24px);
-        animation: loginReveal 0.7s ease forwards;
+
+        translate: -32px 12px;
+
+        filter: blur(4px);
+
+        animation: loginHeroPieceIn 0.85s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
       }
 
-      .login-delay-1 {
-        animation-delay: 0.1s;
-      }
+      @keyframes loginHeroPieceIn {
+        from {
+          opacity: 0;
 
-      .login-delay-2 {
-        animation-delay: 0.2s;
-      }
+          translate: -32px 12px;
 
-      .login-delay-3 {
-        animation-delay: 0.3s;
-      }
+          filter: blur(4px);
+        }
 
-      @keyframes loginReveal {
         to {
           opacity: 1;
-          transform: translateY(0);
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        FEATURE FLOW
+        01 → 02 → 03
+      ========================================================= */
+
+      .login-feature-intro {
+        opacity: 0;
+
+        translate: -38px 0;
+
+        scale: 0.98;
+
+        filter: blur(3px);
+
+        animation: loginFeatureIn 0.68s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
+      }
+
+      @keyframes loginFeatureIn {
+        0% {
+          opacity: 0;
+
+          translate: -38px 0;
+
+          scale: 0.98;
+
+          filter: blur(3px);
+        }
+
+        70% {
+          opacity: 1;
+
+          translate: 4px 0;
+
+          scale: 1.01;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        GUEST NOTE
+      ========================================================= */
+
+      .login-guest-intro {
+        opacity: 0;
+
+        translate: -24px 10px;
+
+        filter: blur(3px);
+
+        animation: loginGuestIn 0.72s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
+      }
+
+      @keyframes loginGuestIn {
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        LOGIN CARD
+        RIGHT → CENTER
+      ========================================================= */
+
+      .login-card-intro {
+        opacity: 0;
+
+        translate: 58px 14px;
+
+        scale: 0.965;
+
+        filter: blur(5px);
+
+        animation: loginCardIn 0.95s var(--login-motion-ease) 180ms both;
+      }
+
+      @keyframes loginCardIn {
+        0% {
+          opacity: 0;
+
+          translate: 58px 14px;
+
+          scale: 0.965;
+
+          filter: blur(5px);
+        }
+
+        68% {
+          opacity: 1;
+
+          translate: -5px 0;
+
+          scale: 1.008;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        CONTENT INSIDE LOGIN CARD
+      ========================================================= */
+
+      .login-card-piece {
+        opacity: 0;
+
+        translate: 0 18px;
+
+        filter: blur(3px);
+
+        animation: loginCardPieceIn 0.66s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
+      }
+
+      @keyframes loginCardPieceIn {
+        from {
+          opacity: 0;
+
+          translate: 0 18px;
+
+          filter: blur(3px);
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        DEMO ACCOUNT BUTTONS
+      ========================================================= */
+
+      .login-demo-intro {
+        opacity: 0;
+
+        translate: 24px 0;
+
+        scale: 0.98;
+
+        animation: loginDemoIn 0.58s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
+      }
+
+      @keyframes loginDemoIn {
+        from {
+          opacity: 0;
+
+          translate: 24px 0;
+
+          scale: 0.98;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+        }
+      }
+
+      /* =========================================================
+        SUPPORT AREA — WAIT FOR SCROLL
+      ========================================================= */
+
+      .login-support-shell {
+        opacity: 0;
+
+        translate: 0 32px;
+
+        scale: 0.98;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--login-motion-ease),
+          translate 0.85s var(--login-motion-ease),
+          scale 0.85s var(--login-motion-ease),
+          filter 0.75s ease;
+      }
+
+      .login-support-shell.login-support-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        filter: blur(0);
+      }
+
+      .login-support-cell {
+        opacity: 0;
+
+        translate: 0 20px;
+      }
+
+      .login-support-cell.login-support-cell-visible {
+        animation: loginSupportCellIn 0.65s var(--login-motion-ease)
+          var(--login-delay, 0ms) both;
+      }
+
+      @keyframes loginSupportCellIn {
+        0% {
+          opacity: 0;
+
+          translate: 0 20px;
+        }
+
+        70% {
+          opacity: 1;
+
+          translate: 0 -3px;
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        MOBILE
+      ========================================================= */
+
+      @media (max-width: 640px) {
+        .login-hero-piece {
+          translate: -22px 10px;
+        }
+
+        .login-card-intro {
+          translate: 0 30px;
+
+          scale: 0.97;
+        }
+
+        @keyframes loginCardIn {
+          0% {
+            opacity: 0;
+
+            translate: 0 30px;
+
+            scale: 0.97;
+
+            filter: blur(4px);
+          }
+
+          65% {
+            opacity: 1;
+
+            translate: 0 -4px;
+
+            scale: 1.008;
+
+            filter: blur(0);
+          }
+
+          100% {
+            opacity: 1;
+
+            translate: 0 0;
+
+            scale: 1;
+
+            filter: blur(0);
+          }
         }
       }
 
@@ -120,10 +431,27 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .login-reveal {
-          opacity: 1;
-          transform: none;
-          animation: none;
+        .login-hero-piece,
+        .login-feature-intro,
+        .login-guest-intro,
+        .login-card-intro,
+        .login-card-piece,
+        .login-demo-intro,
+        .login-support-shell,
+        .login-support-cell {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          scale: 1 !important;
+
+          filter: none !important;
+
+          transform: none !important;
+
+          animation: none !important;
+
+          transition: none !important;
         }
 
         *,
@@ -971,6 +1299,210 @@
           );
         });
       });
+
+      /* ==========================================
+        LOGIN PAGE MOTION
+      ========================================== */
+
+      const loginReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      /* ==========================================
+        HERO + LOGIN CARD
+      ========================================== */
+
+      function setupLoginHeroMotion() {
+        if (loginReducedMotion) {
+          return;
+        }
+
+        const hero = document.querySelector("main > section:first-child");
+
+        const layout = hero?.querySelector(".relative.mx-auto.grid");
+
+        if (!layout) return;
+
+        const left = layout.children[0];
+
+        const loginCard = layout.children[1];
+
+        /* ========================================
+          LEFT HERO
+
+          Badge
+          Heading
+          Description
+        ======================================== */
+
+        if (left) {
+          const mainPieces = [
+            left.children[0],
+            left.children[1],
+            left.children[2],
+          ];
+
+          const delays = [80, 180, 290];
+
+          mainPieces.forEach((piece, index) => {
+            if (!piece) return;
+
+            piece.classList.add("login-hero-piece");
+
+            piece.style.setProperty("--login-delay", `${delays[index]}ms`);
+          });
+
+          /* ======================================
+            FEATURE ROWS
+
+            01 → 02 → 03
+          ====================================== */
+
+          const featureRows = left.querySelectorAll(".login-feature");
+
+          featureRows.forEach((feature, index) => {
+            feature.classList.add("login-feature-intro");
+
+            feature.style.setProperty(
+              "--login-delay",
+              `${420 + index * 110}ms`,
+            );
+          });
+
+          /* ======================================
+            GUEST NOTE
+          ====================================== */
+
+          const guestNote = left.lastElementChild;
+
+          if (guestNote) {
+            guestNote.classList.add("login-guest-intro");
+
+            guestNote.style.setProperty("--login-delay", "780ms");
+          }
+        }
+
+        /* ========================================
+          LOGIN CARD
+        ======================================== */
+
+        if (!loginCard) return;
+
+        loginCard.classList.add("login-card-intro");
+
+        /*
+          Existing children:
+
+          0 = heading
+          1 = prototype notice
+          2 = login form
+          3 = demo accounts
+        */
+
+        const cardChildren = Array.from(loginCard.children);
+
+        const cardDelays = [430, 540, 650, 820];
+
+        cardChildren.forEach((piece, index) => {
+          piece.classList.add("login-card-piece");
+
+          piece.style.setProperty(
+            "--login-delay",
+            `${cardDelays[index] || 820}ms`,
+          );
+        });
+
+        /* ========================================
+          DEMO ACCOUNTS
+
+          Student → Admin
+        ======================================== */
+
+        const demoButtons = loginCard.querySelectorAll("[data-demo-email]");
+
+        demoButtons.forEach((button, index) => {
+          button.classList.add("login-demo-intro");
+
+          button.style.setProperty("--login-delay", `${980 + index * 100}ms`);
+        });
+      }
+
+      /* ==========================================
+        LOWER SUPPORT AREA
+
+        DO NOT animate on initial load.
+        Wait until user scrolls here.
+      ========================================== */
+
+      function setupLoginSupportMotion() {
+        if (loginReducedMotion) {
+          return;
+        }
+
+        const supportSection = Array.from(
+          document.querySelectorAll("main > section"),
+        ).find(
+          (section) =>
+            section.querySelector('a[href="guest-tracking.html"]') &&
+            section.querySelector('a[href="all-reports.html"]') &&
+            section.querySelector('a[href="help.html"]'),
+        );
+
+        if (!supportSection) return;
+
+        const supportGrid = supportSection.querySelector(
+          ".grid.overflow-hidden",
+        );
+
+        if (!supportGrid) return;
+
+        supportGrid.classList.add("login-support-shell");
+
+        const supportCells = Array.from(supportGrid.children);
+
+        supportCells.forEach((cell, index) => {
+          cell.classList.add("login-support-cell");
+
+          cell.style.setProperty("--login-delay", `${120 + index * 100}ms`);
+        });
+
+        const supportObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              supportGrid.classList.add("login-support-visible");
+
+              supportCells.forEach((cell) => {
+                cell.classList.add("login-support-cell-visible");
+              });
+
+              supportObserver.disconnect();
+            });
+          },
+          {
+            threshold: 0.22,
+
+            rootMargin: "0px 0px -55px 0px",
+          },
+        );
+
+        supportObserver.observe(supportGrid);
+      }
+
+      /* ==========================================
+        START LOGIN MOTION
+      ========================================== */
+
+      function setupLoginMotion() {
+        setupLoginHeroMotion();
+
+        setupLoginSupportMotion();
+      }
+
+      setupLoginMotion();
 
       /* ==========================================
          EXISTING SESSION

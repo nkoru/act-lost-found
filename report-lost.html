@@ -89,18 +89,57 @@
       .form-step {
         display: none;
       }
+
       .form-step.active {
         display: block;
-        animation: step-in 0.28s ease-out;
       }
-      @keyframes step-in {
-        from {
+
+
+      /* =========================================================
+        ACTIVE FORM STEP
+        Triggered by JS only when appropriate.
+      ========================================================= */
+
+      .report-step-card-enter {
+        animation:
+          reportStepCardIn
+          0.72s
+          cubic-bezier(0.22, 1, 0.36, 1)
+          both;
+      }
+
+
+      @keyframes reportStepCardIn {
+        0% {
           opacity: 0;
-          transform: translateY(10px);
+
+          translate: 0 30px;
+
+          scale: 0.97;
+
+          filter: blur(4px);
         }
-        to {
+
+
+        65% {
           opacity: 1;
-          transform: translateY(0);
+
+          translate: 0 -4px;
+
+          scale: 1.012;
+
+          filter: blur(0);
+        }
+
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
         }
       }
 
@@ -130,6 +169,421 @@
       .field-error {
         border-color: #e11d48 !important;
         box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.08) !important;
+      }
+
+      /* =========================================================
+        REPORT LOST — INDEX-CONSISTENT MOTION
+      ========================================================= */
+
+      :root {
+        --report-motion-ease:
+          cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+
+      /* =========================================================
+        HERO LEFT
+      ========================================================= */
+
+      .report-hero-piece {
+        opacity: 0;
+
+        animation:
+          reportHeroPieceIn
+          0.85s
+          var(--report-motion-ease)
+          var(--report-delay, 0ms)
+          forwards;
+      }
+
+
+      @keyframes reportHeroPieceIn {
+        from {
+          opacity: 0;
+
+          translate: -30px 12px;
+
+          filter: blur(5px);
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        HERO RIGHT GUIDE
+      ========================================================= */
+
+      .report-guide-panel {
+        opacity: 0;
+
+        animation:
+          reportGuidePanelIn
+          0.9s
+          var(--report-motion-ease)
+          280ms
+          forwards;
+      }
+
+
+      @keyframes reportGuidePanelIn {
+        from {
+          opacity: 0;
+
+          translate: 48px 10px;
+
+          scale: 0.97;
+
+          filter: blur(4px);
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+
+      .report-guide-step {
+        opacity: 0;
+
+        animation:
+          reportGuideStepIn
+          0.62s
+          var(--report-motion-ease)
+          var(--guide-delay, 0ms)
+          forwards;
+      }
+
+
+      @keyframes reportGuideStepIn {
+        from {
+          opacity: 0;
+
+          translate: 22px 0;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+
+      /* =========================================================
+        GENERAL SCROLL REVEAL
+      ========================================================= */
+
+      .report-scroll-reveal {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        scale: 0.97;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--report-motion-ease),
+          translate 0.85s var(--report-motion-ease),
+          scale 0.85s var(--report-motion-ease),
+          filter 0.75s ease;
+
+        transition-delay:
+          var(--report-delay, 0ms);
+      }
+
+
+      .report-scroll-left {
+        opacity: 0;
+
+        translate: -46px 8px;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--report-motion-ease),
+          translate 0.9s var(--report-motion-ease),
+          filter 0.75s ease;
+
+        transition-delay:
+          var(--report-delay, 0ms);
+      }
+
+
+      .report-scroll-right {
+        opacity: 0;
+
+        translate: 46px 8px;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--report-motion-ease),
+          translate 0.9s var(--report-motion-ease),
+          filter 0.75s ease;
+
+        transition-delay:
+          var(--report-delay, 0ms);
+      }
+
+
+      .report-scroll-reveal.report-visible,
+      .report-scroll-left.report-visible,
+      .report-scroll-right.report-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        filter: blur(0);
+      }
+
+
+      /* =========================================================
+        REPORT PROGRESS
+        LINE + NUMBERS FLOW TOGETHER LEFT → RIGHT
+      ========================================================= */
+
+
+      /* HORIZONTAL CONNECTING LINE */
+
+      .report-progress-track {
+        clip-path:
+          inset(0 100% 0 0);
+      }
+
+
+      .report-progress-track.report-track-visible {
+        animation:
+          reportProgressLineFlow
+          1.2s
+          cubic-bezier(0.22, 1, 0.36, 1)
+          100ms
+          both;
+      }
+
+
+      @keyframes reportProgressLineFlow {
+        from {
+          clip-path:
+            inset(0 100% 0 0);
+        }
+
+        to {
+          clip-path:
+            inset(0 0 0 0);
+        }
+      }
+
+
+      /* =========================================================
+        PROGRESS NUMBERS
+
+        1 → 2 → 3 → 4
+
+        Their delays match the position
+        of the moving horizontal line.
+      ========================================================= */
+
+      .report-progress-node {
+        opacity: 0;
+
+        translate: -22px 0;
+
+        scale: 0.88;
+
+        filter: blur(3px);
+      }
+
+
+      .report-progress-node.report-node-visible {
+        animation:
+          reportProgressNodeFlow
+          0.58s
+          cubic-bezier(0.16, 1, 0.3, 1)
+          var(--node-delay, 0ms)
+          both;
+      }
+
+
+      @keyframes reportProgressNodeFlow {
+        0% {
+          opacity: 0;
+
+          translate: -22px 0;
+
+          scale: 0.88;
+
+          filter: blur(3px);
+        }
+
+
+        68% {
+          opacity: 1;
+
+          translate: 3px 0;
+
+          scale: 1.04;
+
+          filter: blur(0);
+        }
+
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        SIDE GUIDE CARDS
+      ========================================================= */
+
+      .report-side-card {
+        opacity: 0;
+
+        translate: 52px 16px;
+
+        scale: 0.97;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--report-motion-ease),
+          translate 0.95s var(--report-motion-ease),
+          scale 0.95s var(--report-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay:
+          var(--report-side-delay, 0ms);
+      }
+
+
+      .report-side-card.report-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        filter: blur(0);
+      }
+
+
+      /* =========================================================
+        SUCCESS STATE
+      ========================================================= */
+
+      #successState.report-success-enter
+      > div {
+        animation:
+          reportSuccessCardIn
+          0.78s
+          cubic-bezier(0.22, 1, 0.36, 1)
+          both;
+      }
+
+
+      @keyframes reportSuccessCardIn {
+        0% {
+          opacity: 0;
+
+          translate: 0 34px;
+
+          scale: 0.955;
+
+          filter: blur(5px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -5px;
+
+          scale: 1.015;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        MOBILE MENU
+      ========================================================= */
+
+      #mobileMenu:not(.hidden) {
+        animation:
+          reportMobileMenuIn
+          0.25s
+          ease-out
+          both;
+      }
+
+
+      @keyframes reportMobileMenuIn {
+        from {
+          opacity: 0;
+
+          translate: 0 -8px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+
+      /* =========================================================
+        MOBILE
+      ========================================================= */
+
+      @media (max-width: 640px) {
+        .report-scroll-left {
+          translate: -24px 6px;
+        }
+
+        .report-scroll-right,
+        .report-side-card {
+          translate: 24px 6px;
+        }
+
+        .report-scroll-left.report-visible,
+        .report-scroll-right.report-visible,
+        .report-side-card.report-visible {
+          translate: 0 0;
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -2138,6 +2592,7 @@
 
       let currentStep = 1;
       let imageDataUrl = "";
+      let reportFormMotionStarted = false;
 
       // Never allow a future lost date.
       dateLost.max = new Date().toISOString().split("T")[0];
@@ -2164,6 +2619,10 @@
         nextButton.classList.toggle("hidden", currentStep === 4);
         submitButton.classList.toggle("hidden", currentStep !== 4);
         submitButton.classList.toggle("inline-flex", currentStep === 4);
+
+        if (reportFormMotionStarted) {
+          animateCurrentReportStep();
+        }
       }
 
       function fieldsForStep(stepNumber) {
@@ -2465,14 +2924,580 @@
             "h-1.5 w-1.5 rounded-full bg-emerald-500";
         }
 
-        successState.classList.remove("hidden");
+        successState.classList.remove(
+          "hidden",
+        );
+
+
+        animateReportSuccess();
+
 
         successState.scrollIntoView({
           behavior: "smooth",
-          block: "start"
+          block: "start",
         });
 
         });
+
+        /* ==========================================
+          REPORT LOST — INDEX-CONSISTENT MOTION
+        ========================================== */
+
+        const reportReducedMotion =
+          window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+
+
+        /* ==========================================
+          GENERAL OBSERVER
+        ========================================== */
+
+        const reportRevealObserver =
+          new IntersectionObserver(
+            (entries, observer) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                  return;
+                }
+
+
+                entry.target.classList.add(
+                  "report-visible",
+                );
+
+
+                observer.unobserve(
+                  entry.target,
+                );
+              });
+            },
+            {
+              threshold: 0.2,
+
+              rootMargin:
+                "0px 0px -50px 0px",
+            },
+          );
+
+
+        function observeReportElement(
+          element,
+          delay = 0,
+        ) {
+          if (!element) return;
+
+
+          element.style.setProperty(
+            "--report-delay",
+            `${delay}ms`,
+          );
+
+
+          reportRevealObserver.observe(
+            element,
+          );
+        }
+
+
+        /* ==========================================
+          HERO
+        ========================================== */
+
+        function setupReportHeroMotion() {
+          const hero =
+            document.querySelector(
+              "main > section:first-child",
+            );
+
+
+          if (!hero) return;
+
+
+          const layout =
+            hero.querySelector(
+              ".relative.mx-auto.max-w-7xl > .grid",
+            );
+
+
+          if (!layout) return;
+
+
+          const left =
+            layout.children[0];
+
+          const right =
+            layout.children[1];
+
+
+          /* ========================================
+            LEFT
+
+            Back
+            Badge
+            Heading
+            Description
+          ======================================== */
+
+          if (left) {
+            Array.from(
+              left.children,
+            ).forEach(
+              (element, index) => {
+
+                element.classList.add(
+                  "report-hero-piece",
+                );
+
+
+                element.style.setProperty(
+                  "--report-delay",
+                  `${80 + index * 110}ms`,
+                );
+              },
+            );
+          }
+
+
+          /* ========================================
+            RIGHT GUIDE
+          ======================================== */
+
+          const guidePanel =
+            right?.firstElementChild;
+
+
+          if (!guidePanel) return;
+
+
+          guidePanel.classList.add(
+            "report-guide-panel",
+          );
+
+
+          const guideSteps =
+            guidePanel.querySelectorAll(
+              ".mt-5.grid.gap-3 > div",
+            );
+
+
+          guideSteps.forEach(
+            (step, index) => {
+
+              step.classList.add(
+                "report-guide-step",
+              );
+
+
+              step.style.setProperty(
+                "--guide-delay",
+                `${620 + index * 100}ms`,
+              );
+            },
+          );
+        }
+
+
+        /* ==========================================
+          LOST / FOUND SWITCH
+        ========================================== */
+
+        function setupReportSwitchMotion() {
+          const sections =
+            Array.from(
+              document.querySelectorAll(
+                "main > section",
+              ),
+            );
+
+
+          const switchSection =
+            sections.find((section) =>
+              section.querySelector(
+                'a[href="report-lost.html"]',
+              ) &&
+              section.querySelector(
+                'a[href="report-found.html"]',
+              ),
+            );
+
+
+          if (!switchSection) return;
+
+
+          const row =
+            switchSection.firstElementChild;
+
+
+          if (!row) return;
+
+
+          const switchBox =
+            row.children[0];
+
+          const validationBadge =
+            row.children[1];
+
+
+          if (switchBox) {
+            switchBox.classList.add(
+              "report-scroll-left",
+            );
+
+
+            observeReportElement(
+              switchBox,
+              0,
+            );
+          }
+
+
+          if (validationBadge) {
+            validationBadge.classList.add(
+              "report-scroll-right",
+            );
+
+
+            observeReportElement(
+              validationBadge,
+              80,
+            );
+          }
+        }
+
+
+        /* ==========================================
+          PROGRESS TRACKER
+        ========================================== */
+
+        function setupReportProgressMotion() {
+          const progressSection =
+            progress?.closest(
+              "section",
+            );
+
+
+          if (!progressSection) return;
+
+
+          const progressCard =
+            progressSection.firstElementChild;
+
+
+          if (progressCard) {
+            progressCard.classList.add(
+              "report-scroll-reveal",
+            );
+
+
+            observeReportElement(
+              progressCard,
+            );
+          }
+
+
+          /* ========================================
+            EXISTING CONNECTING TRACK
+
+            This is the gray horizontal line
+            behind the four numbers.
+          ======================================== */
+
+          const progressTrack =
+            progress?.parentElement;
+
+
+          if (progressTrack) {
+            progressTrack.classList.add(
+              "report-progress-track",
+            );
+          }
+
+
+          /* ========================================
+            PREPARE
+
+            1 → 2 → 3 → 4
+          ======================================== */
+
+          const nodes =
+            Array.from(stepNodes);
+
+
+          /*
+            These delays correspond approximately
+            to where the moving line reaches each
+            node.
+
+            1 = start
+            2 = 1/3 across
+            3 = 2/3 across
+            4 = end
+          */
+
+          const nodeDelays = [
+            100,
+            430,
+            760,
+            1090,
+          ];
+
+
+          nodes.forEach(
+            (node, index) => {
+
+              node.classList.add(
+                "report-progress-node",
+              );
+
+
+              node.style.setProperty(
+                "--node-delay",
+                `${nodeDelays[index]}ms`,
+              );
+            },
+          );
+
+
+          /* ========================================
+            ONE OBSERVER STARTS EVERYTHING
+
+            Line and numbers share the same
+            timeline.
+          ======================================== */
+
+          const progressFlowObserver =
+            new IntersectionObserver(
+              (entries) => {
+
+                entries.forEach((entry) => {
+
+                  if (!entry.isIntersecting) {
+                    return;
+                  }
+
+
+                  /*
+                    Start horizontal line.
+                  */
+
+                  progressTrack?.classList.add(
+                    "report-track-visible",
+                  );
+
+
+                  /*
+                    Start 1 → 2 → 3 → 4.
+
+                    Their delays are synchronized
+                    with the moving line.
+                  */
+
+                  nodes.forEach((node) => {
+                    node.classList.add(
+                      "report-node-visible",
+                    );
+                  });
+
+
+                  progressFlowObserver.disconnect();
+                });
+              },
+              {
+                threshold: 0.3,
+
+                rootMargin:
+                  "0px 0px -45px 0px",
+              },
+            );
+
+
+          progressFlowObserver.observe(
+            progressSection,
+          );
+        }
+
+
+        /* ==========================================
+          ACTIVE FORM STEP
+        ========================================== */
+
+        function animateCurrentReportStep() {
+          if (reportReducedMotion) {
+            return;
+          }
+
+
+          const activeStep =
+            document.querySelector(
+              ".form-step.active",
+            );
+
+
+          const card =
+            activeStep?.firstElementChild;
+
+
+          if (!card) return;
+
+
+          /*
+            Remove → reflow → add
+
+            This allows the same animation
+            whenever the user changes steps.
+          */
+
+          card.classList.remove(
+            "report-step-card-enter",
+          );
+
+
+          void card.offsetWidth;
+
+
+          card.classList.add(
+            "report-step-card-enter",
+          );
+        }
+
+
+        /* ==========================================
+          FORM + SIDE CARDS
+        ========================================== */
+
+        function setupReportFormMotion() {
+          if (!formArea) return;
+
+
+          /*
+            Step 1 must NOT animate while it is
+            still below the viewport.
+
+            Wait for the form itself.
+          */
+
+          const formObserver =
+            new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) {
+                    return;
+                  }
+
+
+                  reportFormMotionStarted =
+                    true;
+
+
+                  animateCurrentReportStep();
+
+
+                  formObserver.disconnect();
+                });
+              },
+              {
+                threshold: 0.12,
+
+                rootMargin:
+                  "0px 0px -55px 0px",
+              },
+            );
+
+
+          formObserver.observe(
+            formArea,
+          );
+
+
+          /* ========================================
+            SIDE PANEL
+          ======================================== */
+
+          const aside =
+            formArea.querySelector(
+              "aside",
+            );
+
+
+          if (!aside) return;
+
+
+          Array.from(
+            aside.children,
+          ).forEach(
+            (card, index) => {
+
+              card.classList.add(
+                "report-side-card",
+              );
+
+
+              card.style.setProperty(
+                "--report-side-delay",
+                `${index * 100}ms`,
+              );
+
+
+              reportRevealObserver.observe(
+                card,
+              );
+            },
+          );
+        }
+
+
+        /* ==========================================
+          SUCCESS STATE PREP
+        ========================================== */
+
+        function animateReportSuccess() {
+          if (
+            !successState ||
+            reportReducedMotion
+          ) {
+            return;
+          }
+
+
+          successState.classList.remove(
+            "report-success-enter",
+          );
+
+
+          void successState.offsetWidth;
+
+
+          successState.classList.add(
+            "report-success-enter",
+          );
+        }
+
+
+        /* ==========================================
+          START PAGE MOTION
+        ========================================== */
+
+        function setupReportLostMotion() {
+          if (reportReducedMotion) {
+            return;
+          }
+
+
+          setupReportHeroMotion();
+
+
+          setupReportSwitchMotion();
+
+
+          setupReportProgressMotion();
+
+
+          setupReportFormMotion();
+        }
+
+
+        setupReportLostMotion();
 
       // SHARED MOBILE NAVIGATION
       const menuButton = document.getElementById("menuButton");

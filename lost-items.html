@@ -143,7 +143,350 @@
           animation-iteration-count: 1 !important;
         }
       }
+
+      /* =========================================================
+        LOST ITEMS PAGE — PREMIUM MOTION
+      ========================================================= */
+
+      :root {
+        --lost-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* =========================================================
+        1. DIRECTORY HERO — PAGE OPENING
+      ========================================================= */
+
+      .lost-hero-piece {
+        opacity: 0;
+
+        animation: lostHeroPieceIn 0.85s var(--lost-motion-ease)
+          var(--lost-delay, 0ms) forwards;
+      }
+
+      @keyframes lostHeroPieceIn {
+        from {
+          opacity: 0;
+
+          translate: -36px 12px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* Right guide enters from opposite side */
+
+      .lost-guide-panel {
+        opacity: 0;
+
+        animation: lostGuidePanelIn 0.95s var(--lost-motion-ease) 220ms forwards;
+      }
+
+      @keyframes lostGuidePanelIn {
+        from {
+          opacity: 0;
+
+          translate: 50px 0;
+
+          scale: 0.97;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+        }
+      }
+
+      /* Guide steps: Search → Filter → Check */
+
+      .lost-guide-step {
+        opacity: 0;
+
+        translate: 22px 0;
+
+        animation: lostGuideStepIn 0.65s var(--lost-motion-ease)
+          var(--guide-delay, 0ms) forwards;
+      }
+
+      @keyframes lostGuideStepIn {
+        from {
+          opacity: 0;
+
+          translate: 22px 0;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        2. FILTER PANEL — OPENS WHEN SCROLLED TO
+      ========================================================= */
+
+      .lost-filter-panel {
+        opacity: 0;
+
+        translate: 0 34px;
+
+        scale: 0.985;
+
+        clip-path: inset(0 0 12% 0 round 26px);
+
+        transition:
+          opacity 0.85s var(--lost-motion-ease),
+          translate 0.9s var(--lost-motion-ease),
+          scale 0.9s var(--lost-motion-ease),
+          clip-path 0.95s var(--lost-motion-ease);
+      }
+
+      .lost-filter-panel.lost-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        clip-path: inset(0 0 0 0 round 26px);
+      }
+
+      /* =========================================================
+        3. RESULTS HEADING
+      ========================================================= */
+
+      .lost-results-header {
+        opacity: 0;
+
+        translate: -34px 0;
+
+        transition:
+          opacity 0.8s ease,
+          translate 0.85s var(--lost-motion-ease);
+      }
+
+      .lost-results-header.lost-visible {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      /* =========================================================
+        4. REPORT CARDS — SAME AS HOME
+      ========================================================= */
+
+      .lost-report-prep {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        scale: 0.955;
+
+        filter: blur(4px);
+      }
+
+      .lost-report-prep.lost-report-visible {
+        animation: lostReportEnter 0.72s cubic-bezier(0.22, 1, 0.36, 1)
+          var(--lost-card-delay, 0ms) both;
+      }
+
+      @keyframes lostReportEnter {
+        0% {
+          opacity: 0;
+
+          translate: 0 30px;
+
+          scale: 0.955;
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -4px;
+
+          scale: 1.018;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        5. EMPTY STATE
+      ========================================================= */
+
+      .lost-empty-enter {
+        animation: lostEmptyIn 0.65s var(--lost-motion-ease) both;
+      }
+
+      @keyframes lostEmptyIn {
+        from {
+          opacity: 0;
+
+          translate: 0 20px;
+
+          scale: 0.98;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+        }
+      }
+
+      /* =========================================================
+        6. HELP CTA — INWARD ENTRANCE
+      ========================================================= */
+
+      .lost-help-card {
+        opacity: 0;
+
+        transition: opacity 0.75s ease;
+
+        overflow: hidden;
+      }
+
+      .lost-help-card.lost-visible {
+        opacity: 1;
+      }
+
+      /* Text comes from left */
+
+      .lost-help-text {
+        opacity: 0;
+
+        translate: -42px 0;
+
+        transition:
+          opacity 0.75s ease,
+          translate 0.9s var(--lost-motion-ease);
+      }
+
+      .lost-help-card.lost-visible .lost-help-text {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      /* Button comes from right */
+
+      .lost-help-action {
+        opacity: 0;
+
+        translate: 42px 0;
+
+        transition:
+          opacity 0.75s ease,
+          translate 0.9s var(--lost-motion-ease);
+
+        transition-delay: 90ms;
+      }
+
+      .lost-help-card.lost-visible .lost-help-action {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      /* Yellow side accent draws in */
+
+      .lost-help-accent {
+        transform: scaleY(0);
+
+        transform-origin: bottom;
+
+        transition: transform 0.7s var(--lost-motion-ease);
+
+        transition-delay: 220ms;
+      }
+
+      .lost-help-card.lost-visible .lost-help-accent {
+        transform: scaleY(1);
+      }
+
+      /* =========================================================
+        7. MOBILE MENU
+      ========================================================= */
+
+      .lost-mobile-menu-enter {
+        animation: lostMobileMenuIn 0.25s ease-out both;
+      }
+
+      @keyframes lostMobileMenuIn {
+        from {
+          opacity: 0;
+
+          translate: 0 -8px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        ACCESSIBILITY
+      ========================================================= */
+
+      @media (prefers-reduced-motion: reduce) {
+        .lost-hero-piece,
+        .lost-guide-panel,
+        .lost-guide-step,
+        .lost-filter-panel,
+        .lost-results-header,
+        .lost-report-prep,
+        .lost-empty-enter,
+        .lost-help-card,
+        .lost-help-text,
+        .lost-help-action,
+        .lost-mobile-menu-enter {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          scale: 1 !important;
+
+          transform: none !important;
+
+          clip-path: none !important;
+
+          animation: none !important;
+
+          transition: none !important;
+        }
+
+        .lost-help-accent {
+          transform: none !important;
+
+          transition: none !important;
+        }
+      }
     </style>
+
+    <link rel="stylesheet" href="animations.css" />
   </head>
 
   <body class="bg-white text-ink antialiased">
@@ -720,8 +1063,8 @@
             </h3>
 
             <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-              Try another keyword, location, or category, or reset the filters to
-              view all active reports.
+              Try another keyword, location, or category, or reset the filters
+              to view all active reports.
             </p>
 
             <button
@@ -771,36 +1114,35 @@
           >
             <div class="absolute left-0 top-0 h-full w-1.5 bg-actyellow"></div>
 
-          <div
-            class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
-          >
-            <div class="max-w-2xl">
-              <p
-                class="text-[11px] font-black uppercase tracking-[0.16em] text-actblue"
-              >
-                Still can't find your item?
-              </p>
-
-              <h2
-                class="mt-2 text-2xl font-black tracking-tight text-slate-900"
-              >
-                Report it and let the ACT community help trace it.
-              </h2>
-
-              <p class="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-                Normal reports can appear after automatic validation. Suspicious
-                submissions are held for moderator review.
-              </p>
-            </div>
-
-            <a
-              href="report-lost.html"
-              class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark hover:shadow-lg"
+            <div
+              class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
             >
-              Report a lost item
-              <span>→</span>
-            </a>
-          </div>
+              <div class="max-w-2xl">
+                <p
+                  class="text-[11px] font-black uppercase tracking-[0.16em] text-actblue"
+                >
+                  Still can't find your item?
+                </p>
+
+                <h2
+                  class="mt-2 text-2xl font-black tracking-tight text-slate-900"
+                >
+                  Report it and let the ACT community help trace it.
+                </h2>
+
+                <p class="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+                  Normal reports can appear after automatic validation.
+                  Suspicious submissions are held for moderator review.
+                </p>
+              </div>
+
+              <a
+                href="report-lost.html"
+                class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark hover:shadow-lg"
+              >
+                Report a lost item
+                <span>→</span>
+              </a>
             </div>
           </div>
         </div>
@@ -1371,212 +1713,279 @@
         lostReportsGrid.innerHTML = visibleReports
           .map(
             (report) => `
-                <article
-                  class="report-card group overflow-hidden rounded-2xl
-                         border border-slate-200 bg-white
-                         shadow-[0_8px_25px_rgba(23,32,51,0.06)]
-                         transition duration-300
-                         hover:-translate-y-1
-                         hover:border-actblue/20
-                         hover:shadow-[0_18px_40px_rgba(12,46,138,0.11)]"
+
+              <article
+                class="report-card group overflow-hidden rounded-2xl
+                      border border-slate-200 bg-white
+                      shadow-[0_8px_25px_rgba(23,32,51,0.06)]
+                      transition duration-300
+                      hover:-translate-y-1
+                      hover:border-actblue/20
+                      hover:shadow-[0_18px_40px_rgba(12,46,138,0.11)]"
+              >
+
+                <a
+                  href="item-details.html?id=${encodeURIComponent(report.id)}"
+                  class="block"
                 >
-                  <a
-                    href="item-details.html?id=${encodeURIComponent(report.id)}"
-                    class="block"
+
+                  <!-- IMAGE -->
+                  <div
+                    class="relative aspect-[4/3] overflow-hidden bg-slate-100"
                   >
+
+                    <img
+                      src="${reportImage(report)}"
+                      alt="${escapeHtml(report.item)}"
+                      class="h-full w-full object-cover
+                            transition duration-500
+                            group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+
+
+                    <!-- Image gradient -->
                     <div
-                      class="relative aspect-[4/3] overflow-hidden bg-slate-100"
+                      class="pointer-events-none absolute inset-x-0 bottom-0
+                            h-20 bg-gradient-to-t
+                            from-slate-950/25 to-transparent"
+                    ></div>
+
+
+                    <!-- LOST BADGE -->
+                    <span
+                      class="absolute left-3 top-3 inline-flex items-center gap-1.5
+                            rounded-full bg-actblue px-3 py-1.5
+                            text-[10px] font-black uppercase
+                            tracking-[0.13em] text-white shadow-sm"
                     >
-                      <img
-                        src="${reportImage(report)}"
-                        alt="${escapeHtml(report.item)}"
-                        class="h-full w-full object-cover
-                               transition duration-500
-                               group-hover:scale-[1.04]"
-                        loading="lazy"
-                      />
-
-                      <div
-                        class="pointer-events-none absolute inset-x-0
-                               bottom-0 h-20 bg-gradient-to-t
-                               from-slate-950/25 to-transparent"
-                      ></div>
 
                       <span
-                        class="absolute left-3 top-3 inline-flex items-center
-                               gap-1.5 rounded-full bg-actblue px-3 py-1.5
-                               text-[10px] font-black uppercase
-                               tracking-[0.13em] text-white shadow-sm"
-                      >
-                        <span
-                          class="h-1.5 w-1.5 rounded-full bg-actyellow"
-                        ></span>
+                        class="h-1.5 w-1.5 rounded-full bg-actyellow"
+                      ></span>
 
-                        Lost
-                      </span>
+                      Lost
+
+                    </span>
+
+
+                    <!-- STATUS -->
+                    <span
+                      class="absolute right-3 top-3
+                            inline-flex items-center gap-1.5
+                            rounded-full border border-white/40
+                            bg-white/95 px-3 py-1.5
+                            text-[10px] font-black uppercase
+                            tracking-[0.12em] text-actblue
+                            shadow-sm backdrop-blur"
+                    >
 
                       <span
-                        class="absolute right-3 top-3 inline-flex items-center
-                               gap-1.5 rounded-full border border-white/40
-                               bg-white/95 px-3 py-1.5
-                               text-[10px] font-black uppercase
-                               tracking-[0.12em] text-actblue
-                               shadow-sm backdrop-blur"
-                      >
-                        <span
-                          class="h-1.5 w-1.5 rounded-full bg-emerald-500"
-                        ></span>
+                        class="h-1.5 w-1.5 rounded-full bg-emerald-500"
+                      ></span>
 
-                        Active
-                      </span>
-                    </div>
+                      Active
 
-                    <div class="p-5">
-                      <div
-                        class="flex items-center justify-between gap-3"
-                      >
-                        <p
-                          class="text-[10px] font-black uppercase
-                                 tracking-[0.15em] text-actblue"
-                        >
-                          ${escapeHtml(report.category)}
-                        </p>
+                    </span>
 
-                        <span
-                          class="max-w-[100px] truncate text-[10px]
-                                 font-bold tracking-wide text-slate-300"
-                          title="${escapeHtml(report.id)}"
-                        >
-                          #${escapeHtml(report.id)}
-                        </span>
-                      </div>
+                  </div>
 
-                      <h3
-                        class="mt-2 line-clamp-2 text-xl font-black
-                        leading-6 tracking-tight text-slate-900 transition
-                        group-hover:text-actblue"
-                      >
-                        ${escapeHtml(report.item)}
-                      </h3>
+
+                  <!-- CONTENT -->
+                  <div class="p-5">
+
+                    <!-- CATEGORY + REPORT ID -->
+                    <div
+                      class="flex items-center justify-between gap-3"
+                    >
 
                       <p
-                        class="mt-2 line-clamp-2 text-xs font-medium leading-5
-                        text-slate-400"
+                        class="text-[10px] font-black uppercase
+                              tracking-[0.15em] text-actblue"
                       >
-                        ${escapeHtml(report.description)}
+                        ${escapeHtml(report.category)}
                       </p>
 
-                      <div
-                        class="mt-5 grid gap-2.5 border-t
-                               border-slate-100 pt-4"
+
+                      <span
+                        class="text-[10px] font-bold
+                              tracking-wide text-slate-300"
+                        title="${escapeHtml(report.id)}"
                       >
-                        <div
-                          class="flex min-w-0 items-center gap-2.5
-                                 text-xs font-semibold text-slate-500"
-                        >
-                          <span
-                            class="flex h-7 w-7 shrink-0 items-center
-                                   justify-center rounded-lg
-                                   bg-actblue/[0.05] text-actblue"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-3.5 w-3.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"
-                              />
-                              <circle cx="12" cy="9" r="2.2" />
-                            </svg>
-                          </span>
+                        #${escapeHtml(report.id)}
+                      </span>
 
-                          <span class="truncate">
-                            ${escapeHtml(report.location)}
-                          </span>
-                        </div>
+                    </div>
 
-                        <div
-                          class="flex items-center gap-2.5
-                                 text-xs font-semibold text-slate-500"
-                        >
-                          <span
-                            class="flex h-7 w-7 shrink-0 items-center
-                                   justify-center rounded-lg
-                                   bg-actyellow/[0.15] text-actblue"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-3.5 w-3.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                            >
-                              <rect
-                                x="3"
-                                y="4"
-                                width="18"
-                                height="17"
-                                rx="2"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                d="M7 2v4M17 2v4M3 9h18"
-                              />
-                            </svg>
-                          </span>
 
-                          <span>
-                            ${escapeHtml(report.date)}
-                          </span>
-                        </div>
-                      </div>
+                    <!-- ITEM -->
+                    <h3
+                      class="mt-2 line-clamp-2
+                            text-lg font-black leading-6
+                            text-slate-900
+                            transition
+                            group-hover:text-actblue"
+                    >
+                      ${escapeHtml(report.item)}
+                    </h3>
 
+
+                    <!-- DESCRIPTION -->
+                    <p
+                      class="mt-2 line-clamp-2
+                            text-xs leading-5 text-slate-500"
+                    >
+                      ${escapeHtml(report.description)}
+                    </p>
+
+
+                    <!-- DETAILS -->
+                    <div
+                      class="mt-5 grid gap-2.5
+                            border-t border-slate-100 pt-4"
+                    >
+
+                      <!-- LOCATION -->
                       <div
-                        class="mt-5 flex items-center justify-between
-                               border-t border-slate-100 pt-4"
+                        class="flex min-w-0 items-center gap-2.5
+                              text-xs font-semibold text-slate-500"
                       >
-                        <span
-                          class="text-xs font-black text-actblue"
-                        >
-                          View details
-                        </span>
 
                         <span
-                          class="flex h-9 w-9 items-center justify-center
-                                  rounded-full bg-actblue/[0.06] text-actblue
-                                 transition duration-300
-                                 group-hover:bg-actblue
-                                 group-hover:text-white"
+                          class="flex h-7 w-7 shrink-0 items-center
+                                justify-center rounded-lg
+                                bg-actblue/5 text-actblue"
                         >
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 transition-transform
-                                   duration-300
-                                   group-hover:translate-x-0.5"
+                            class="h-3.5 w-3.5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
+                            stroke-width="1.8"
                           >
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              d="m9 18 6-6-6-6"
+                              d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"
+                            />
+
+                            <circle
+                              cx="12"
+                              cy="9"
+                              r="2.2"
                             />
                           </svg>
+
                         </span>
+
+
+                        <span class="truncate">
+                          ${escapeHtml(report.location)}
+                        </span>
+
                       </div>
+
+
+                      <!-- DATE -->
+                      <div
+                        class="flex items-center gap-2.5
+                              text-xs font-semibold text-slate-500"
+                      >
+
+                        <span
+                          class="flex h-7 w-7 shrink-0 items-center
+                                justify-center rounded-lg
+                                bg-actyellow/[0.15] text-actblue"
+                        >
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                          >
+
+                            <rect
+                              x="3"
+                              y="4"
+                              width="18"
+                              height="17"
+                              rx="2"
+                            />
+
+                            <path
+                              stroke-linecap="round"
+                              d="M7 2v4M17 2v4M3 9h18"
+                            />
+
+                          </svg>
+
+                        </span>
+
+
+                        <span>
+                          ${escapeHtml(report.date)}
+                        </span>
+
+                      </div>
+
                     </div>
-                  </a>
-                </article>
-              `,
+
+
+                    <!-- VIEW REPORT -->
+                    <div
+                      class="mt-5 flex items-center justify-between
+                            border-t border-slate-100 pt-4"
+                    >
+
+                      <span
+                        class="text-xs font-bold text-slate-400"
+                      >
+                        View report
+                      </span>
+
+
+                      <span
+                        class="flex h-9 w-9 items-center justify-center
+                              rounded-full bg-slate-50
+                              text-actblue
+                              transition duration-300
+                              group-hover:bg-actblue
+                              group-hover:text-white"
+                      >
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4
+                                transition-transform duration-300
+                                group-hover:translate-x-0.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m9 18 6-6-6-6"
+                          />
+                        </svg>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </a>
+
+              </article>
+
+            `,
           )
           .join("");
       }
@@ -1668,11 +2077,408 @@
       });
 
       /* ==========================================
+        LOST ITEMS PAGE — PREMIUM MOTION
+      ========================================== */
+
+      const lostReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      /* ==========================================
+        GENERAL SCROLL OBSERVER
+      ========================================== */
+
+      const lostScrollObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("lost-visible");
+
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.18,
+
+          rootMargin: "0px 0px -55px 0px",
+        },
+      );
+
+      function observeLostElement(element) {
+        if (!element) return;
+
+        lostScrollObserver.observe(element);
+      }
+
+      /* ==========================================
+        HERO
+      ========================================== */
+
+      function setupLostHeroMotion() {
+        const directoryGrid = document.querySelector(".directory-grid");
+
+        const heroSection = directoryGrid?.closest("section");
+
+        if (!heroSection) return;
+
+        const heroLayout = heroSection.querySelector(
+          ".relative.mx-auto.max-w-7xl .grid",
+        );
+
+        if (!heroLayout) return;
+
+        const heroLeft = heroLayout.children[0];
+
+        const heroRight = heroLayout.children[1];
+
+        /*
+          Badge
+          Heading
+          Paragraph
+          Buttons
+        */
+
+        if (heroLeft) {
+          Array.from(heroLeft.children).forEach((element, index) => {
+            element.classList.add("lost-hero-piece");
+
+            element.style.setProperty("--lost-delay", `${90 + index * 110}ms`);
+          });
+        }
+
+        /*
+          Right-side Find it faster panel
+        */
+
+        const guidePanel = heroRight?.firstElementChild;
+
+        if (!guidePanel) return;
+
+        guidePanel.classList.add("lost-guide-panel");
+
+        /*
+          Search → Filter → Check
+        */
+
+        const guideSteps = guidePanel.querySelectorAll(".mt-5.grid > div");
+
+        guideSteps.forEach((step, index) => {
+          step.classList.add("lost-guide-step");
+
+          step.style.setProperty("--guide-delay", `${600 + index * 120}ms`);
+        });
+      }
+
+      /* ==========================================
+        FILTER PANEL + RESULTS HEADER
+      ========================================== */
+
+      function setupLostDirectoryMotion() {
+        const directorySection = lostReportsGrid?.closest("section");
+
+        if (!directorySection) return;
+
+        const wrapper = directorySection.querySelector(
+          ":scope > div.relative.mx-auto",
+        );
+
+        if (!wrapper) return;
+
+        /*
+          Current structure:
+
+          child 0 = search/filter toolbar
+          child 1 = results heading
+          child 2 = report grid
+          child 3 = empty state
+          child 4 = load more
+        */
+
+        const filterPanel = wrapper.children[0];
+
+        const resultsHeader = wrapper.children[1];
+
+        if (filterPanel) {
+          filterPanel.classList.add("lost-filter-panel");
+
+          observeLostElement(filterPanel);
+        }
+
+        if (resultsHeader) {
+          resultsHeader.classList.add("lost-results-header");
+
+          observeLostElement(resultsHeader);
+        }
+      }
+
+      /* ==========================================
+        REPORT CARDS — SAME MOTION AS HOME
+      ========================================== */
+
+      let lostReportObserver = null;
+
+      /* ==========================================
+        CREATE REPORT CARD OBSERVER
+      ========================================== */
+
+      function getLostReportObserver() {
+        if (lostReportObserver) {
+          return lostReportObserver;
+        }
+
+        lostReportObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              const card = entry.target;
+
+              /*
+                  Same behavior as Home:
+                  animate only when this exact
+                  card enters the viewport.
+                */
+
+              card.classList.add("lost-report-visible");
+
+              /*
+                  Animate once for this
+                  rendered card.
+                */
+
+              lostReportObserver.unobserve(card);
+            });
+          },
+          {
+            /*
+                EXACT SAME AS HOME
+              */
+
+            threshold: 0.25,
+
+            rootMargin: "0px 0px -45px 0px",
+          },
+        );
+
+        return lostReportObserver;
+      }
+
+      /* ==========================================
+        PREPARE REPORT CARDS
+      ========================================== */
+
+      function prepareLostReportCards() {
+        if (!lostReportsGrid) return;
+
+        const cards = Array.from(
+          lostReportsGrid.querySelectorAll(".report-card"),
+        );
+
+        const observer = getLostReportObserver();
+
+        /*
+          Lost Items grid:
+
+          mobile = 1
+          sm     = 2
+          lg     = 3
+          xl     = 4
+
+          We keep its correct responsive
+          layout, but use the SAME Home
+          animation timing.
+        */
+
+        let columns = 1;
+
+        if (window.innerWidth >= 1280) {
+          columns = 4;
+        } else if (window.innerWidth >= 1024) {
+          columns = 3;
+        } else if (window.innerWidth >= 640) {
+          columns = 2;
+        }
+
+        cards.forEach((card, index) => {
+          /*
+              SAME AS HOME:
+
+              Every newly rendered card starts
+              from its animation state.
+            */
+
+          card.classList.remove("lost-report-visible");
+
+          card.classList.add("lost-report-prep");
+
+          /*
+              Stagger only within the row.
+            */
+
+          const positionInRow = index % columns;
+
+          /*
+              EXACT SAME 90ms timing
+              used on Home.
+            */
+
+          card.style.setProperty(
+            "--lost-card-delay",
+            `${positionInRow * 90}ms`,
+          );
+
+          /*
+              Each card waits until it
+              actually reaches the viewport.
+            */
+
+          observer.observe(card);
+        });
+      }
+
+      /* ==========================================
+        WATCH GENERATED REPORT GRID
+      ========================================== */
+
+      function setupLostReportWatcher() {
+        if (!lostReportsGrid) return;
+
+        const observer = new MutationObserver(() => {
+          requestAnimationFrame(() => {
+            prepareLostReportCards();
+          });
+        });
+
+        observer.observe(lostReportsGrid, {
+          childList: true,
+        });
+      }
+
+      /* ==========================================
+        EMPTY STATE
+      ========================================== */
+
+      function setupLostEmptyStateMotion() {
+        if (!emptyState) return;
+
+        const observer = new MutationObserver(() => {
+          if (emptyState.classList.contains("hidden")) {
+            return;
+          }
+
+          emptyState.classList.remove("lost-empty-enter");
+
+          void emptyState.offsetWidth;
+
+          emptyState.classList.add("lost-empty-enter");
+        });
+
+        observer.observe(emptyState, {
+          attributes: true,
+
+          attributeFilter: ["class"],
+        });
+      }
+
+      /* ==========================================
+        HELP CTA
+      ========================================== */
+
+      function setupLostHelpMotion() {
+        const helpLabel = Array.from(document.querySelectorAll("main p")).find(
+          (element) =>
+            element.textContent.includes("Still can't find your item?"),
+        );
+
+        const helpSection = helpLabel?.closest("section");
+
+        if (!helpSection) return;
+
+        const helpCard = helpSection.querySelector(
+          "div.relative.overflow-hidden",
+        );
+
+        if (!helpCard) return;
+
+        helpCard.classList.add("lost-help-card");
+
+        const helpLayout = helpCard.querySelector(".flex.flex-col");
+
+        if (helpLayout) {
+          const helpText = helpLayout.children[0];
+
+          const helpAction = helpLayout.children[1];
+
+          helpText?.classList.add("lost-help-text");
+
+          helpAction?.classList.add("lost-help-action");
+        }
+
+        /*
+          Yellow vertical accent
+        */
+
+        const accent = helpCard.querySelector(":scope > div.absolute");
+
+        accent?.classList.add("lost-help-accent");
+
+        observeLostElement(helpCard);
+      }
+
+      /* ==========================================
+        MOBILE MENU ENTRANCE
+      ========================================== */
+
+      if (menuButton && mobileMenu && !lostReducedMotion) {
+        menuButton.addEventListener("click", () => {
+          requestAnimationFrame(() => {
+            if (mobileMenu.classList.contains("hidden")) {
+              return;
+            }
+
+            mobileMenu.classList.remove("lost-mobile-menu-enter");
+
+            void mobileMenu.offsetWidth;
+
+            mobileMenu.classList.add("lost-mobile-menu-enter");
+          });
+        });
+      }
+
+      /* ==========================================
+        START LOST ITEMS MOTION
+      ========================================== */
+
+      if (!lostReducedMotion) {
+        /*
+          Watch the report grid BEFORE
+          renderReports() creates the cards.
+        */
+
+        setupLostReportWatcher();
+
+        setupLostHeroMotion();
+
+        setupLostDirectoryMotion();
+
+        setupLostEmptyStateMotion();
+
+        setupLostHelpMotion();
+      }
+
+      /* ==========================================
            INITIAL RENDER
       ========================================== */
       buildLocationOptions();
       renderCategoryFilters();
       renderReports();
     </script>
+
+    <script src="animations.js"></script>
   </body>
 </html>

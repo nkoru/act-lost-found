@@ -1,0 +1,236 @@
+/* =========================================================
+   ACT LOST & FOUND — SHARED MOTION SYSTEM
+   Footer is intentionally excluded.
+========================================================= */
+
+:root {
+  --act-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================================================
+   SCROLL REVEAL BASE
+========================================================= */
+
+.act-reveal {
+  opacity: 0;
+  filter: blur(4px);
+
+  transition:
+    opacity 0.75s var(--act-motion-ease),
+    transform 0.75s var(--act-motion-ease),
+    filter 0.75s ease;
+
+  transition-delay: var(--act-delay, 0ms);
+
+  will-change: opacity, transform, filter;
+}
+
+/* Rise gently */
+.act-up {
+  transform: translateY(34px);
+}
+
+/* Enter from left */
+.act-left {
+  transform: translateX(-42px) translateY(8px);
+}
+
+/* Enter from right */
+.act-right {
+  transform: translateX(42px) translateY(8px);
+}
+
+/* Cards */
+.act-scale {
+  transform: translateY(26px) scale(0.965);
+}
+
+/* Final position */
+.act-reveal.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* =========================================================
+   PAGE / HERO ENTRANCE
+========================================================= */
+
+.act-page-enter {
+  opacity: 0;
+
+  animation: actPageEnter 0.78s var(--act-motion-ease) var(--act-delay, 0ms)
+    forwards;
+}
+
+@keyframes actPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* =========================================================
+   DYNAMIC ITEMS
+   Reports, dashboard records, messages, etc.
+========================================================= */
+
+.act-dynamic-enter {
+  transform-origin: center bottom;
+
+  animation: actDynamicEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--act-delay, 0ms) both;
+}
+
+@keyframes actDynamicEnter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+    filter: blur(4px);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* =========================================================
+   FORM FIELD MICRO-INTERACTION
+========================================================= */
+
+main input:not([type="checkbox"]):not([type="radio"]),
+main select,
+main textarea {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+main input:not([type="checkbox"]):not([type="radio"]):focus,
+main select:focus,
+main textarea:focus {
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   BUTTON PRESS
+========================================================= */
+
+main button,
+main a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+main button,
+main a[class*="rounded"] {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+main button:active,
+main a[class*="rounded"]:active {
+  transform: scale(0.975);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+  .act-left {
+    transform: translateX(-22px) translateY(8px);
+  }
+
+  .act-right {
+    transform: translateX(22px) translateY(8px);
+  }
+
+  .act-up {
+    transform: translateY(26px);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .act-reveal,
+  .act-page-enter,
+  .act-dynamic-enter {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   PREMIUM CARD HOVER
+========================================================= */
+
+.act-hover-card {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.act-hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 45px rgba(12, 46, 138, 0.1);
+}
+
+/* =========================================================
+   TAB CONTENT CHANGE
+========================================================= */
+
+@keyframes actTabContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.act-tab-enter {
+  animation: actTabContent 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes actMobileMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.act-mobile-menu-enter {
+  animation: actMobileMenu 0.22s ease-out;
+}

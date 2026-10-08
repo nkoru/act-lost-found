@@ -426,6 +426,671 @@
           transform: translateY(0) scale(1);
         }
       }
+
+      /* =========================================================
+        HOME PAGE — FINAL PREMIUM MOTION
+      ========================================================= */
+
+      :root {
+        --home-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* =========================================================
+        GENERAL SCROLL REVEAL
+        Used for section headings / CTA only.
+      ========================================================= */
+
+      .home-reveal {
+        opacity: 0;
+        filter: blur(4px);
+
+        translate: 0 30px;
+
+        transition:
+          opacity 0.8s var(--home-motion-ease),
+          translate 0.8s var(--home-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay: var(--home-delay, 0ms);
+
+        will-change: opacity, translate, filter;
+      }
+
+      .home-reveal[data-home-motion="left"] {
+        translate: -38px 8px;
+      }
+
+      .home-reveal[data-home-motion="right"] {
+        translate: 38px 8px;
+      }
+
+      .home-reveal.home-visible {
+        opacity: 1;
+        filter: blur(0);
+
+        translate: 0 0;
+      }
+
+      /* =========================================================
+        HERO — PAGE OPENING
+      ========================================================= */
+
+      .home-intro {
+        opacity: 0;
+
+        animation: homeIntro 0.85s var(--home-motion-ease)
+          var(--home-delay, 0ms) forwards;
+      }
+
+      @keyframes homeIntro {
+        from {
+          opacity: 0;
+
+          translate: -26px 12px;
+
+          filter: blur(5px);
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        LOST / FOUND — INWARD CENTER ENTRANCE
+      ========================================================= */
+
+      /*
+        Both cards begin outside their natural position.
+        Lost comes from the left.
+        Found comes from the right.
+      */
+
+      .home-action-card {
+        opacity: 0;
+
+        translate: -90px 18px;
+
+        rotate: -2.5deg;
+
+        scale: 0.96;
+
+        transition:
+          opacity 0.75s ease,
+          translate 1s var(--home-motion-ease),
+          rotate 1s var(--home-motion-ease),
+          scale 1s var(--home-motion-ease);
+
+        transition-delay: var(--action-delay, 0ms);
+
+        will-change: opacity, translate, rotate, scale;
+      }
+
+      /* Found comes inward from the right */
+
+      .home-action-card[data-action="found"] {
+        translate: 90px 18px;
+
+        rotate: 2.5deg;
+      }
+
+      /* Final resting position */
+
+      .home-action-card.home-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        rotate: 0deg;
+
+        scale: 1;
+      }
+
+      /* =========================================================
+        ACCENT LINE — DRAWS IN AFTER CARD ARRIVES
+      ========================================================= */
+
+      .home-action-card > div.absolute:first-child {
+        transform: scaleY(0);
+
+        transform-origin: center;
+
+        transition: transform 0.55s var(--home-motion-ease);
+
+        transition-delay: calc(var(--action-delay, 0ms) + 430ms);
+      }
+
+      .home-action-card.home-visible > div.absolute:first-child {
+        transform: scaleY(1);
+      }
+
+      /* =========================================================
+        ICON — SOFT APPEARANCE
+      ========================================================= */
+
+      .home-action-card > .flex > span:first-child {
+        opacity: 0;
+
+        scale: 0.8;
+
+        transition:
+          opacity 0.5s ease,
+          scale 0.65s var(--home-motion-ease);
+
+        transition-delay: calc(var(--action-delay, 0ms) + 480ms);
+      }
+
+      .home-action-card.home-visible > .flex > span:first-child {
+        opacity: 1;
+
+        scale: 1;
+      }
+
+      /* =========================================================
+        TEXT — FOLLOWS CARD INTO PLACE
+      ========================================================= */
+
+      .home-action-card .min-w-0.flex-1 {
+        opacity: 0;
+
+        translate: 0 12px;
+
+        transition:
+          opacity 0.55s ease,
+          translate 0.65s var(--home-motion-ease);
+
+        transition-delay: calc(var(--action-delay, 0ms) + 520ms);
+      }
+
+      .home-action-card.home-visible .min-w-0.flex-1 {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      /* =========================================================
+        MOBILE — LESS SIDE MOVEMENT
+      ========================================================= */
+
+      @media (max-width: 640px) {
+        .home-action-card {
+          translate: -45px 14px;
+
+          rotate: -1.5deg;
+        }
+
+        .home-action-card[data-action="found"] {
+          translate: 45px 14px;
+
+          rotate: 1.5deg;
+        }
+
+        .home-action-card.home-visible {
+          translate: 0 0;
+
+          rotate: 0deg;
+
+          scale: 1;
+        }
+      }
+
+      /* =========================================================
+        RECENT REPORTS — CONNECTED SCENE
+      ========================================================= */
+
+      .home-reports-piece {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        filter: blur(5px);
+
+        transition:
+          opacity 0.8s var(--home-motion-ease),
+          translate 0.8s var(--home-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay: var(--reports-delay, 0ms);
+      }
+
+      .home-reports-piece.home-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        filter: blur(0);
+      }
+
+      /* Report cards wait until section is visible */
+
+      .home-report-prep {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        scale: 0.955;
+
+        filter: blur(4px);
+      }
+
+      .home-report-prep.home-report-enter {
+        animation: homeReportEnter 0.72s cubic-bezier(0.22, 1, 0.36, 1)
+          var(--report-delay, 0ms) both;
+      }
+
+      @keyframes homeReportEnter {
+        0% {
+          opacity: 0;
+
+          translate: 0 30px;
+
+          scale: 0.955;
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -4px;
+
+          scale: 1.018;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        CATEGORIES — ONE BY ONE
+      ========================================================= */
+
+      .home-category-heading {
+        opacity: 0;
+
+        translate: 0 28px;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.8s var(--home-motion-ease),
+          translate 0.8s var(--home-motion-ease),
+          filter 0.8s ease;
+      }
+
+      .home-category-heading.home-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        filter: blur(0);
+      }
+
+      .home-category-card {
+        opacity: 0;
+
+        translate: 0 34px;
+
+        scale: 0.91;
+
+        rotate: var(--category-tilt, 0deg);
+
+        filter: blur(4px);
+
+        transform-origin: center bottom;
+      }
+
+      .home-category-card.home-visible {
+        animation: homeCategoryPop 0.72s cubic-bezier(0.16, 1, 0.3, 1)
+          var(--category-delay, 0ms) both;
+      }
+
+      @keyframes homeCategoryPop {
+        0% {
+          opacity: 0;
+
+          translate: 0 34px;
+
+          scale: 0.91;
+
+          rotate: var(--category-tilt, 0deg);
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -5px;
+
+          scale: 1.035;
+
+          rotate: 0deg;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          rotate: 0deg;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        TRUST & SAFETY — SLOW ZOOM IN ONLY
+      ========================================================= */
+
+      .trust-reveal {
+        opacity: 0;
+        transform: scale(0.92);
+        transform-origin: center center;
+        transition: none;
+      }
+
+      .trust-scene.show .trust-reveal {
+        animation: trust-slow-zoom 1.35s ease-out forwards;
+      }
+
+      @keyframes trust-slow-zoom {
+        from {
+          opacity: 0;
+          transform: scale(0.92);
+        }
+
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Pop sequence */
+
+      .trust-scene.show .trust-reveal-seal {
+        animation-delay: 0.03s;
+      }
+
+      .trust-scene.show .trust-delay-1 {
+        animation-delay: 0.14s;
+      }
+
+      .trust-scene.show .trust-delay-2 {
+        animation-delay: 0.28s;
+      }
+
+      .trust-scene.show .trust-delay-3 {
+        animation-delay: 0.42s;
+      }
+
+      .trust-scene.show .trust-delay-4 {
+        animation-delay: 0.56s;
+      }
+
+      /* =========================================================
+        TRUST & SAFETY — KEEP STILL AFTER ZOOM
+      ========================================================= */
+
+      .trust-scene.show .trust-float-a,
+      .trust-scene.show .trust-float-b,
+      .trust-scene.show .trust-float-c,
+      .trust-scene.show .trust-float-d,
+      .trust-scene.show .trust-seal-float {
+        animation: none !important;
+        transform: none !important;
+      }
+
+      /* =========================================================
+        TRUST FLOATING
+        Starts only AFTER popping finishes.
+      ========================================================= */
+
+      .trust-scene.show .trust-float-a {
+        animation: trust-float-a 6s ease-in-out 1.4s infinite;
+      }
+
+      .trust-scene.show .trust-float-b {
+        animation: trust-float-b 6.8s ease-in-out 1.6s infinite;
+      }
+
+      .trust-scene.show .trust-float-c {
+        animation: trust-float-c 7.2s ease-in-out 1.8s infinite;
+      }
+
+      .trust-scene.show .trust-float-d {
+        animation: trust-float-d 5.8s ease-in-out 2s infinite;
+      }
+
+      .trust-scene.show .trust-seal-float {
+        animation: trust-seal-float 7s ease-in-out 1.2s infinite;
+      }
+
+      /* Keep floating disabled on tablets / phones */
+
+      @media (max-width: 1023px) {
+        .trust-scene.show .trust-float-a,
+        .trust-scene.show .trust-float-b,
+        .trust-scene.show .trust-float-c,
+        .trust-scene.show .trust-float-d,
+        .trust-scene.show .trust-seal-float {
+          animation: none !important;
+        }
+      }
+
+      /* =========================================================
+        MOBILE MENU
+      ========================================================= */
+
+      .home-mobile-menu-enter {
+        animation: homeMobileMenuEnter 0.25s ease-out both;
+      }
+
+      @keyframes homeMobileMenuEnter {
+        from {
+          opacity: 0;
+
+          translate: 0 -8px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        MOBILE
+      ========================================================= */
+
+      @media (max-width: 640px) {
+        .home-action-card {
+          translate: -28px 0;
+        }
+
+        .home-action-card[data-action="found"] {
+          translate: 28px 0;
+        }
+
+        .home-action-card.home-visible {
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        TRUST & SAFETY — DIRECTIONAL REVEAL
+        Four cards move gently toward the center.
+        Center seal stays still.
+      ========================================================= */
+
+      /* -----------------------------------------
+        CENTER SEAL — NO ENTRANCE ANIMATION
+      ----------------------------------------- */
+
+      .trust-reveal-seal {
+        opacity: 1 !important;
+
+        transform: none !important;
+
+        animation: none !important;
+
+        transition: none !important;
+      }
+
+      /* -----------------------------------------
+        FOUR SURROUNDING CARDS
+      ----------------------------------------- */
+
+      .trust-delay-1,
+      .trust-delay-2,
+      .trust-delay-3,
+      .trust-delay-4 {
+        opacity: 0;
+
+        animation: none !important;
+
+        transition:
+          opacity 0.9s ease,
+          transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+
+        will-change: opacity, transform;
+      }
+
+      /* -----------------------------------------
+        REPORT SCREENING
+        upper-left → resting position
+      ----------------------------------------- */
+
+      .trust-delay-1 {
+        transform: translate(-34px, -18px);
+      }
+
+      /* -----------------------------------------
+        SMART MATCHING
+        upper-right → resting position
+      ----------------------------------------- */
+
+      .trust-delay-2 {
+        transform: translate(34px, -18px);
+      }
+
+      /* -----------------------------------------
+        VERIFIED CLAIMS
+        lower-left → resting position
+      ----------------------------------------- */
+
+      .trust-delay-3 {
+        transform: translate(-34px, 18px);
+      }
+
+      /* -----------------------------------------
+        PRIVACY PROTECTED
+        lower-right → resting position
+      ----------------------------------------- */
+
+      .trust-delay-4 {
+        transform: translate(34px, 18px);
+      }
+
+      /* -----------------------------------------
+        FINAL POSITION
+      ----------------------------------------- */
+
+      .trust-delay-1.trust-visible,
+      .trust-delay-2.trust-visible,
+      .trust-delay-3.trust-visible,
+      .trust-delay-4.trust-visible {
+        opacity: 1;
+
+        transform: translate(0, 0);
+
+        animation: none !important;
+      }
+
+      /* -----------------------------------------
+        NO FLOATING / PUMPING AFTER ENTRANCE
+      ----------------------------------------- */
+
+      .trust-scene.show .trust-float-a,
+      .trust-scene.show .trust-float-b,
+      .trust-scene.show .trust-float-c,
+      .trust-scene.show .trust-float-d {
+        animation: none !important;
+
+        transform: none !important;
+      }
+
+      /* =========================================================
+        ACCESSIBILITY — KEEP LAST
+      ========================================================= */
+
+      @media (prefers-reduced-motion: reduce) {
+        .home-reveal,
+        .home-intro,
+        .home-action-card,
+        .home-reports-piece,
+        .home-report-prep,
+        .home-category-heading,
+        .home-category-card,
+        .home-mobile-menu-enter,
+        .trust-reveal {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          scale: 1 !important;
+
+          rotate: 0deg !important;
+
+          transform: none !important;
+
+          filter: none !important;
+
+          clip-path: none !important;
+
+          animation: none !important;
+
+          transition: none !important;
+        }
+
+        .home-action-card > div.absolute:first-child,
+        .home-action-card > .flex > span:first-child,
+        .home-action-card .min-w-0.flex-1 {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          transform: none !important;
+
+          transition: none !important;
+        }
+
+        .trust-float-a,
+        .trust-float-b,
+        .trust-float-c,
+        .trust-float-d,
+        .trust-seal-float {
+          animation: none !important;
+        }
+      }
     </style>
   </head>
 
@@ -2599,29 +3264,608 @@
       }
 
       /* ==========================================
-        TRUST & SAFETY REVEAL
-        ========================================== */
+        TRUST & SAFETY
+        Each surrounding card animates
+        only when IT enters the screen.
+      ========================================== */
 
       const trustScene = document.getElementById("trustScene");
 
       if (trustScene) {
-        const trustSceneObserver = new IntersectionObserver(
+        const trustCards = trustScene.querySelectorAll(
+          ".trust-delay-1, .trust-delay-2, .trust-delay-3, .trust-delay-4",
+        );
+
+        const trustCardObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                trustScene.classList.add("show");
-
-                trustSceneObserver.disconnect();
+              if (!entry.isIntersecting) {
+                return;
               }
+
+              entry.target.classList.add("trust-visible");
+
+              /*
+                  Animate this card once only.
+                */
+              trustCardObserver.unobserve(entry.target);
             });
           },
-
           {
-            threshold: 0.2,
+            threshold: 0.3,
+
+            /*
+                Wait until the card is properly
+                inside the visible screen.
+              */
+            rootMargin: "0px 0px -60px 0px",
           },
         );
 
-        trustSceneObserver.observe(trustScene);
+        trustCards.forEach((card) => {
+          trustCardObserver.observe(card);
+        });
+      }
+
+      /* ==========================================
+        HOME PAGE — FINAL PREMIUM MOTION
+      ========================================== */
+
+      const homeReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      /* ==========================================
+        GENERAL SCROLL OBSERVER
+      ========================================== */
+
+      const homeRevealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("home-visible");
+
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.15,
+
+          rootMargin: "0px 0px -55px 0px",
+        },
+      );
+
+      function homeReveal(element, motion = "up", delay = 0) {
+        if (!element) return;
+
+        if (element.dataset.homeRevealBound === "true") {
+          return;
+        }
+
+        element.dataset.homeRevealBound = "true";
+
+        element.classList.add("home-reveal");
+
+        element.dataset.homeMotion = motion;
+
+        element.style.setProperty("--home-delay", `${delay}ms`);
+
+        homeRevealObserver.observe(element);
+      }
+
+      /* ==========================================
+        HERO
+      ========================================== */
+
+      function setupHomeHeroMotion() {
+        const heroContent = document.querySelector(
+          ".hero-photo .relative.z-10",
+        );
+
+        if (!heroContent) return;
+
+        Array.from(heroContent.children).forEach((element, index) => {
+          element.classList.add("home-intro");
+
+          element.style.setProperty("--home-delay", `${100 + index * 110}ms`);
+        });
+      }
+
+      /* ==========================================
+        LOST + FOUND MAIN ACTION CARDS
+      ========================================== */
+
+      function setupHomeActionCards() {
+        const lostCard = document.querySelector(
+          'main a[href="report-lost.html"]',
+        );
+
+        const foundCard = document.querySelector(
+          'main a[href="report-found.html"]',
+        );
+
+        if (!lostCard || !foundCard) {
+          return;
+        }
+
+        lostCard.classList.add("home-action-card");
+
+        foundCard.classList.add("home-action-card");
+
+        lostCard.dataset.action = "lost";
+
+        foundCard.dataset.action = "found";
+
+        lostCard.style.setProperty("--action-delay", "0ms");
+
+        foundCard.style.setProperty("--action-delay", "130ms");
+
+        const actionSection = lostCard.closest("section");
+
+        if (!actionSection) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              lostCard.classList.add("home-visible");
+
+              foundCard.classList.add("home-visible");
+
+              observer.disconnect();
+            });
+          },
+          {
+            threshold: 0.25,
+
+            rootMargin: "0px 0px -30px 0px",
+          },
+        );
+
+        observer.observe(actionSection);
+      }
+
+      /* ==========================================
+        RECENT REPORTS
+        Cards animate only when THEY enter view.
+      ========================================== */
+
+      let reportCardObserver = null;
+
+      /* ==========================================
+        CREATE CARD OBSERVER
+      ========================================== */
+
+      function getReportCardObserver() {
+        if (reportCardObserver) {
+          return reportCardObserver;
+        }
+
+        reportCardObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              const card = entry.target;
+
+              /*
+                  This card has actually reached
+                  the visible part of the screen.
+                */
+              card.classList.add("home-report-enter");
+
+              /*
+                  Animate only once.
+                */
+              reportCardObserver.unobserve(card);
+            });
+          },
+          {
+            threshold: 0.25,
+
+            /*
+                Makes the animation begin only
+                after the card is slightly inside
+                the viewport.
+              */
+            rootMargin: "0px 0px -45px 0px",
+          },
+        );
+
+        return reportCardObserver;
+      }
+
+      /* ==========================================
+        PREPARE REPORT CARDS
+      ========================================== */
+
+      function prepareHomeReportCards() {
+        if (!reportsGrid) return;
+
+        const cards = Array.from(reportsGrid.querySelectorAll(".report-card"));
+
+        const observer = getReportCardObserver();
+
+        /*
+          Determine how many cards are
+          displayed in each row.
+        */
+
+        let columns = 1;
+
+        if (window.innerWidth >= 1024) {
+          columns = 4;
+        } else if (window.innerWidth >= 640) {
+          columns = 2;
+        }
+
+        cards.forEach((card, index) => {
+          /*
+              Start hidden and ready.
+            */
+          card.classList.remove("home-report-enter");
+
+          card.classList.add("home-report-prep");
+
+          /*
+              Stagger ONLY within the row.
+
+              Desktop:
+              1 2 3 4
+
+              Then row 2 gets its own:
+              1 2 3 4
+            */
+
+          const positionInRow = index % columns;
+
+          card.style.setProperty("--report-delay", `${positionInRow * 90}ms`);
+
+          /*
+              Each card gets watched
+              individually.
+            */
+
+          observer.observe(card);
+        });
+      }
+
+      /* ==========================================
+        RECENT REPORTS HEADING + FILTERS
+      ========================================== */
+
+      function setupRecentReportsMotion() {
+        const section = document.getElementById("recent-reports");
+
+        if (!section) return;
+
+        const wrapper = section.querySelector(":scope > div.relative.mx-auto");
+
+        if (!wrapper) return;
+
+        const heading = wrapper.children[0];
+
+        const filters = wrapper.children[1];
+
+        if (heading) {
+          heading.classList.add("home-reports-piece");
+
+          heading.style.setProperty("--reports-delay", "0ms");
+        }
+
+        if (filters) {
+          filters.classList.add("home-reports-piece");
+
+          filters.style.setProperty("--reports-delay", "120ms");
+        }
+
+        /*
+          Heading and filters have their
+          own section observer.
+        */
+
+        const sectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              heading?.classList.add("home-visible");
+
+              filters?.classList.add("home-visible");
+
+              sectionObserver.disconnect();
+            });
+          },
+          {
+            threshold: 0.15,
+
+            rootMargin: "0px 0px -45px 0px",
+          },
+        );
+
+        sectionObserver.observe(section);
+      }
+
+      /* ==========================================
+        WATCH REPORT GRID
+
+        This is important because filtering
+        and searching rebuilds the cards.
+      ========================================== */
+
+      function setupReportGridWatcher() {
+        if (!reportsGrid) return;
+
+        const observer = new MutationObserver(() => {
+          /*
+              Wait until the new report cards
+              have been inserted.
+            */
+
+          requestAnimationFrame(() => {
+            prepareHomeReportCards();
+          });
+        });
+
+        observer.observe(reportsGrid, {
+          childList: true,
+        });
+      }
+
+      /* ==========================================
+        CATEGORY SECTION
+        Each box animates when it enters view.
+      ========================================== */
+
+      function setupCategoriesMotion() {
+        const sections = Array.from(
+          document.querySelectorAll("main > section"),
+        );
+
+        const categorySection = sections.find((section) => {
+          const title = section.querySelector("h2");
+
+          return (
+            title && title.textContent.includes("What are you looking for?")
+          );
+        });
+
+        if (!categorySection) return;
+
+        const wrapper = categorySection.querySelector(
+          ":scope > div.relative.mx-auto",
+        );
+
+        if (!wrapper) return;
+
+        const heading = wrapper.children[0];
+
+        const cards = Array.from(
+          wrapper.querySelectorAll("button[data-search]"),
+        );
+
+        /* ================================
+          HEADING
+        ================================= */
+
+        if (heading) {
+          heading.classList.add("home-category-heading");
+        }
+
+        const headingObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              heading?.classList.add("home-visible");
+
+              headingObserver.disconnect();
+            });
+          },
+          {
+            threshold: 0.2,
+
+            rootMargin: "0px 0px -40px 0px",
+          },
+        );
+
+        if (heading) {
+          headingObserver.observe(heading);
+        }
+
+        /* ================================
+          PREPARE CATEGORY CARDS
+        ================================= */
+
+        let columns = 1;
+
+        if (window.innerWidth >= 1024) {
+          columns = 4;
+        } else if (window.innerWidth >= 640) {
+          columns = 2;
+        }
+
+        cards.forEach((card, index) => {
+          card.classList.add("home-category-card");
+
+          /*
+              Only stagger cards that are
+              beside each other in the same row.
+            */
+
+          const positionInRow = index % columns;
+
+          const delayStep = window.innerWidth < 640 ? 40 : 90;
+
+          card.style.setProperty(
+            "--category-delay",
+            `${positionInRow * delayStep}ms`,
+          );
+
+          /*
+              Keep the tiny tilt you already liked.
+            */
+
+          let tilt = "0deg";
+
+          if (index % 3 === 0) {
+            tilt = "-1.5deg";
+          } else if (index % 3 === 1) {
+            tilt = "1.5deg";
+          }
+
+          card.style.setProperty("--category-tilt", tilt);
+        });
+
+        /* ================================
+          WATCH EVERY CARD SEPARATELY
+        ================================= */
+
+        const cardObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              /*
+                  Only this visible box
+                  gets animated.
+                */
+
+              entry.target.classList.add("home-visible");
+
+              /*
+                  Animate once only.
+                */
+
+              cardObserver.unobserve(entry.target);
+            });
+          },
+          {
+            threshold: 0.22,
+
+            /*
+                Wait until the box is actually
+                inside the visible screen.
+              */
+
+            rootMargin: "0px 0px -50px 0px",
+          },
+        );
+
+        cards.forEach((card) => {
+          cardObserver.observe(card);
+        });
+      }
+
+      /* ==========================================
+        HOW IT WORKS HEADING + CTA
+
+        The actual 01 → 02 → 03 → ✓
+        animation remains your existing code.
+      ========================================== */
+
+      function setupProcessSectionMotion() {
+        const sections = Array.from(
+          document.querySelectorAll("main > section"),
+        );
+
+        const processSection = sections.find((section) => {
+          const title = section.querySelector("h2");
+
+          return (
+            title && title.textContent.includes("How ACT Lost & Found works")
+          );
+        });
+
+        if (!processSection) return;
+
+        const wrapper = processSection.querySelector(
+          ":scope > div.relative.mx-auto",
+        );
+
+        if (!wrapper) return;
+
+        homeReveal(wrapper.children[0], "up");
+
+        homeReveal(wrapper.children[2], "up", 120);
+      }
+
+      /* ==========================================
+        TRUST & SAFETY HEADING
+
+        The cards/seal use their own
+        pop + floating system.
+      ========================================== */
+
+      function setupTrustHeadingMotion() {
+        const section = document.getElementById("trust-safety");
+
+        if (!section) return;
+
+        const wrapper = section.querySelector(":scope > div.relative.mx-auto");
+
+        if (!wrapper) return;
+
+        homeReveal(wrapper.children[0], "up");
+      }
+
+      /* ==========================================
+        MOBILE MENU
+      ========================================== */
+
+      if (menuButton && mobileMenu && !homeReducedMotion) {
+        menuButton.addEventListener("click", () => {
+          requestAnimationFrame(() => {
+            if (mobileMenu.classList.contains("hidden")) {
+              return;
+            }
+
+            mobileMenu.classList.remove("home-mobile-menu-enter");
+
+            void mobileMenu.offsetWidth;
+
+            mobileMenu.classList.add("home-mobile-menu-enter");
+          });
+        });
+      }
+
+      /* ==========================================
+        START HOME MOTION
+      ========================================== */
+
+      if (!homeReducedMotion) {
+        /*
+          Watch the report grid BEFORE
+          renderReports() is called below.
+        */
+
+        setupReportGridWatcher();
+
+        setupHomeHeroMotion();
+
+        setupHomeActionCards();
+
+        setupRecentReportsMotion();
+
+        setupCategoriesMotion();
+
+        setupProcessSectionMotion();
+
+        setupTrustHeadingMotion();
       }
 
       /* ==========================================

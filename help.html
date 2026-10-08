@@ -87,75 +87,305 @@
         width: 100%;
       }
 
-      /* =================================
-   HELP SCROLL REVEALS
-================================= */
+      /* =========================================================
+        HELP PAGE — INDEX-CONSISTENT MOTION
+      ========================================================= */
+
+      :root {
+        --help-motion-ease:
+          cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+
+      /* =========================================================
+        HERO LEFT — SAME MOTION DNA AS INDEX HERO
+      ========================================================= */
+
+      .help-hero-piece {
+        opacity: 0;
+
+        animation:
+          helpHeroIntro
+          0.85s
+          var(--help-motion-ease)
+          var(--help-delay, 0ms)
+          forwards;
+      }
+
+
+      @keyframes helpHeroIntro {
+        from {
+          opacity: 0;
+
+          translate: -26px 12px;
+
+          filter: blur(5px);
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        HERO SHORTCUT BOXES
+        SAME FAMILY AS INDEX CATEGORY CARDS
+      ========================================================= */
+
+      .help-hero-card {
+        opacity: 0;
+
+        translate: 0 34px;
+
+        scale: 0.91;
+
+        rotate: var(
+          --help-hero-tilt,
+          0deg
+        );
+
+        filter: blur(4px);
+
+        transform-origin:
+          center bottom;
+      }
+
+
+      .help-hero-card.help-visible {
+        animation:
+          helpHeroCardPop
+          0.72s
+          cubic-bezier(0.16, 1, 0.3, 1)
+          var(--help-card-delay, 0ms)
+          both;
+      }
+
+
+      @keyframes helpHeroCardPop {
+        0% {
+          opacity: 0;
+
+          translate: 0 34px;
+
+          scale: 0.91;
+
+          rotate: var(
+            --help-hero-tilt,
+            0deg
+          );
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -5px;
+
+          scale: 1.035;
+
+          rotate: 0deg;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          rotate: 0deg;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        GENERAL REVEALS
+        SAME AS INDEX GENERAL MOTION
+      ========================================================= */
 
       .help-reveal {
         opacity: 0;
-        transform: translateY(28px);
+
+        filter: blur(4px);
+
+        translate: 0 30px;
+
         transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
+          opacity 0.8s
+            var(--help-motion-ease),
+          translate 0.8s
+            var(--help-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay:
+          var(--help-delay, 0ms);
+
+        will-change:
+          opacity,
+          translate,
+          filter;
       }
+
 
       .help-reveal-left {
         opacity: 0;
-        transform: translateX(-30px);
+
+        filter: blur(4px);
+
+        translate: -38px 8px;
+
         transition:
-          opacity 0.75s ease,
-          transform 0.75s ease;
+          opacity 0.8s
+            var(--help-motion-ease),
+          translate 0.85s
+            var(--help-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay:
+          var(--help-delay, 0ms);
       }
+
 
       .help-reveal-right {
         opacity: 0;
-        transform: translateX(30px);
+
+        filter: blur(4px);
+
+        translate: 38px 8px;
+
         transition:
-          opacity 0.75s ease,
-          transform 0.75s ease;
+          opacity 0.8s
+            var(--help-motion-ease),
+          translate 0.85s
+            var(--help-motion-ease),
+          filter 0.8s ease;
+
+        transition-delay:
+          var(--help-delay, 0ms);
       }
 
-      .help-scene.show .help-reveal,
-      .help-scene.show .help-reveal-left,
-      .help-scene.show .help-reveal-right {
+
+      .help-reveal.help-visible,
+      .help-reveal-left.help-visible,
+      .help-reveal-right.help-visible {
         opacity: 1;
-        transform: translate(0);
+
+        filter: blur(0);
+
+        translate: 0 0;
       }
 
-      .help-scene.show .help-delay-1 {
-        transition-delay: 0.12s;
-      }
 
-      .help-scene.show .help-delay-2 {
-        transition-delay: 0.24s;
-      }
-
-      .help-scene.show .help-delay-3 {
-        transition-delay: 0.36s;
-      }
-
-      .help-scene.show .help-delay-4 {
-        transition-delay: 0.48s;
-      }
-
-      /* =================================
-   HELP CARDS
-================================= */
+      /* =========================================================
+        HELP CARDS
+      ========================================================= */
 
       .help-card {
         transition:
+          opacity 0.8s
+            var(--help-motion-ease),
+
+          translate 0.85s
+            var(--help-motion-ease),
+
+          filter 0.8s ease,
+
           transform 0.3s ease,
+
           border-color 0.3s ease,
+
           box-shadow 0.3s ease;
+
+        transition-delay:
+          var(--help-delay, 0ms);
       }
+
 
       .help-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(12, 46, 138, 0.2);
-        box-shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+        transform:
+          translateY(-5px);
+
+        border-color:
+          rgba(12, 46, 138, 0.2);
+
+        box-shadow:
+          0 18px 45px
+          rgba(23, 32, 51, 0.09);
       }
 
-      /* FAQ */
+
+      /* =========================================================
+        FAQ — SAME CARD ENTRANCE FAMILY AS HOME REPORTS
+      ========================================================= */
+
+      .help-faq-item {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        scale: 0.955;
+
+        filter: blur(4px);
+      }
+
+
+      .help-faq-item.help-faq-visible {
+        animation:
+          helpFaqEnter
+          0.72s
+          cubic-bezier(0.22, 1, 0.36, 1)
+          var(--help-faq-delay, 0ms)
+          both;
+      }
+
+
+      @keyframes helpFaqEnter {
+        0% {
+          opacity: 0;
+
+          translate: 0 30px;
+
+          scale: 0.955;
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -4px;
+
+          scale: 1.018;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        FAQ INTERACTION
+      ========================================================= */
+
       details {
         transition:
           border-color 0.25s ease,
@@ -163,23 +393,254 @@
           background-color 0.25s ease;
       }
 
+
       details:hover {
-        border-color: rgba(12, 46, 138, 0.18);
+        border-color:
+          rgba(12, 46, 138, 0.18);
       }
+
 
       details[open] {
-        border-color: rgba(12, 46, 138, 0.18);
-        box-shadow: 0 12px 30px rgba(23, 32, 51, 0.06);
+        border-color:
+          rgba(12, 46, 138, 0.18);
+
+        box-shadow:
+          0 12px 30px
+          rgba(23, 32, 51, 0.06);
       }
 
-      /* Accessibility */
+      /* =========================================================
+        HELP — EXTRA INDIVIDUAL REVEALS
+        For smaller boxes / actions that were
+        previously appearing with their parent.
+      ========================================================= */
+
+      .help-detail-reveal {
+        opacity: 0;
+
+        translate: 0 24px;
+
+        scale: 0.97;
+
+        filter: blur(3px);
+      }
+
+
+      .help-detail-reveal.help-detail-visible {
+        animation:
+          helpDetailEnter
+          0.72s
+          cubic-bezier(0.22, 1, 0.36, 1)
+          var(--help-detail-delay, 0ms)
+          both;
+      }
+
+
+      @keyframes helpDetailEnter {
+        0% {
+          opacity: 0;
+
+          translate: 0 24px;
+
+          scale: 0.97;
+
+          filter: blur(3px);
+        }
+
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -3px;
+
+          scale: 1.012;
+
+          filter: blur(0);
+        }
+
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+
+      /* =========================================================
+        CONTINUE WITH YOUR CASE
+        Guest + ACT Account move toward center
+        like Home's Lost / Found pair.
+      ========================================================= */
+
+      .help-case-option {
+        opacity: 0;
+
+        filter: blur(4px);
+
+        transition:
+          opacity 0.75s ease,
+          translate 0.95s
+            var(--help-motion-ease),
+          scale 0.95s
+            var(--help-motion-ease),
+          rotate 0.95s
+            var(--help-motion-ease),
+          filter 0.75s ease;
+
+        will-change:
+          opacity,
+          translate,
+          scale,
+          rotate,
+          filter;
+      }
+
+
+      /* GUEST — left → center */
+
+      .help-case-option[data-help-case="guest"] {
+        translate: -80px 14px;
+
+        scale: 0.95;
+
+        rotate: -2deg;
+      }
+
+
+      /* ACCOUNT — right → center */
+
+      .help-case-option[data-help-case="account"] {
+        translate: 80px 14px;
+
+        scale: 0.95;
+
+        rotate: 2deg;
+      }
+
+
+      .help-case-option.help-case-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        rotate: 0deg;
+
+        filter: blur(0);
+      }
+
+
+      /* =========================================================
+        MOBILE — SHORTER TRAVEL
+      ========================================================= */
+
+      @media (max-width: 640px) {
+
+        .help-case-option[data-help-case="guest"] {
+          translate: -36px 12px;
+
+          rotate: -1deg;
+        }
+
+
+        .help-case-option[data-help-case="account"] {
+          translate: 36px 12px;
+
+          rotate: 1deg;
+        }
+
+
+        .help-case-option.help-case-visible {
+          translate: 0 0;
+
+          scale: 1;
+
+          rotate: 0deg;
+        }
+      }
+
+
+      /* =========================================================
+        MOBILE MENU
+      ========================================================= */
+
+      .help-mobile-menu-enter {
+        animation:
+          helpMobileMenuIn
+          0.25s
+          ease-out
+          both;
+      }
+
+
+      @keyframes helpMobileMenuIn {
+        from {
+          opacity: 0;
+
+          translate: 0 -8px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+
+      /* =========================================================
+        MOBILE
+      ========================================================= */
+
+      @media (max-width: 640px) {
+        .help-reveal-left {
+          translate: -24px 8px;
+        }
+
+        .help-reveal-right {
+          translate: 24px 8px;
+        }
+
+        .help-reveal-left.help-visible,
+        .help-reveal-right.help-visible {
+          translate: 0 0;
+        }
+      }
+
+
+      /* =========================================================
+        ACCESSIBILITY
+      ========================================================= */
+
       @media (prefers-reduced-motion: reduce) {
+        .help-hero-piece,
+        .help-hero-card,
         .help-reveal,
         .help-reveal-left,
-        .help-reveal-right {
-          opacity: 1;
-          transform: none;
-          transition: none;
+        .help-reveal-right,
+        .help-faq-item,
+        .help-detail-reveal,
+        .help-case-option,
+        .help-mobile-menu-enter {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          scale: 1 !important;
+
+          rotate: 0deg !important;
+
+          filter: none !important;
+
+          animation: none !important;
+
+          transition: none !important;
         }
       }
     </style>
@@ -1303,28 +1764,634 @@
       });
 
       /* ==========================================
-        HELP SECTION REVEALS
+        HELP PAGE — INDEX-CONSISTENT MOTION
       ========================================== */
 
-      const helpScenes = document.querySelectorAll(".help-scene");
+      const helpReducedMotion =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
 
-      const helpSceneObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("show");
-              helpSceneObserver.unobserve(entry.target);
-            }
+
+      /* ==========================================
+        GENERAL INDIVIDUAL OBSERVER
+      ========================================== */
+
+      const helpRevealObserver =
+        new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+
+              entry.target.classList.add(
+                "help-visible",
+              );
+
+
+              observer.unobserve(
+                entry.target,
+              );
+            });
+          },
+          {
+            threshold: 0.18,
+
+            rootMargin:
+              "0px 0px -55px 0px",
+          },
+        );
+
+
+      function observeHelpElement(
+        element,
+        delay = 0,
+      ) {
+        if (!element) return;
+
+
+        element.style.setProperty(
+          "--help-delay",
+          `${delay}ms`,
+        );
+
+
+        helpRevealObserver.observe(
+          element,
+        );
+      }
+
+
+      /* ==========================================
+        HERO
+      ========================================== */
+
+      function setupHelpHeroMotion() {
+        const hero =
+          document.querySelector(
+            "main > section:first-child",
+          );
+
+
+        if (!hero) return;
+
+
+        const layout =
+          hero.querySelector(
+            ".relative.mx-auto.grid",
+          );
+
+
+        if (!layout) return;
+
+
+        const left =
+          layout.children[0];
+
+        const right =
+          layout.children[1];
+
+
+        /* LEFT */
+
+        if (left) {
+          Array.from(
+            left.children,
+          ).forEach(
+            (element, index) => {
+              element.classList.add(
+                "help-hero-piece",
+              );
+
+
+              element.style.setProperty(
+                "--help-delay",
+                `${100 + index * 110}ms`,
+              );
+            },
+          );
+        }
+
+
+        /* RIGHT SHORTCUT CARDS */
+
+        if (right) {
+          const cards =
+            Array.from(
+              right.children,
+            );
+
+
+          const tilts = [
+            "-1.8deg",
+            "1.8deg",
+            "-1.4deg",
+            "1.4deg",
+          ];
+
+
+          cards.forEach(
+            (card, index) => {
+              card.classList.add(
+                "help-hero-card",
+              );
+
+
+              card.style.setProperty(
+                "--help-card-delay",
+                `${430 + index * 90}ms`,
+              );
+
+
+              card.style.setProperty(
+                "--help-hero-tilt",
+                tilts[index] || "0deg",
+              );
+
+
+              /*
+                Hero cards are already visible
+                on page load, so activate them
+                immediately after preparation.
+              */
+
+              requestAnimationFrame(() => {
+                card.classList.add(
+                  "help-visible",
+                );
+              });
+            },
+          );
+        }
+      }
+
+
+      /* ==========================================
+        EXISTING HELP REVEALS
+
+        Every element waits until IT
+        reaches the viewport.
+      ========================================== */
+
+      function setupHelpIndividualReveals() {
+        const elements =
+          document.querySelectorAll(
+            ".help-reveal, " +
+            ".help-reveal-left, " +
+            ".help-reveal-right",
+          );
+
+
+        elements.forEach((element) => {
+
+          /*
+            FAQ entries get their own
+            animation system below.
+          */
+
+          if (
+            element.matches("details")
+          ) {
+            return;
+          }
+
+
+          let delay = 0;
+
+
+          if (
+            element.classList.contains(
+              "help-delay-1",
+            )
+          ) {
+            delay = 70;
+          }
+
+
+          else if (
+            element.classList.contains(
+              "help-delay-2",
+            )
+          ) {
+            delay = 140;
+          }
+
+
+          else if (
+            element.classList.contains(
+              "help-delay-3",
+            )
+          ) {
+            delay = 210;
+          }
+
+
+          else if (
+            element.classList.contains(
+              "help-delay-4",
+            )
+          ) {
+            delay = 280;
+          }
+
+
+          observeHelpElement(
+            element,
+            delay,
+          );
+        });
+      }
+
+
+      /* ==========================================
+        FAQ
+        EACH QUESTION WAITS FOR VIEWPORT
+      ========================================== */
+
+      function setupHelpFaqMotion() {
+        const faqItems =
+          Array.from(
+            document.querySelectorAll(
+              "details",
+            ),
+          );
+
+
+        if (!faqItems.length) {
+          return;
+        }
+
+
+        const observer =
+          new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                  return;
+                }
+
+
+                entry.target.classList.add(
+                  "help-faq-visible",
+                );
+
+
+                observer.unobserve(
+                  entry.target,
+                );
+              });
+            },
+            {
+              /*
+                Same trigger family as
+                Home report cards.
+              */
+
+              threshold: 0.25,
+
+              rootMargin:
+                "0px 0px -45px 0px",
+            },
+          );
+
+
+        faqItems.forEach(
+          (item, index) => {
+            item.classList.add(
+              "help-faq-item",
+            );
+
+
+            /*
+              They are vertically stacked,
+              so each one primarily waits
+              for its own viewport entry.
+            */
+
+            item.style.setProperty(
+              "--help-faq-delay",
+              `${(index % 2) * 70}ms`,
+            );
+
+
+            observer.observe(item);
+          },
+        );
+      }
+
+      /* ==========================================
+        EXTRA HELP REVEALS
+
+        Adds motion to smaller elements
+        that do not already have one.
+      ========================================== */
+
+      function setupHelpExtraReveals() {
+
+        /* ========================================
+          SMALL DETAIL OBSERVER
+        ======================================== */
+
+        const detailObserver =
+          new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                  return;
+                }
+
+
+                entry.target.classList.add(
+                  "help-detail-visible",
+                );
+
+
+                detailObserver.unobserve(
+                  entry.target,
+                );
+              });
+            },
+            {
+              threshold: 0.28,
+
+              rootMargin:
+                "0px 0px -45px 0px",
+            },
+          );
+
+
+        function prepareDetail(
+          element,
+          delay = 0,
+        ) {
+          if (!element) return;
+
+
+          element.classList.add(
+            "help-detail-reveal",
+          );
+
+
+          element.style.setProperty(
+            "--help-detail-delay",
+            `${delay}ms`,
+          );
+
+
+          detailObserver.observe(
+            element,
+          );
+        }
+
+
+        /* ========================================
+          REPORTING BUTTONS
+        ======================================== */
+
+        const reportingButtons =
+          document.querySelectorAll(
+            "#reporting .mt-6.flex > a",
+          );
+
+
+        reportingButtons.forEach(
+          (button, index) => {
+            prepareDetail(
+              button,
+              index * 90,
+            );
+          },
+        );
+
+
+        /* ========================================
+          GUEST TRACKING BUTTON
+        ======================================== */
+
+        const guestButton =
+          document.querySelector(
+            '#guest-tracking a[href="guest-tracking.html"]',
+          );
+
+
+        prepareDetail(
+          guestButton,
+          90,
+        );
+
+
+        /* ========================================
+          RETURN — PRIVATE BY DESIGN BOX
+        ======================================== */
+
+        const returnPrivateBox =
+          document.querySelector(
+            "#return .help-reveal-left " +
+            ".mt-6.rounded-2xl",
+          );
+
+
+        prepareDetail(
+          returnPrivateBox,
+          100,
+        );
+
+
+        /* ========================================
+          RETURN CONFIRMATION STEPS
+
+          1
+          2
+          3
+          ✓
+
+          Each waits until IT reaches view.
+        ======================================== */
+
+        const returnSteps =
+          document.querySelectorAll(
+            "#return " +
+            ".help-reveal-right " +
+            ".mt-6.space-y-3 > div",
+          );
+
+
+        returnSteps.forEach(
+          (step, index) => {
+            prepareDetail(
+              step,
+              index * 85,
+            );
+          },
+        );
+
+
+        /* ========================================
+          CONTINUE WITH YOUR CASE
+        ======================================== */
+
+        const continueHeading =
+          Array.from(
+            document.querySelectorAll(
+              "main h3",
+            ),
+          ).find((heading) =>
+            heading.textContent
+              .trim()
+              .includes(
+                "Continue with your case",
+              ),
+          );
+
+
+        const continueCard =
+          continueHeading?.closest(
+            ".help-reveal",
+          );
+
+
+        if (continueCard) {
+
+          const optionsWrapper =
+            continueCard.querySelector(
+              ".grid.gap-4.p-6",
+            );
+
+
+          const options =
+            optionsWrapper
+              ? Array.from(
+                  optionsWrapper.children,
+                )
+              : [];
+
+
+          /*
+            First = Guest
+            Second = ACT Account
+          */
+
+          if (options[0]) {
+            options[0].classList.add(
+              "help-case-option",
+            );
+
+
+            options[0].dataset.helpCase =
+              "guest";
+          }
+
+
+          if (options[1]) {
+            options[1].classList.add(
+              "help-case-option",
+            );
+
+
+            options[1].dataset.helpCase =
+              "account";
+          }
+
+
+          /* ======================================
+            OBSERVE BOTH OPTIONS INDIVIDUALLY
+          ====================================== */
+
+          const caseObserver =
+            new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) {
+                    return;
+                  }
+
+
+                  entry.target.classList.add(
+                    "help-case-visible",
+                  );
+
+
+                  caseObserver.unobserve(
+                    entry.target,
+                  );
+                });
+              },
+              {
+                threshold: 0.3,
+
+                rootMargin:
+                  "0px 0px -45px 0px",
+              },
+            );
+
+
+          options.forEach((option) => {
+            caseObserver.observe(
+              option,
+            );
           });
-        },
-        {
-          threshold: 0.16,
-        },
-      );
+        }
+      }
 
-      helpScenes.forEach((scene) => {
-        helpSceneObserver.observe(scene);
-      });
+
+      /* ==========================================
+        MOBILE MENU
+      ========================================== */
+
+      if (
+        menuButton &&
+        mobileMenu &&
+        !helpReducedMotion
+      ) {
+        menuButton.addEventListener(
+          "click",
+          () => {
+            requestAnimationFrame(() => {
+
+              if (
+                mobileMenu.classList
+                  .contains("hidden")
+              ) {
+                return;
+              }
+
+
+              mobileMenu.classList.remove(
+                "help-mobile-menu-enter",
+              );
+
+
+              void mobileMenu.offsetWidth;
+
+
+              mobileMenu.classList.add(
+                "help-mobile-menu-enter",
+              );
+            });
+          },
+        );
+      }
+
+
+      /* ==========================================
+        START
+      ========================================== */
+
+      if (!helpReducedMotion) {
+
+        setupHelpHeroMotion();
+
+
+        setupHelpIndividualReveals();
+
+
+        setupHelpFaqMotion();
+
+
+        setupHelpExtraReveals();
+      }
     </script>
   </body>
 </html>

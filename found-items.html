@@ -143,7 +143,343 @@
           animation-iteration-count: 1 !important;
         }
       }
+
+      /* =========================================================
+        FOUND ITEMS PAGE — PREMIUM MOTION
+      ========================================================= */
+
+      :root {
+        --found-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* =========================================================
+        HERO
+      ========================================================= */
+
+      .found-hero-piece {
+        opacity: 0;
+
+        animation: foundHeroPieceIn 0.85s var(--found-motion-ease)
+          var(--found-delay, 0ms) forwards;
+      }
+
+      @keyframes foundHeroPieceIn {
+        from {
+          opacity: 0;
+
+          translate: -36px 12px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      .found-guide-panel {
+        opacity: 0;
+
+        animation: foundGuidePanelIn 0.95s var(--found-motion-ease) 220ms
+          forwards;
+      }
+
+      @keyframes foundGuidePanelIn {
+        from {
+          opacity: 0;
+
+          translate: 50px 0;
+
+          scale: 0.97;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+        }
+      }
+
+      .found-guide-step {
+        opacity: 0;
+
+        translate: 22px 0;
+
+        animation: foundGuideStepIn 0.65s var(--found-motion-ease)
+          var(--guide-delay, 0ms) forwards;
+      }
+
+      @keyframes foundGuideStepIn {
+        from {
+          opacity: 0;
+
+          translate: 22px 0;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        FILTER PANEL
+      ========================================================= */
+
+      .found-filter-panel {
+        opacity: 0;
+
+        translate: 0 34px;
+
+        scale: 0.985;
+
+        clip-path: inset(0 0 12% 0 round 26px);
+
+        transition:
+          opacity 0.85s var(--found-motion-ease),
+          translate 0.9s var(--found-motion-ease),
+          scale 0.9s var(--found-motion-ease),
+          clip-path 0.95s var(--found-motion-ease);
+      }
+
+      .found-filter-panel.found-visible {
+        opacity: 1;
+
+        translate: 0 0;
+
+        scale: 1;
+
+        clip-path: inset(0 0 0 0 round 26px);
+      }
+
+      /* =========================================================
+        RESULTS HEADING
+      ========================================================= */
+
+      .found-results-header {
+        opacity: 0;
+
+        translate: -34px 0;
+
+        transition:
+          opacity 0.8s ease,
+          translate 0.85s var(--found-motion-ease);
+      }
+
+      .found-results-header.found-visible {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      /* =========================================================
+        REPORT CARDS — EXACT SAME ANIMATION AS HOME
+      ========================================================= */
+
+      .found-report-prep {
+        opacity: 0;
+
+        translate: 0 30px;
+
+        scale: 0.955;
+
+        filter: blur(4px);
+      }
+
+      .found-report-prep.found-report-visible {
+        animation: foundReportEnter 0.72s cubic-bezier(0.22, 1, 0.36, 1)
+          var(--found-card-delay, 0ms) both;
+      }
+
+      @keyframes foundReportEnter {
+        0% {
+          opacity: 0;
+
+          translate: 0 30px;
+
+          scale: 0.955;
+
+          filter: blur(4px);
+        }
+
+        65% {
+          opacity: 1;
+
+          translate: 0 -4px;
+
+          scale: 1.018;
+
+          filter: blur(0);
+        }
+
+        100% {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+
+          filter: blur(0);
+        }
+      }
+
+      /* =========================================================
+        EMPTY STATE
+      ========================================================= */
+
+      .found-empty-enter {
+        animation: foundEmptyIn 0.65s var(--found-motion-ease) both;
+      }
+
+      @keyframes foundEmptyIn {
+        from {
+          opacity: 0;
+
+          translate: 0 20px;
+
+          scale: 0.98;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+
+          scale: 1;
+        }
+      }
+
+      /* =========================================================
+        HELP CTA — INWARD
+      ========================================================= */
+
+      .found-help-card {
+        opacity: 0;
+
+        transition: opacity 0.75s ease;
+
+        overflow: hidden;
+      }
+
+      .found-help-card.found-visible {
+        opacity: 1;
+      }
+
+      .found-help-text {
+        opacity: 0;
+
+        translate: -42px 0;
+
+        transition:
+          opacity 0.75s ease,
+          translate 0.9s var(--found-motion-ease);
+      }
+
+      .found-help-card.found-visible .found-help-text {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      .found-help-action {
+        opacity: 0;
+
+        translate: 42px 0;
+
+        transition:
+          opacity 0.75s ease,
+          translate 0.9s var(--found-motion-ease);
+
+        transition-delay: 90ms;
+      }
+
+      .found-help-card.found-visible .found-help-action {
+        opacity: 1;
+
+        translate: 0 0;
+      }
+
+      .found-help-accent {
+        transform: scaleY(0);
+
+        transform-origin: bottom;
+
+        transition: transform 0.7s var(--found-motion-ease);
+
+        transition-delay: 220ms;
+      }
+
+      .found-help-card.found-visible .found-help-accent {
+        transform: scaleY(1);
+      }
+
+      /* =========================================================
+        MOBILE MENU
+      ========================================================= */
+
+      .found-mobile-menu-enter {
+        animation: foundMobileMenuIn 0.25s ease-out both;
+      }
+
+      @keyframes foundMobileMenuIn {
+        from {
+          opacity: 0;
+
+          translate: 0 -8px;
+        }
+
+        to {
+          opacity: 1;
+
+          translate: 0 0;
+        }
+      }
+
+      /* =========================================================
+        ACCESSIBILITY
+      ========================================================= */
+
+      @media (prefers-reduced-motion: reduce) {
+        .found-hero-piece,
+        .found-guide-panel,
+        .found-guide-step,
+        .found-filter-panel,
+        .found-results-header,
+        .found-report-prep,
+        .found-empty-enter,
+        .found-help-card,
+        .found-help-text,
+        .found-help-action,
+        .found-mobile-menu-enter {
+          opacity: 1 !important;
+
+          translate: none !important;
+
+          scale: 1 !important;
+
+          transform: none !important;
+
+          filter: none !important;
+
+          clip-path: none !important;
+
+          animation: none !important;
+
+          transition: none !important;
+        }
+
+        .found-help-accent {
+          transform: none !important;
+
+          transition: none !important;
+        }
+      }
     </style>
+
+    <link rel="stylesheet" href="animations.css" />
   </head>
 
   <body class="bg-white text-ink antialiased">
@@ -1354,210 +1690,279 @@
         foundReportsGrid.innerHTML = visibleReports
           .map(
             (report) => `
-                <article
-                  class="report-card group overflow-hidden rounded-2xl
-                         border border-slate-200 bg-white
-                         shadow-[0_8px_25px_rgba(23,32,51,0.06)]
-                         transition duration-300
-                         hover:-translate-y-1
-                         hover:border-actblue/20
-                         hover:shadow-[0_18px_40px_rgba(12,46,138,0.11)]"
+
+              <article
+                class="report-card group overflow-hidden rounded-2xl
+                      border border-slate-200 bg-white
+                      shadow-[0_8px_25px_rgba(23,32,51,0.06)]
+                      transition duration-300
+                      hover:-translate-y-1
+                      hover:border-actblue/20
+                      hover:shadow-[0_18px_40px_rgba(12,46,138,0.11)]"
+              >
+
+                <a
+                  href="item-details.html?id=${encodeURIComponent(report.id)}"
+                  class="block"
                 >
-                  <a
-                    href="item-details.html?id=${encodeURIComponent(report.id)}"
-                    class="block"
+
+                  <!-- IMAGE -->
+                  <div
+                    class="relative aspect-[4/3] overflow-hidden bg-slate-100"
                   >
+
+                    <img
+                      src="${reportImage(report)}"
+                      alt="${escapeHtml(report.item)}"
+                      class="h-full w-full object-cover
+                            transition duration-500
+                            group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+
+
                     <div
-                      class="relative aspect-[4/3] overflow-hidden bg-slate-100"
+                      class="pointer-events-none absolute inset-x-0 bottom-0
+                            h-20 bg-gradient-to-t
+                            from-slate-950/25 to-transparent"
+                    ></div>
+
+
+                    <!-- FOUND BADGE -->
+                    <span
+                      class="absolute left-3 top-3 inline-flex items-center gap-1.5
+                            rounded-full bg-actyellow px-3 py-1.5
+                            text-[10px] font-black uppercase
+                            tracking-[0.13em] text-actblue shadow-sm"
                     >
-                      <img
-                        src="${reportImage(report)}"
-                        alt="${escapeHtml(report.item)}"
-                        class="h-full w-full object-cover
-                               transition duration-500
-                               group-hover:scale-[1.04]"
-                        loading="lazy"
-                      />
-
-                      <div
-                        class="pointer-events-none absolute inset-x-0
-                               bottom-0 h-20 bg-gradient-to-t
-                               from-slate-950/25 to-transparent"
-                      ></div>
 
                       <span
-                        class="absolute left-3 top-3 inline-flex items-center
-                               gap-1.5 rounded-full bg-actyellow px-3 py-1.5
-                               text-[10px] font-black uppercase
-                               tracking-[0.13em] text-actblue shadow-sm"
-                      >
-                        <span
-                          class="h-1.5 w-1.5 rounded-full bg-actblue"
-                        ></span>
+                        class="h-1.5 w-1.5 rounded-full bg-actblue"
+                      ></span>
 
-                        Found
-                      </span>
+                      Found
+
+                    </span>
+
+
+                    <!-- STATUS -->
+                    <span
+                      class="absolute right-3 top-3
+                            inline-flex items-center gap-1.5
+                            rounded-full border border-white/40
+                            bg-white/95 px-3 py-1.5
+                            text-[10px] font-black uppercase
+                            tracking-[0.12em] text-actblue
+                            shadow-sm backdrop-blur"
+                    >
 
                       <span
-                        class="absolute right-3 top-3 inline-flex items-center
-                               gap-1.5 rounded-full border border-white/40
-                               bg-white/95 px-3 py-1.5
-                               text-[10px] font-black uppercase
-                               tracking-[0.12em] text-actblue
-                               shadow-sm backdrop-blur"
-                      >
-                        <span
-                          class="h-1.5 w-1.5 rounded-full bg-emerald-500"
-                        ></span>
+                        class="h-1.5 w-1.5 rounded-full bg-emerald-500"
+                      ></span>
 
-                        Active
-                      </span>
-                    </div>
+                      Active
 
-                    <div class="p-5">
-                      <div
-                        class="flex items-center justify-between gap-3"
-                      >
-                        <p
-                          class="text-[10px] font-black uppercase
-                                 tracking-[0.15em] text-actblue"
-                        >
-                          ${escapeHtml(report.category)}
-                        </p>
+                    </span>
 
-                        <span
-                          class="max-w-[100px] truncate text-[10px]
-                                 font-bold tracking-wide text-slate-300"
-                          title="${escapeHtml(report.id)}"
-                        >
-                          #${escapeHtml(report.id)}
-                        </span>
-                      </div>
+                  </div>
 
-                      <h3
-                        class="mt-2 line-clamp-2 text-xl font-black
-                          leading-6 tracking-tight text-slate-900 transition
-                          group-hover:text-actblue"
-                      >
-                        ${escapeHtml(report.item)}
-                      </h3>
+
+                  <!-- CONTENT -->
+                  <div class="p-5">
+
+                    <div
+                      class="flex items-center justify-between gap-3"
+                    >
 
                       <p
-                        class="mt-2 line-clamp-2 text-xs font-medium leading-5
-                          text-slate-400"
+                        class="text-[10px] font-black uppercase
+                              tracking-[0.15em] text-actblue"
                       >
-                        ${escapeHtml(report.description)}
+                        ${escapeHtml(report.category)}
                       </p>
 
-                      <div
-                        class="mt-5 grid gap-2.5 border-t
-                               border-slate-100 pt-4"
+
+                      <span
+                        class="text-[10px] font-bold
+                              tracking-wide text-slate-300"
+                        title="${escapeHtml(report.id)}"
                       >
-                        <div
-                          class="flex min-w-0 items-center gap-2.5
-                                 text-xs font-semibold text-slate-500"
-                        >
-                          <span
-                            class="flex h-7 w-7 shrink-0 items-center
-                                   justify-center rounded-lg
-                                   bg-actblue/[0.05] text-actblue"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-3.5 w-3.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"
-                              />
-                              <circle cx="12" cy="9" r="2.2" />
-                            </svg>
-                          </span>
+                        #${escapeHtml(report.id)}
+                      </span>
 
-                          <span class="truncate">
-                            ${escapeHtml(report.location)}
-                          </span>
-                        </div>
+                    </div>
 
-                        <div
-                          class="flex items-center gap-2.5
-                                 text-xs font-semibold text-slate-500"
-                        >
-                          <span
-                            class="flex h-7 w-7 shrink-0 items-center
-                                   justify-center rounded-lg
-                                   bg-actyellow/[0.15] text-actblue"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-3.5 w-3.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                            >
-                              <rect
-                                x="3"
-                                y="4"
-                                width="18"
-                                height="17"
-                                rx="2"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                d="M7 2v4M17 2v4M3 9h18"
-                              />
-                            </svg>
-                          </span>
 
-                          <span>
-                            ${escapeHtml(report.date)}
-                          </span>
-                        </div>
-                      </div>
+                    <!-- ITEM -->
+                    <h3
+                      class="mt-2 line-clamp-2
+                            text-lg font-black leading-6
+                            text-slate-900
+                            transition
+                            group-hover:text-actblue"
+                    >
+                      ${escapeHtml(report.item)}
+                    </h3>
+
+
+                    <!-- DESCRIPTION -->
+                    <p
+                      class="mt-2 line-clamp-2
+                            text-xs leading-5 text-slate-500"
+                    >
+                      ${escapeHtml(report.description)}
+                    </p>
+
+
+                    <!-- DETAILS -->
+                    <div
+                      class="mt-5 grid gap-2.5
+                            border-t border-slate-100 pt-4"
+                    >
 
                       <div
-                        class="mt-5 flex items-center justify-between
-                               border-t border-slate-100 pt-4"
+                        class="flex min-w-0 items-center gap-2.5
+                              text-xs font-semibold text-slate-500"
                       >
-                        <span class="text-xs font-black text-actblue">
-                          View details
-                        </span>
 
                         <span
-                          class="flex h-9 w-9 items-center justify-center
-                                rounded-full bg-actblue/[0.06] text-actblue"
-                                 transition duration-300
-                                 group-hover:bg-actblue
-                                 group-hover:text-white"
+                          class="flex h-7 w-7 shrink-0 items-center
+                                justify-center rounded-lg
+                                bg-actblue/5 text-actblue"
                         >
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 transition-transform
-                                   duration-300
-                                   group-hover:translate-x-0.5"
+                            class="h-3.5 w-3.5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
+                            stroke-width="1.8"
                           >
+
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              d="m9 18 6-6-6-6"
+                              d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"
                             />
+
+                            <circle
+                              cx="12"
+                              cy="9"
+                              r="2.2"
+                            />
+
                           </svg>
+
                         </span>
+
+
+                        <span class="truncate">
+                          ${escapeHtml(report.location)}
+                        </span>
+
                       </div>
+
+
+                      <div
+                        class="flex items-center gap-2.5
+                              text-xs font-semibold text-slate-500"
+                      >
+
+                        <span
+                          class="flex h-7 w-7 shrink-0 items-center
+                                justify-center rounded-lg
+                                bg-actyellow/[0.15] text-actblue"
+                        >
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3.5 w-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                          >
+
+                            <rect
+                              x="3"
+                              y="4"
+                              width="18"
+                              height="17"
+                              rx="2"
+                            />
+
+                            <path
+                              stroke-linecap="round"
+                              d="M7 2v4M17 2v4M3 9h18"
+                            />
+
+                          </svg>
+
+                        </span>
+
+
+                        <span>
+                          ${escapeHtml(report.date)}
+                        </span>
+
+                      </div>
+
                     </div>
-                  </a>
-                </article>
-              `,
+
+
+                    <!-- VIEW REPORT -->
+                    <div
+                      class="mt-5 flex items-center justify-between
+                            border-t border-slate-100 pt-4"
+                    >
+
+                      <span
+                        class="text-xs font-bold text-slate-400"
+                      >
+                        View report
+                      </span>
+
+
+                      <span
+                        class="flex h-9 w-9 items-center justify-center
+                              rounded-full bg-slate-50
+                              text-actblue
+                              transition duration-300
+                              group-hover:bg-actblue
+                              group-hover:text-white"
+                      >
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4
+                                transition-transform duration-300
+                                group-hover:translate-x-0.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m9 18 6-6-6-6"
+                          />
+
+                        </svg>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </a>
+
+              </article>
+
+            `,
           )
           .join("");
       }
@@ -1649,11 +2054,350 @@
       });
 
       /* ==========================================
+        FOUND ITEMS PAGE — PREMIUM MOTION
+      ========================================== */
+
+      const foundReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      /* ==========================================
+        GENERAL SCROLL OBSERVER
+      ========================================== */
+
+      const foundScrollObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("found-visible");
+
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.18,
+
+          rootMargin: "0px 0px -55px 0px",
+        },
+      );
+
+      function observeFoundElement(element) {
+        if (!element) return;
+
+        foundScrollObserver.observe(element);
+      }
+
+      /* ==========================================
+        HERO
+      ========================================== */
+
+      function setupFoundHeroMotion() {
+        const directoryGrid = document.querySelector(".directory-grid");
+
+        const heroSection = directoryGrid?.closest("section");
+
+        if (!heroSection) return;
+
+        const heroLayout = heroSection.querySelector(
+          ".relative.mx-auto.max-w-7xl .grid",
+        );
+
+        if (!heroLayout) return;
+
+        const heroLeft = heroLayout.children[0];
+
+        const heroRight = heroLayout.children[1];
+
+        if (heroLeft) {
+          Array.from(heroLeft.children).forEach((element, index) => {
+            element.classList.add("found-hero-piece");
+
+            element.style.setProperty("--found-delay", `${90 + index * 110}ms`);
+          });
+        }
+
+        const guidePanel = heroRight?.firstElementChild;
+
+        if (!guidePanel) return;
+
+        guidePanel.classList.add("found-guide-panel");
+
+        const guideSteps = guidePanel.querySelectorAll(".mt-5.grid > div");
+
+        guideSteps.forEach((step, index) => {
+          step.classList.add("found-guide-step");
+
+          step.style.setProperty("--guide-delay", `${600 + index * 120}ms`);
+        });
+      }
+
+      /* ==========================================
+        FILTER PANEL + RESULTS HEADER
+      ========================================== */
+
+      function setupFoundDirectoryMotion() {
+        const directorySection = foundReportsGrid?.closest("section");
+
+        if (!directorySection) return;
+
+        const wrapper = directorySection.querySelector(
+          ":scope > div.relative.mx-auto",
+        );
+
+        if (!wrapper) return;
+
+        const filterPanel = wrapper.children[0];
+
+        const resultsHeader = wrapper.children[1];
+
+        if (filterPanel) {
+          filterPanel.classList.add("found-filter-panel");
+
+          observeFoundElement(filterPanel);
+        }
+
+        if (resultsHeader) {
+          resultsHeader.classList.add("found-results-header");
+
+          observeFoundElement(resultsHeader);
+        }
+      }
+
+      /* ==========================================
+        REPORT CARD OBSERVER
+        SAME AS HOME
+      ========================================== */
+
+      let foundReportObserver = null;
+
+      function getFoundReportObserver() {
+        if (foundReportObserver) {
+          return foundReportObserver;
+        }
+
+        foundReportObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
+
+              const card = entry.target;
+
+              card.classList.add("found-report-visible");
+
+              foundReportObserver.unobserve(card);
+            });
+          },
+          {
+            /*
+                Exact same viewport trigger
+                used by Home.
+              */
+
+            threshold: 0.25,
+
+            rootMargin: "0px 0px -45px 0px",
+          },
+        );
+
+        return foundReportObserver;
+      }
+
+      /* ==========================================
+        PREPARE REPORT CARDS
+      ========================================== */
+
+      function prepareFoundReportCards() {
+        if (!foundReportsGrid) return;
+
+        const cards = Array.from(
+          foundReportsGrid.querySelectorAll(".report-card"),
+        );
+
+        const observer = getFoundReportObserver();
+
+        /*
+          Found Items grid:
+
+          mobile = 1
+          sm     = 2
+          lg     = 3
+          xl     = 4
+        */
+
+        let columns = 1;
+
+        if (window.innerWidth >= 1280) {
+          columns = 4;
+        } else if (window.innerWidth >= 1024) {
+          columns = 3;
+        } else if (window.innerWidth >= 640) {
+          columns = 2;
+        }
+
+        cards.forEach((card, index) => {
+          card.classList.remove("found-report-visible");
+
+          card.classList.add("found-report-prep");
+
+          const positionInRow = index % columns;
+
+          /*
+              Same Home stagger.
+            */
+
+          card.style.setProperty(
+            "--found-card-delay",
+            `${positionInRow * 90}ms`,
+          );
+
+          /*
+              Every card waits until
+              IT reaches the viewport.
+            */
+
+          observer.observe(card);
+        });
+      }
+
+      /* ==========================================
+        WATCH DYNAMIC REPORT GRID
+      ========================================== */
+
+      function setupFoundReportWatcher() {
+        if (!foundReportsGrid) return;
+
+        const observer = new MutationObserver(() => {
+          requestAnimationFrame(() => {
+            prepareFoundReportCards();
+          });
+        });
+
+        observer.observe(foundReportsGrid, {
+          childList: true,
+        });
+      }
+
+      /* ==========================================
+        EMPTY STATE
+      ========================================== */
+
+      function setupFoundEmptyStateMotion() {
+        if (!emptyState) return;
+
+        const observer = new MutationObserver(() => {
+          if (emptyState.classList.contains("hidden")) {
+            return;
+          }
+
+          emptyState.classList.remove("found-empty-enter");
+
+          void emptyState.offsetWidth;
+
+          emptyState.classList.add("found-empty-enter");
+        });
+
+        observer.observe(emptyState, {
+          attributes: true,
+
+          attributeFilter: ["class"],
+        });
+      }
+
+      /* ==========================================
+        HELP CTA
+      ========================================== */
+
+      function setupFoundHelpMotion() {
+        const helpLabel = Array.from(document.querySelectorAll("main p")).find(
+          (element) =>
+            element.textContent.includes("Found something on campus?"),
+        );
+
+        const helpSection = helpLabel?.closest("section");
+
+        if (!helpSection) return;
+
+        const helpCard = helpSection.querySelector(
+          "div.relative.overflow-hidden",
+        );
+
+        if (!helpCard) return;
+
+        helpCard.classList.add("found-help-card");
+
+        const helpLayout = helpCard.querySelector(".flex.flex-col");
+
+        if (helpLayout) {
+          const helpText = helpLayout.children[0];
+
+          const helpAction = helpLayout.children[1];
+
+          helpText?.classList.add("found-help-text");
+
+          helpAction?.classList.add("found-help-action");
+        }
+
+        const accent = helpCard.querySelector(":scope > div.absolute");
+
+        accent?.classList.add("found-help-accent");
+
+        observeFoundElement(helpCard);
+      }
+
+      /* ==========================================
+        MOBILE MENU
+      ========================================== */
+
+      if (menuButton && mobileMenu && !foundReducedMotion) {
+        menuButton.addEventListener("click", () => {
+          requestAnimationFrame(() => {
+            if (mobileMenu.classList.contains("hidden")) {
+              return;
+            }
+
+            mobileMenu.classList.remove("found-mobile-menu-enter");
+
+            void mobileMenu.offsetWidth;
+
+            mobileMenu.classList.add("found-mobile-menu-enter");
+          });
+        });
+      }
+
+      /* ==========================================
+        START FOUND ITEMS MOTION
+      ========================================== */
+
+      if (!foundReducedMotion) {
+        /*
+          Must run BEFORE renderReports()
+          creates the cards.
+        */
+
+        setupFoundReportWatcher();
+
+        setupFoundHeroMotion();
+
+        setupFoundDirectoryMotion();
+
+        setupFoundEmptyStateMotion();
+
+        setupFoundHelpMotion();
+      }
+
+      /* ==========================================
            INITIAL RENDER
       ========================================== */
       buildLocationOptions();
       renderCategoryFilters();
       renderReports();
     </script>
+
+    <script src="animations.js"></script>
   </body>
 </html>

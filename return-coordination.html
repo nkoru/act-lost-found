@@ -77,6 +77,8 @@
         );
       }
     </style>
+
+    <link rel="stylesheet" href="animations.css" />
   </head>
   <body class="bg-slate-50 text-ink antialiased">
     <header
@@ -741,7 +743,7 @@
               (viewerRole === "admin" && message.senderRole === "admin");
 
             const safeSender = escapeHTML(
-              message.senderName || message.senderRole || "Participant"
+              message.senderName || message.senderRole || "Participant",
             );
 
             const safeMessage = escapeHTML(message.text || "");
@@ -934,5 +936,7 @@
         renderCase();
       });
     </script>
+
+    <script src="animations.js"></script>
   </body>
 </html>
