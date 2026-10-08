@@ -92,6 +92,80 @@
       }
     </style>
 
+    <style>
+      .match-section-reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .match-section-reveal.match-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .match-source-reveal {
+        opacity: 0;
+        transform: translateX(-22px);
+        transition:
+          opacity 0.6s ease 0.12s,
+          transform 0.6s ease 0.12s;
+      }
+
+      .match-visible .match-source-reveal {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .match-result-card {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s ease var(--match-delay),
+          transform 0.6s ease var(--match-delay),
+          box-shadow 0.25s ease,
+          background-color 0.25s ease;
+      }
+
+      .match-result-card.match-card-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .match-score-bar {
+        transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .match-reason {
+        opacity: 0;
+        transform: translateY(5px);
+        animation: matchReasonReveal 0.4s ease forwards;
+        animation-delay: calc(0.45s + var(--reason-delay));
+      }
+
+      @keyframes matchReasonReveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .match-section-reveal,
+        .match-source-reveal,
+        .match-result-card,
+        .match-score-bar,
+        .match-reason {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+
     <link rel="stylesheet" href="animations.css" />
   </head>
 
@@ -759,6 +833,92 @@
       </section>
 
       <!-- =====================================================
+     POSSIBLE MATCHES
+====================================================== -->
+      <section
+        id="possibleMatchSection"
+        class="mx-auto hidden max-w-7xl px-5 pb-10 sm:px-7 lg:px-8"
+      >
+        <div
+          id="possibleMatchShell"
+          class="match-section-reveal overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_18px_55px_rgba(23,32,51,0.08)]"
+        >
+          <div class="h-1.5 w-full bg-actyellow"></div>
+
+          <div class="p-6 sm:p-8">
+            <!-- HEADER -->
+            <div
+              class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
+            >
+              <div class="max-w-3xl">
+                <div
+                  class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                >
+                  <span
+                    class="flex h-9 w-9 items-center justify-center rounded-xl bg-actyellow text-actblue shadow-sm"
+                  >
+                    ⚡
+                  </span>
+
+                  Rule-based matching
+                </div>
+
+                <h2
+                  id="possibleMatchTitle"
+                  class="mt-4 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl"
+                >
+                  Possible match detected
+                </h2>
+
+                <p
+                  id="possibleMatchSubtitle"
+                  class="mt-2 max-w-2xl text-sm font-medium leading-7 text-slate-500"
+                >
+                  The system compared this report with other active reports.
+                </p>
+              </div>
+
+              <div
+                id="possibleMatchCount"
+                class="shrink-0 rounded-full bg-actblue/[0.07] px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+              >
+                0 matches
+              </div>
+            </div>
+
+            <!-- CURRENT REPORT -->
+            <div
+              id="matchSourceCard"
+              class="match-source-reveal mt-7 rounded-[24px] border border-slate-200 bg-slate-50/80 p-5 sm:p-6"
+            ></div>
+
+            <!-- MATCHES -->
+            <div
+              id="possibleMatchList"
+              class="mt-5 grid gap-5 lg:grid-cols-2"
+            ></div>
+
+            <!-- NOTE -->
+            <div
+              class="mt-6 flex gap-3 rounded-2xl border border-actyellow/30 bg-actyellow/[0.07] p-4"
+            >
+              <div
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-actyellow text-xs font-black text-actblue"
+              >
+                i
+              </div>
+
+              <p class="text-xs font-semibold leading-6 text-slate-600">
+                A possible match is only a recommendation. The system does not
+                automatically decide ownership. A claim and verification are
+                still required before an item can be returned.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
            SAFETY NOTE
       ====================================================== -->
       <section
@@ -966,6 +1126,7 @@
          SESSION
     ====================================================== -->
     <script src="session.js"></script>
+    <script src="workflow.js"></script>
 
     <!-- =====================================================
          ITEM DETAILS JS
@@ -1183,6 +1344,24 @@
 
       const primaryAction = document.getElementById("primaryAction");
 
+      const possibleMatchSection = document.getElementById(
+        "possibleMatchSection",
+      );
+
+      const possibleMatchShell = document.getElementById("possibleMatchShell");
+
+      const possibleMatchTitle = document.getElementById("possibleMatchTitle");
+
+      const possibleMatchSubtitle = document.getElementById(
+        "possibleMatchSubtitle",
+      );
+
+      const matchSourceCard = document.getElementById("matchSourceCard");
+
+      const possibleMatchList = document.getElementById("possibleMatchList");
+
+      const possibleMatchCount = document.getElementById("possibleMatchCount");
+
       /* ==========================================
          HELPERS
       ========================================== */
@@ -1193,50 +1372,6 @@
           .replaceAll(">", "&gt;")
           .replaceAll('"', "&quot;")
           .replaceAll("'", "&#039;");
-      }
-
-      function fallbackImage() {
-        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1200"
-            height="900"
-            viewBox="0 0 1200 900"
-          >
-            <rect
-              width="1200"
-              height="900"
-              fill="#f1f5f9"
-            />
-
-            <circle
-              cx="600"
-              cy="370"
-              r="90"
-              fill="#0c2e8a"
-              opacity=".07"
-            />
-
-            <path
-              d="M545 370h110M600 315v110"
-              stroke="#0c2e8a"
-              stroke-width="18"
-              stroke-linecap="round"
-            />
-
-            <text
-              x="600"
-              y="555"
-              text-anchor="middle"
-              font-family="Arial, sans-serif"
-              font-size="40"
-              font-weight="700"
-              fill="#64748b"
-            >
-              No item photo
-            </text>
-          </svg>
-        `)}`;
       }
 
       function formatTime(value) {
@@ -1257,6 +1392,298 @@
         const displayHour = hour % 12 || 12;
 
         return `${displayHour}:${minute} ${suffix}`;
+      }
+
+      function renderPossibleMatches(report) {
+        if (
+          !window.ACTWorkflow ||
+          typeof ACTWorkflow.possibleMatches !== "function"
+        ) {
+          possibleMatchSection.classList.add("hidden");
+          return;
+        }
+
+        const matches = ACTWorkflow.possibleMatches(report);
+
+        if (!matches.length) {
+          possibleMatchSection.classList.add("hidden");
+          possibleMatchList.innerHTML = "";
+          return;
+        }
+
+        const reportType = String(report.type || "").toLowerCase();
+        const viewingLost = reportType === "lost";
+
+        possibleMatchTitle.textContent = viewingLost
+          ? "Possible found item match"
+          : matches.length === 1
+            ? "Possible owner report found"
+            : "Possible owner reports found";
+
+        possibleMatchSubtitle.textContent = viewingLost
+          ? "We found active Found Item reports that may correspond to your lost item based on shared details."
+          : "We found Lost Item reports that may belong to people searching for an item similar to this one.";
+
+        possibleMatchCount.textContent =
+          matches.length === 1
+            ? "1 possible match"
+            : `${matches.length} possible matches`;
+
+        // CURRENT / SOURCE REPORT
+        matchSourceCard.innerHTML = `
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p
+          class="text-[9px] font-black uppercase tracking-[0.14em] text-slate-400"
+        >
+          Current report
+        </p>
+
+        <div class="mt-2 flex flex-wrap items-center gap-2">
+          <span
+            class="rounded-full ${
+              viewingLost
+                ? "bg-rose-50 text-rose-700"
+                : "bg-emerald-50 text-emerald-700"
+            } px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.11em]"
+          >
+            ${viewingLost ? "Lost" : "Found"}
+          </span>
+
+          <span
+            class="text-[10px] font-bold text-slate-400"
+          >
+            #${escapeHtml(report.id)}
+          </span>
+        </div>
+
+        <h3 class="mt-3 text-xl font-black text-slate-900">
+          ${escapeHtml(report.item || "Unnamed item")}
+        </h3>
+
+        <p class="mt-1.5 text-xs font-semibold text-slate-500">
+          ${escapeHtml(
+            report.location || report.locationBase || "Location not provided",
+          )}
+          ·
+          ${escapeHtml(report.date || report.dateISO || "Date not provided")}
+        </p>
+      </div>
+
+      <div class="text-left sm:text-right">
+        <p
+          class="text-[9px] font-black uppercase tracking-[0.12em] text-slate-400"
+        >
+          Compared against
+        </p>
+
+        <p class="mt-1 text-sm font-black text-actblue">
+          ${viewingLost ? "Found reports" : "Lost reports"}
+        </p>
+      </div>
+    </div>
+  `;
+
+        possibleMatchList.innerHTML = matches
+          .map((match, index) => {
+            const candidate = match.report;
+
+            const candidateType = String(candidate.type || "").toLowerCase();
+
+            const strong = match.score >= 75;
+
+            const reasons = match.reasons
+              .map(
+                (reason, reasonIndex) => `
+            <span
+              class="match-reason inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1.5 text-[10px] font-bold text-slate-600"
+              style="--reason-delay: ${reasonIndex * 70}ms"
+            >
+              <span class="text-emerald-500">✓</span>
+              ${escapeHtml(reason)}
+            </span>
+          `,
+              )
+              .join("");
+
+            return `
+        <article
+          class="match-result-card group rounded-[26px] border border-slate-200 bg-slate-50/70 p-5 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-xl"
+          style="--match-delay: ${index * 120}ms"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <span
+                class="rounded-full ${
+                  candidateType === "found"
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "bg-rose-50 text-rose-700"
+                } px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.11em]"
+              >
+                ${candidateType === "found" ? "Found" : "Lost"}
+              </span>
+
+              <span
+                class="rounded-full ${
+                  strong
+                    ? "bg-actyellow/25 text-actblue"
+                    : "bg-blue-50 text-actblue"
+                } px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.11em]"
+              >
+                ${strong ? "Strong match" : "Possible match"}
+              </span>
+            </div>
+
+            <div class="shrink-0 text-right">
+              <p
+                class="text-[8px] font-black uppercase tracking-[0.13em] text-slate-400"
+              >
+                Match score
+              </p>
+
+              <p
+                class="match-score mt-1 text-2xl font-black text-actblue"
+                data-score="${match.score}"
+              >
+                0%
+              </p>
+            </div>
+          </div>
+
+          <!-- SCORE BAR -->
+          <div class="mt-5 h-2 overflow-hidden rounded-full bg-slate-200">
+            <div
+              class="match-score-bar h-full rounded-full bg-actblue"
+              data-score="${match.score}"
+              style="width:0%"
+            ></div>
+          </div>
+
+          <div class="mt-5">
+            <p
+              class="text-[9px] font-black uppercase tracking-[0.13em] text-actblue"
+            >
+              ${escapeHtml(candidate.category || "Other")}
+            </p>
+
+            <h3 class="mt-1.5 text-xl font-black text-slate-900">
+              ${escapeHtml(candidate.item || "Unnamed item")}
+            </h3>
+
+            <p
+              class="mt-2 text-xs font-semibold leading-6 text-slate-500"
+            >
+              ${escapeHtml(
+                candidate.location ||
+                  candidate.locationBase ||
+                  "Location not provided",
+              )}
+              ·
+              ${escapeHtml(
+                candidate.date || candidate.dateISO || "Date not provided",
+              )}
+            </p>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${reasons}
+          </div>
+
+          <a
+            href="item-details.html?id=${encodeURIComponent(candidate.id)}"
+            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-actblue px-4 py-3.5 text-xs font-black text-white transition duration-200 hover:-translate-y-0.5 hover:bg-actblueDark hover:shadow-md"
+          >
+            View possible match
+            <span class="transition group-hover:translate-x-1">→</span>
+          </a>
+        </article>
+      `;
+          })
+          .join("");
+
+        possibleMatchSection.classList.remove("hidden");
+
+        requestAnimationFrame(() => {
+          animateMatchSection();
+        });
+      }
+
+      function animateMatchSection() {
+        const shell = document.getElementById("possibleMatchShell");
+
+        if (!shell) return;
+
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        if (reducedMotion) {
+          shell.classList.add("match-visible");
+
+          shell.querySelectorAll(".match-result-card").forEach((card) => {
+            card.classList.add("match-card-visible");
+          });
+
+          shell.querySelectorAll(".match-score").forEach((node) => {
+            node.textContent = `${node.dataset.score}%`;
+          });
+
+          shell.querySelectorAll(".match-score-bar").forEach((bar) => {
+            bar.style.width = `${bar.dataset.score}%`;
+          });
+
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries, animationObserver) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              shell.classList.add("match-visible");
+
+              const cards = [...shell.querySelectorAll(".match-result-card")];
+
+              cards.forEach((card) => {
+                card.classList.add("match-card-visible");
+              });
+
+              const scores = [...shell.querySelectorAll(".match-score")];
+
+              scores.forEach((node) => {
+                const target = Number(node.dataset.score || 0);
+
+                const duration = 700;
+                const start = performance.now();
+
+                function updateScore(now) {
+                  const progress = Math.min((now - start) / duration, 1);
+
+                  node.textContent = `${Math.round(target * progress)}%`;
+
+                  if (progress < 1) {
+                    requestAnimationFrame(updateScore);
+                  }
+                }
+
+                requestAnimationFrame(updateScore);
+              });
+
+              const bars = [...shell.querySelectorAll(".match-score-bar")];
+
+              bars.forEach((bar) => {
+                bar.style.width = `${bar.dataset.score}%`;
+              });
+
+              animationObserver.disconnect();
+            });
+          },
+          {
+            threshold: 0.15,
+          },
+        );
+
+        observer.observe(shell);
       }
 
       /* ==========================================
@@ -1345,7 +1772,17 @@
         /* ------------------------------------------
            Image
         ------------------------------------------ */
-        itemImage.src = report.image || fallbackImage();
+        const hasPhoto = Boolean(String(report.image || "").trim());
+
+        itemImage.src = hasPhoto ? report.image : "images/act_logo.png";
+
+        itemImage.alt = hasPhoto
+          ? `${report.item || "Item"} report photo`
+          : "ACT Lost and Found logo";
+
+        itemImage.className = hasPhoto
+          ? "h-full w-full object-cover"
+          : "h-full w-full bg-white object-contain p-16 sm:p-20";
 
         itemImage.alt = report.item
           ? `${report.item} report photo`
@@ -1476,6 +1913,8 @@
           `;
         }
 
+        renderPossibleMatches(report);
+
         /* ------------------------------------------
            Show
         ------------------------------------------ */
@@ -1492,6 +1931,8 @@
          NOT FOUND
       ========================================== */
       function showNotFound() {
+        possibleMatchSection.classList.add("hidden");
+
         loadingState.classList.add("hidden");
 
         itemDetailsState.classList.add("hidden");

@@ -1656,17 +1656,17 @@
            REPORT CARDS
       ========================================== */
       function reportImage(report) {
-        return (
-          report.image ||
-          `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
-              <rect width="900" height="675" fill="#f1f5f9"/>
-              <circle cx="450" cy="287" r="78" fill="#0c2e8a" opacity=".08"/>
-              <path d="M405 300h90M450 255v90" stroke="#0c2e8a" stroke-width="16" stroke-linecap="round"/>
-              <text x="450" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#64748b">No item photo</text>
-            </svg>
-          `)}`
-        );
+        const hasPhoto = Boolean(String(report.image || "").trim());
+
+        return hasPhoto ? report.image : "images/act_logo.png";
+      }
+
+      function reportImageClass(report) {
+        const hasPhoto = Boolean(String(report.image || "").trim());
+
+        return hasPhoto
+          ? "h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+          : "h-full w-full bg-white object-contain p-10 sm:p-12 transition duration-500 group-hover:scale-[1.03]";
       }
 
       function renderReports() {
@@ -1714,9 +1714,7 @@
                     <img
                       src="${reportImage(report)}"
                       alt="${escapeHtml(report.item)}"
-                      class="h-full w-full object-cover
-                            transition duration-500
-                            group-hover:scale-[1.04]"
+                      class="${reportImageClass(report)}"
                       loading="lazy"
                     />
 

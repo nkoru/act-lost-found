@@ -905,17 +905,6 @@
         );
       }
 
-      function fallbackImage() {
-        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
-            <rect width="900" height="675" fill="#f1f5f9"/>
-            <circle cx="450" cy="270" r="75" fill="#0c2e8a" opacity=".08"/>
-            <path d="M405 285h90M450 240v90" stroke="#0c2e8a" stroke-width="16" stroke-linecap="round"/>
-            <text x="450" y="420" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#64748b">No item photo</text>
-          </svg>
-        `)}`;
-      }
-
       function todayLocal() {
         const now = new Date();
         const year = now.getFullYear();
@@ -1003,10 +992,18 @@
       } else {
         document.getElementById("backToItem").href =
           `item-details.html?id=${encodeURIComponent(report.id)}`;
-        document.getElementById("summaryImage").src =
-          report.image || fallbackImage();
-        document.getElementById("summaryImage").alt =
-          `${report.item} report image`;
+        const summaryImage = document.getElementById("summaryImage");
+        const hasPhoto = Boolean(String(report.image || "").trim());
+
+        summaryImage.src = hasPhoto ? report.image : "images/act_logo.png";
+
+        summaryImage.alt = hasPhoto
+          ? `${report.item} report image`
+          : "ACT Lost and Found logo";
+
+        summaryImage.className = hasPhoto
+          ? "h-full w-full object-cover"
+          : "h-full w-full bg-white object-contain p-12 sm:p-16";
         document.getElementById("summaryCategory").textContent =
           report.category || "Other";
         document.getElementById("summaryName").textContent =

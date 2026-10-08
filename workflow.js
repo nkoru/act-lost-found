@@ -214,6 +214,241 @@
       .toLowerCase();
   }
 
+  function matchWords(value) {
+    const ignored = new Set([
+      "a",
+      "an",
+      "the",
+      "my",
+      "item",
+      "lost",
+      "found",
+      "at",
+      "in",
+      "on",
+      "near",
+    ]);
+
+    return normalize(value)
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter((word) => word && !ignored.has(word));
+  }
+
+  function textSimilarity(first, second) {
+    const a = normalize(first);
+    const b = normalize(second);
+
+    if (!a || !b) return 0;
+
+    if (a === b) {
+      return 1;
+    }
+
+    if (a.includes(b) || b.includes(a)) {
+      return 0.9;
+    }
+
+    const wordsA = matchWords(a);
+    const wordsB = matchWords(b);
+
+    if (!wordsA.length || !wordsB.length) {
+      return 0;
+    }
+
+    const setA = new Set(wordsA);
+    const setB = new Set(wordsB);
+
+    const common = [...setA].filter((word) => setB.has(word)).length;
+    const largest = Math.max(setA.size, setB.size);
+
+    return largest ? common / largest : 0;
+  }
+
+  function reportDateValue(report) {
+    const value =
+      report?.dateISO ||
+      report?.dateLost ||
+      report?.dateFound ||
+      report?.date ||
+      "";
+
+    if (!value) return null;
+
+    const date = new Date(value);
+
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  function matchScore(source, candidate) {
+    let score = 0;
+    const reasons = [];
+
+    // CATEGORY — 25 points
+    const sourceCategory = normalize(source?.category);
+    const candidateCategory = normalize(candidate?.category);
+
+    if (
+      sourceCategory &&
+      candidateCategory &&
+      sourceCategory === candidateCategory
+    ) {
+      score += 25;
+      reasons.push("Same category");
+    }
+
+    // ITEM NAME — up to 30 points
+    const itemSimilarity = textSimilarity(source?.item, candidate?.item);
+
+    if (itemSimilarity >= 0.9) {
+      score += 30;
+      reasons.push("Very similar item name");
+    } else if (itemSimilarity >= 0.5) {
+      score += 22;
+      reasons.push("Similar item name");
+    } else if (itemSimilarity >= 0.25) {
+      score += 12;
+      reasons.push("Partially similar item name");
+    }
+
+    // COLOR — 15 points
+    const sourceColor = normalize(source?.color);
+    const candidateColor = normalize(candidate?.color);
+
+    if (
+      sourceColor &&
+      candidateColor &&
+      (sourceColor === candidateColor ||
+        sourceColor.includes(candidateColor) ||
+        candidateColor.includes(sourceColor))
+    ) {
+      score += 15;
+      reasons.push("Same or similar color");
+    }
+
+    // LOCATION — 15 points
+    const sourceLocation = normalize(
+      source?.specificLocation || source?.location || source?.locationBase,
+    );
+
+    const candidateLocation = normalize(
+      candidate?.specificLocation ||
+        candidate?.location ||
+        candidate?.locationBase,
+    );
+
+    if (
+      sourceLocation &&
+      candidateLocation &&
+      (sourceLocation === candidateLocation ||
+        sourceLocation.includes(candidateLocation) ||
+        candidateLocation.includes(sourceLocation))
+    ) {
+      score += 15;
+      reasons.push("Same or nearby location");
+    }
+
+    // DATE — up to 10 points
+    const sourceDate = reportDateValue(source);
+    const candidateDate = reportDateValue(candidate);
+
+    if (sourceDate && candidateDate) {
+      const difference =
+        Math.abs(sourceDate.getTime() - candidateDate.getTime()) /
+        (1000 * 60 * 60 * 24);
+
+      if (difference < 1) {
+        score += 10;
+        reasons.push("Same date");
+      } else if (difference <= 2) {
+        score += 7;
+        reasons.push("Dates are within 2 days");
+      } else if (difference <= 7) {
+        score += 3;
+        reasons.push("Dates are within 1 week");
+      }
+    }
+
+    // BRAND / MODEL — 5 points
+    const sourceBrand = normalize(source?.brand);
+    const candidateBrand = normalize(candidate?.brand);
+
+    if (
+      sourceBrand &&
+      candidateBrand &&
+      (sourceBrand === candidateBrand ||
+        sourceBrand.includes(candidateBrand) ||
+        candidateBrand.includes(sourceBrand))
+    ) {
+      score += 5;
+      reasons.push("Same or similar brand/model");
+    }
+
+    return {
+      score: Math.min(100, score),
+      reasons,
+    };
+  }
+
+  function possibleMatches(reportOrId, minimumScore = 60) {
+    const source =
+      typeof reportOrId === "object" ? reportOrId : findReport(reportOrId);
+
+    if (!source) {
+      return [];
+    }
+
+    const sourceType = normalize(source.type);
+
+    if (!["lost", "found"].includes(sourceType)) {
+      return [];
+    }
+
+    const oppositeType = sourceType === "lost" ? "found" : "lost";
+
+    const excludedStatuses = new Set([
+      "flagged",
+      "rejected",
+      "returned",
+      "archived",
+    ]);
+
+    return read(KEYS.reports)
+      .filter((candidate) => {
+        if (!candidate?.id) return false;
+
+        if (String(candidate.id) === String(source.id)) {
+          return false;
+        }
+
+        if (normalize(candidate.type) !== oppositeType) {
+          return false;
+        }
+
+        const status = normalize(candidate.status || "active");
+
+        return !excludedStatuses.has(status);
+      })
+      .map((candidate) => {
+        const result = matchScore(source, candidate);
+
+        return {
+          report: candidate,
+          score: result.score,
+          reasons: result.reasons,
+          strength:
+            result.score >= 75
+              ? "strong"
+              : result.score >= 60
+                ? "possible"
+                : "weak",
+        };
+      })
+      .filter((match) => match.score >= minimumScore)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+  }
+
   function moderation(input) {
     const flags = [];
     let score = 100;
@@ -769,6 +1004,8 @@
     code,
     normalize,
     moderation,
+    matchScore,
+    possibleMatches,
     findReport,
     upsertReport,
     updateReport,
