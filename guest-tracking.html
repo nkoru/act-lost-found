@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>Guest Tracking | ACT Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: { raleway: ["Raleway", "sans-serif"] },
+            boxShadow: { soft: "0 14px 40px rgba(12,46,138,.10)" },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 88%
+        );
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition hover:bg-actblue hover:text-white sm:inline-flex"
+          >
+            Log In
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            Log In
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <!-- =====================================================
+          GUEST TRACKING HERO
+      ====================================================== -->
+      <section class="relative overflow-hidden bg-actblue">
+        <div class="intro-grid absolute inset-0"></div>
+
+        <div
+          class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-12 lg:px-8"
+        >
+          <a
+            href="index.html"
+            class="inline-flex items-center gap-2 text-sm font-bold text-white/70 transition hover:text-white"
+          >
+            <span aria-hidden="true">←</span>
+            Back to home
+          </a>
+
+          <div class="mt-6 grid gap-7 lg:grid-cols-[1fr_360px] lg:items-end">
+            <!-- LEFT -->
+            <div class="max-w-3xl">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+              >
+                <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+
+                Guest Tracking
+              </div>
+
+              <h1
+                class="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+              >
+                Track your case.
+                <span class="text-actyellow"> Stay connected securely. </span>
+              </h1>
+
+              <p
+                class="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+              >
+                Use the Reference ID and 6-digit Guest Access Code you received
+                after submitting a report, ownership claim, or return lead.
+              </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div
+              class="hidden rounded-[24px] border border-white/15 bg-white/[0.08] p-5 backdrop-blur-sm lg:block"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+              >
+                What you need
+              </p>
+
+              <div class="mt-3 space-y-2.5">
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                  >
+                    1
+                  </span>
+
+                  <span> Enter the Reference ID shown after submission. </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    2
+                  </span>
+
+                  <span> Enter your private 6-digit Guest Access Code. </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    3
+                  </span>
+
+                  <span>
+                    View the latest case status and return coordination when
+                    available.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+          TRACKING CONTENT
+      ====================================================== -->
+      <section
+        class="relative mx-auto max-w-4xl px-5 py-8 pb-20 sm:px-7 lg:px-8 lg:py-10"
+      >
+        <form
+          id="trackingForm"
+          class="mx-auto max-w-2xl rounded-[30px] border border-slate-200 bg-white p-6 shadow-soft sm:p-8"
+        >
+          <div class="mb-7">
+            <p
+              class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+            >
+              Case lookup
+            </p>
+
+            <h2
+              class="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl"
+            >
+              Enter your guest case details
+            </h2>
+
+            <p class="mt-3 max-w-xl text-sm leading-7 text-slate-500">
+              Use the Reference ID and 6-digit Guest Access Code provided when
+              your case was submitted.
+            </p>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-[1fr_220px]">
+            <div>
+              <label
+                for="referenceId"
+                class="text-sm font-extrabold text-slate-800"
+                >Reference ID</label
+              >
+              <input
+                id="referenceId"
+                required
+                placeholder="e.g. L-12345678 or C-ABC123"
+                class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+              />
+            </div>
+            <div>
+              <label
+                for="accessCode"
+                class="text-sm font-extrabold text-slate-800"
+                >Access Code</label
+              >
+              <input
+                id="accessCode"
+                required
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                minlength="6"
+                maxlength="6"
+                placeholder="6 digits"
+                class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold tracking-[0.15em] outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+              />
+            </div>
+          </div>
+
+          <div
+            id="trackingError"
+            class="mt-4 hidden rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-bold text-rose-700"
+          ></div>
+
+          <button
+            type="submit"
+            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+          >
+            Track case <span>→</span>
+          </button>
+        </form>
+
+        <section
+          id="recentCasesSection"
+          class="mx-auto mt-6 hidden max-w-2xl rounded-[30px] border border-slate-200 bg-white p-6 shadow-soft sm:p-8"
+        >
+          <div class="flex items-start gap-4">
+            <span
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-actyellow text-sm font-black text-actblue"
+            >
+              ↺
+            </span>
+
+            <div>
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+              >
+                This browser
+              </p>
+
+              <h2 class="mt-1 text-xl font-black text-slate-900">
+                Recent guest cases
+              </h2>
+
+              <p
+                class="mt-2 max-w-xl text-xs font-semibold leading-5 text-slate-500"
+              >
+                Cases submitted or opened on this browser are saved here so you
+                can quickly return to tracking or secure return coordination.
+              </p>
+            </div>
+          </div>
+
+          <div id="recentCasesList" class="mt-5 grid gap-3"></div>
+        </section>
+
+        <section
+          id="resultState"
+          class="mx-auto mt-7 hidden max-w-2xl rounded-[30px] border border-slate-200 bg-white p-6 shadow-soft sm:p-8"
+        >
+          <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+          >
+            <!-- LEFT RESULT INFO -->
+            <div class="flex items-start gap-4">
+              <div
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-actyellow text-sm font-black text-actblue"
+              >
+                ✓
+              </div>
+
+              <div>
+                <p
+                  id="resultKind"
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                ></p>
+
+                <h2
+                  id="resultTitle"
+                  class="mt-2 text-2xl font-black text-slate-900"
+                ></h2>
+
+                <p
+                  id="resultMeta"
+                  class="mt-2 text-sm font-semibold leading-6 text-slate-500"
+                ></p>
+              </div>
+            </div>
+
+            <!-- STATUS -->
+            <span
+              id="resultStatus"
+              class="inline-flex w-fit shrink-0 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em]"
+            ></span>
+          </div>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.12em] text-slate-400"
+              >
+                Reference ID
+              </p>
+              <p
+                id="resultId"
+                class="mt-1.5 text-sm font-black text-actblue"
+              ></p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.12em] text-slate-400"
+              >
+                Last updated
+              </p>
+              <p
+                id="resultUpdated"
+                class="mt-1.5 text-sm font-bold text-slate-700"
+              ></p>
+            </div>
+          </div>
+
+          <div
+            id="coordinationBox"
+            class="mt-6 hidden rounded-2xl border border-actyellow/40 bg-actyellow/[0.10] p-5"
+          >
+            <p class="text-sm font-black text-slate-900">
+              Return coordination is open
+            </p>
+            <p class="mt-2 text-xs font-semibold leading-5 text-slate-500">
+              Your case has reached the secure handoff stage. Use the same guest
+              access code to open the private return thread.
+            </p>
+            <a
+              id="coordinationLink"
+              href="#"
+              class="mt-4 inline-flex rounded-xl bg-actblue px-5 py-3 text-xs font-black text-white"
+              >Open secure return thread →</a
+            >
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div class="grid gap-12 md:grid-cols-3 lg:gap-16">
+          <!-- BRAND -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="mb-5 h-24 w-24 object-contain"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow">Found</span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm leading-6 text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- HELP -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+
+              <h3 class="text-lg font-extrabold">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">▣</span>
+                <p>Asian College of Technology</p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">●</span>
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">☎</span>
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">✉</span>
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INFORMATION -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+
+              <h3 class="text-lg font-extrabold">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-blue-100">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 border-t border-blue-800 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+    <script src="workflow.js"></script>
+    <script>
+      const form = document.getElementById("trackingForm");
+      const errorBox = document.getElementById("trackingError");
+      const resultState = document.getElementById("resultState");
+      const recentCasesSection = document.getElementById("recentCasesSection");
+      const recentCasesList = document.getElementById("recentCasesList");
+
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById("referenceId").value = params.get("ref") || "";
+      document.getElementById("accessCode").value = params.get("code") || "";
+
+      function statusClass(status) {
+        const s = String(status || "").toLowerCase();
+        if (
+          ["active", "verified", "completed", "resolved", "returned"].includes(
+            s,
+          )
+        )
+          return "border-emerald-200 bg-emerald-50 text-emerald-700";
+        if (["flagged", "rejected"].includes(s))
+          return "border-rose-200 bg-rose-50 text-rose-700";
+        return "border-amber-200 bg-amber-50 text-amber-700";
+      }
+
+      function findGuestRecord(ref, code) {
+        const sources = [
+          { key: ACTWorkflow.KEYS.reports, kind: "Report" },
+          { key: ACTWorkflow.KEYS.claims, kind: "Ownership Claim" },
+          { key: ACTWorkflow.KEYS.returns, kind: "Return Lead" },
+        ];
+
+        for (const source of sources) {
+          const record = ACTWorkflow.read(source.key).find(
+            (item) =>
+              String(item.id).toLowerCase() === String(ref).toLowerCase() &&
+              String(item.guestAccessCode || "") === String(code),
+          );
+
+          if (record) return { record, kind: source.kind };
+        }
+
+        return null;
+      }
+
+      function linkedReport(record, kind) {
+        if (kind === "Report") return record;
+        return (
+          ACTWorkflow.findReport(record.reportId) ||
+          record.reportSnapshot ||
+          null
+        );
+      }
+
+      function linkedCase(record, kind) {
+        if (record.returnCaseId)
+          return ACTWorkflow.findCase(record.returnCaseId);
+
+        if (kind === "Report") {
+          return ACTWorkflow.read(ACTWorkflow.KEYS.cases).find(
+            (item) => String(item.reportId) === String(record.id),
+          );
+        }
+
+        return null;
+      }
+
+      function recentCaseAction(found, code) {
+        const { record, kind } = found;
+        const returnCase = linkedCase(record, kind);
+
+        if (returnCase) {
+          return {
+            href:
+              `return-coordination.html?case=${encodeURIComponent(returnCase.id)}` +
+              `&code=${encodeURIComponent(code)}`,
+            label:
+              returnCase.status === "returned"
+                ? "View completed return"
+                : "Open return chat",
+          };
+        }
+
+        return {
+          href:
+            `guest-tracking.html?ref=${encodeURIComponent(record.id)}` +
+            `&code=${encodeURIComponent(code)}`,
+          label: "Track case",
+        };
+      }
+
+      function escapeHTML(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderRecentCases() {
+        const recent = ACTWorkflow.recentGuestCases();
+
+        if (!recent.length) {
+          recentCasesSection.classList.add("hidden");
+          recentCasesList.innerHTML = "";
+          return;
+        }
+
+        const cards = recent
+          .map((item) => {
+            const found = findGuestRecord(item.referenceId, item.accessCode);
+
+            if (!found) return "";
+
+            const { record, kind } = found;
+            const report = linkedReport(record, kind);
+            const action = recentCaseAction(found, item.accessCode);
+
+            const status = String(record.status || "pending").replaceAll(
+              "_",
+              " ",
+            );
+
+            return `
+            <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-[10px] font-black uppercase tracking-[0.1em] text-actblue">
+                      ${escapeHTML(kind)}
+                    </span>
+                    <span class="text-[10px] font-bold uppercase text-slate-400">
+                      ${escapeHTML(status)}
+                    </span>
+                  </div>
+
+                  <h3 class="mt-1.5 text-sm font-black text-slate-900">
+                    ${escapeHTML(report?.item || "Guest case")}
+                  </h3>
+
+                  <p class="mt-1 text-[11px] font-semibold text-slate-400">
+                    ${escapeHTML(record.id)}
+                  </p>
+                </div>
+
+                <a
+                  href="${action.href}"
+                  class="inline-flex items-center justify-center rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white hover:bg-actblueDark"
+                >
+                  ${escapeHTML(action.label)} →
+                </a>
+              </div>
+            </article>
+          `;
+          })
+          .filter(Boolean)
+          .join("");
+
+        if (!cards) {
+          recentCasesSection.classList.add("hidden");
+          return;
+        }
+
+        recentCasesList.innerHTML = cards;
+        recentCasesSection.classList.remove("hidden");
+      }
+
+      function render(found, code) {
+        const { record, kind } = found;
+        const report = linkedReport(record, kind);
+        const returnCase = linkedCase(record, kind);
+
+        document.getElementById("resultKind").textContent = kind;
+        document.getElementById("resultTitle").textContent =
+          report?.item || kind;
+        document.getElementById("resultMeta").textContent =
+          kind === "Report"
+            ? `${String(record.type || "").toUpperCase()} · ${record.location || "Location not specified"}`
+            : `Linked to ${report?.item || `Report ${record.reportId}`}`;
+
+        document.getElementById("resultId").textContent = record.id;
+        document.getElementById("resultUpdated").textContent = new Date(
+          record.updatedAt || record.createdAt || Date.now(),
+        ).toLocaleString();
+
+        const status = record.status || "pending";
+        const statusEl = document.getElementById("resultStatus");
+        statusEl.textContent = String(status).replaceAll("_", " ");
+        statusEl.className = `inline-flex w-fit rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] ${statusClass(status)}`;
+
+        const coordinationBox = document.getElementById("coordinationBox");
+
+        const coordinationTitle = coordinationBox.querySelector("p");
+
+        const coordinationText = coordinationBox.querySelector("p + p");
+
+        const coordinationLink = document.getElementById("coordinationLink");
+
+        if (returnCase) {
+          coordinationBox.classList.remove("hidden");
+
+          coordinationLink.href = `return-coordination.html?case=${encodeURIComponent(
+            returnCase.id,
+          )}&code=${encodeURIComponent(code)}`;
+
+          if (returnCase.status === "returned") {
+            coordinationTitle.textContent = "Return completed";
+
+            coordinationText.textContent =
+              "This case has been confirmed as returned.";
+
+            coordinationLink.textContent = "View completed return →";
+          } else {
+            coordinationTitle.textContent = "Return coordination is open";
+
+            coordinationText.textContent =
+              "Your case has reached the secure handoff stage. Use the same guest access code to open the private return thread.";
+
+            coordinationLink.textContent = "Open secure return thread →";
+          }
+        } else {
+          coordinationBox.classList.add("hidden");
+        }
+
+        resultState.classList.remove("hidden");
+        resultState.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        errorBox.classList.add("hidden");
+        resultState.classList.add("hidden");
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const ref = document.getElementById("referenceId").value.trim();
+        const code = document.getElementById("accessCode").value.trim();
+
+        const found = findGuestRecord(ref, code);
+
+        if (!found) {
+          errorBox.textContent =
+            "We couldn't verify that Reference ID and Guest Access Code. Check both values and try again.";
+          errorBox.classList.remove("hidden");
+          return;
+        }
+
+        ACTWorkflow.rememberGuestCase(
+          ref,
+          code,
+          String(found.kind || "case").toLowerCase(),
+        );
+
+        renderRecentCases();
+        render(found, code);
+      });
+
+      renderRecentCases();
+
+      if (params.get("ref") && params.get("code")) {
+        form.requestSubmit();
+      }
+    </script>
+  </body>
+</html>

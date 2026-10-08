@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>My Dashboard | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 12px 35px rgba(12,46,138,.10)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      .tab.active {
+        background: #0c2e8a;
+        color: #fff;
+      }
+
+      .tab {
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .tab:not(.active):hover {
+        background: #f1f5f9;
+        color: #0c2e8a;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 88%
+        );
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            data-logout
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-4 py-2.5 text-sm font-extrabold text-actblue transition hover:bg-actblue hover:text-white sm:inline-flex"
+          >
+            Log out
+          </button>
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <button
+            type="button"
+            data-logout
+            class="mt-2 block w-full rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white transition hover:bg-actblueDark"
+          >
+            Log out
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative overflow-hidden bg-actblue">
+        <div class="intro-grid absolute inset-0"></div>
+
+        <div
+          class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-12 lg:px-8"
+        >
+          <div class="grid gap-7 lg:grid-cols-[1fr_360px] lg:items-end">
+            <div class="max-w-3xl">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+              >
+                <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+                My Account
+              </div>
+
+              <h1
+                id="welcomeTitle"
+                class="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+              >
+                Welcome back
+              </h1>
+
+              <p
+                class="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+              >
+                Track your reports, ownership claims, return activity, secure
+                coordination, and notifications from one place.
+              </p>
+            </div>
+
+            <div
+              class="hidden rounded-[24px] border border-white/15 bg-white/[0.08] p-5 backdrop-blur-sm lg:block"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+              >
+                Quick access
+              </p>
+
+              <div class="mt-3 space-y-2.5">
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                  >
+                    1
+                  </span>
+                  <span>Check the status of reports and ownership claims.</span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    2
+                  </span>
+                  <span>Open active secure return coordination.</span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    3
+                  </span>
+                  <span>Review important status notifications.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="mx-auto max-w-7xl px-5 py-10 pb-20 sm:px-7 lg:px-8 lg:py-12 lg:pb-20"
+      >
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <!-- REPORTS -->
+          <div
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 shadow-soft"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-slate-400"
+                >
+                  My reports
+                </p>
+
+                <p
+                  id="reportCount"
+                  class="mt-2 text-3xl font-black text-actblue"
+                >
+                  0
+                </p>
+              </div>
+
+              <span
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actblue/[0.07] text-lg font-black text-actblue"
+              >
+                ◇
+              </span>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold text-slate-400">
+              Lost and found reports you submitted
+            </p>
+          </div>
+
+          <!-- CLAIMS -->
+          <div
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 shadow-soft"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actyellow"></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-slate-400"
+                >
+                  My claims
+                </p>
+
+                <p
+                  id="claimCount"
+                  class="mt-2 text-3xl font-black text-actblue"
+                >
+                  0
+                </p>
+              </div>
+
+              <span
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actyellow/[0.14] text-lg font-black text-actblue"
+              >
+                ✓
+              </span>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold text-slate-400">
+              Ownership claims awaiting or past verification
+            </p>
+          </div>
+
+          <!-- RETURN COORDINATION -->
+          <div
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 shadow-soft"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-slate-400"
+                >
+                  Return coordination
+                </p>
+
+                <p id="caseCount" class="mt-2 text-3xl font-black text-actblue">
+                  0
+                </p>
+              </div>
+
+              <span
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actblue/[0.07] text-lg font-black text-actblue"
+              >
+                ↔
+              </span>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold text-slate-400">
+              Active secure item-return cases
+            </p>
+          </div>
+
+          <!-- NOTIFICATIONS -->
+          <div
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 shadow-soft"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actyellow"></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-slate-400"
+                >
+                  Unread notifications
+                </p>
+
+                <p
+                  id="notificationCount"
+                  class="mt-2 text-3xl font-black text-actblue"
+                >
+                  0
+                </p>
+              </div>
+
+              <span
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actyellow/[0.14] text-lg font-black text-actblue"
+              >
+                !
+              </span>
+            </div>
+
+            <p class="mt-4 text-xs font-semibold text-slate-400">
+              Important updates that need your attention
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-soft"
+        >
+          <div class="border-b border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+            <div class="flex flex-wrap gap-2">
+              <button
+                data-tab="reports"
+                class="tab active rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500"
+              >
+                Reports
+              </button>
+              <button
+                data-tab="claims"
+                class="tab rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500"
+              >
+                Claims
+              </button>
+              <button
+                data-tab="returns"
+                class="tab rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500"
+              >
+                Return Activity
+              </button>
+              <button
+                data-tab="notifications"
+                class="tab rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500"
+              >
+                Notifications
+              </button>
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-5">
+            <div
+              class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <p
+                  id="sectionLabel"
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  My reports
+                </p>
+                <h2
+                  id="sectionTitle"
+                  class="mt-1 text-xl font-black text-slate-900"
+                >
+                  Submitted reports
+                </h2>
+              </div>
+
+              <div class="flex gap-2">
+                <a
+                  href="report-lost.html"
+                  class="rounded-xl border border-actblue/15 bg-actblue/[0.04] px-4 py-2.5 text-xs font-black text-actblue transition hover:-translate-y-0.5 hover:border-actblue/25 hover:bg-actblue/[0.08]"
+                >
+                  Report lost
+                </a>
+                <a
+                  href="report-found.html"
+                  class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+                >
+                  Report found
+                </a>
+              </div>
+            </div>
+
+            <div id="dashboardList" class="grid gap-4"></div>
+
+            <div
+              id="emptyState"
+              class="hidden rounded-[24px] border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center"
+            >
+              <div
+                class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-actblue/[0.07] text-xl font-black text-actblue"
+              >
+                +
+              </div>
+
+              <p class="mt-4 text-sm font-black text-slate-800">
+                Nothing here yet.
+              </p>
+
+              <p
+                id="emptyText"
+                class="mx-auto mt-2 max-w-md text-xs font-semibold leading-5 text-slate-400"
+              >
+                Your activity will appear here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div class="grid gap-12 md:grid-cols-3 lg:gap-16">
+          <!-- BRAND -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="mb-5 h-24 w-24 object-contain"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow">Found</span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm leading-6 text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- HELP -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">▣</span>
+                <p>Asian College of Technology</p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">●</span>
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">☎</span>
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">✉</span>
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INFORMATION -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-blue-100">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 border-t border-blue-800 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+    <script src="workflow.js"></script>
+
+    <script>
+      const state = { tab: "reports" };
+
+      /* ==========================================
+        MOBILE NAVIGATION
+      ========================================== */
+
+      const menuButton = document.getElementById("menuButton");
+
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+
+        menuButton.setAttribute("aria-expanded", "false");
+
+        menuButton.setAttribute("aria-label", "Open menu");
+      }
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+
+        mobileMenu.classList.toggle("hidden");
+
+        menuButton.setAttribute("aria-expanded", String(opening));
+
+        menuButton.setAttribute(
+          "aria-label",
+          opening ? "Close menu" : "Open menu",
+        );
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMobileMenu();
+        }
+      });
+
+      function safeParse(key) {
+        return ACTWorkflow.read(key);
+      }
+
+      const session = ACTAuth.requireUser();
+
+      if (session) {
+        document.getElementById("welcomeTitle").textContent =
+          `Welcome back, ${session.name || "ACT Student"}`;
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "").replace(
+          /[&<>'"]/g,
+          (char) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              "'": "&#039;",
+              '"': "&quot;",
+            })[char],
+        );
+      }
+
+      function badge(status) {
+        const normalized = String(status || "pending").toLowerCase();
+
+        const classes = {
+          pending: "bg-amber-50 text-amber-700 border-amber-200",
+          flagged: "bg-rose-50 text-rose-700 border-rose-200",
+          active: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          rejected: "bg-slate-100 text-slate-500 border-slate-200",
+          verified: "bg-blue-50 text-actblue border-blue-200",
+          coordinating: "bg-blue-50 text-actblue border-blue-200",
+          pending_confirmation: "bg-amber-50 text-amber-700 border-amber-200",
+          completed: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          resolved: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          returned: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          archived: "bg-slate-100 text-slate-500 border-slate-200",
+          claim_requested: "bg-blue-50 text-actblue border-blue-200",
+        };
+
+        return `
+        <span class="inline-flex rounded-full border px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] ${classes[normalized] || classes.pending}">
+          ${escapeHtml(normalized.replaceAll("_", " "))}
+        </span>
+      `;
+      }
+
+      function emailMatches(value) {
+        return (
+          String(value || "").toLowerCase() ===
+          String(session?.email || "").toLowerCase()
+        );
+      }
+
+      function myReports() {
+        if (!session) return [];
+
+        return safeParse(ACTWorkflow.KEYS.reports).filter(
+          (report) =>
+            report.reporter?.mode === "user" &&
+            emailMatches(report.reporter?.email),
+        );
+      }
+
+      function myClaims() {
+        if (!session) return [];
+
+        return safeParse(ACTWorkflow.KEYS.claims).filter(
+          (claim) =>
+            claim.claimant?.mode === "user" &&
+            emailMatches(claim.claimant?.email),
+        );
+      }
+
+      function myReturns() {
+        if (!session) return [];
+
+        return safeParse(ACTWorkflow.KEYS.returns).filter(
+          (lead) =>
+            lead.finder?.mode === "user" && emailMatches(lead.finder?.email),
+        );
+      }
+
+      function myCases() {
+        if (!session) return [];
+
+        return safeParse(ACTWorkflow.KEYS.cases).filter(
+          (record) =>
+            (record.owner?.mode === "user" &&
+              emailMatches(record.owner?.email)) ||
+            (record.finder?.mode === "user" &&
+              emailMatches(record.finder?.email)),
+        );
+      }
+
+      function myNotifications() {
+        if (!session) return [];
+
+        return safeParse(ACTWorkflow.KEYS.notifications).filter((item) =>
+          emailMatches(item.email),
+        );
+      }
+
+      function reportCard(report) {
+        return `
+        <article class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                ${badge(report.status)}
+                <span class="text-[10px] font-bold uppercase text-slate-300">${escapeHtml(report.type || "report")}</span>
+              </div>
+              <h3 class="mt-2 text-base font-black text-slate-900">${escapeHtml(report.item || "Untitled item")}</h3>
+              <p class="mt-1 text-xs font-semibold text-slate-400">
+                ${escapeHtml(report.location || "Location not specified")} · ${escapeHtml(report.date || report.dateISO || "Date not specified")}
+              </p>
+            </div>
+
+            ${
+              ["active", "claim_requested"].includes(
+                String(report.status).toLowerCase(),
+              )
+                ? `<a href="item-details.html?id=${encodeURIComponent(report.id)}" class="text-xs font-black text-actblue hover:underline">View report →</a>`
+                : ""
+            }
+          </div>
+        </article>
+      `;
+      }
+
+      function claimCard(claim) {
+        return `
+        <article class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                ${badge(claim.status)}
+                <span class="text-[10px] font-bold text-slate-300">#${escapeHtml(claim.id)}</span>
+              </div>
+              <h3 class="mt-2 text-base font-black text-slate-900">Ownership claim</h3>
+              <p class="mt-1 text-xs font-semibold text-slate-400">
+                Report #${escapeHtml(claim.reportId)} · Last seen at ${escapeHtml(claim.lastLocation || "not specified")}
+              </p>
+            </div>
+
+            ${
+              claim.returnCaseId
+                ? `<a href="return-coordination.html?case=${encodeURIComponent(claim.returnCaseId)}" class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white">Open return thread →</a>`
+                : ""
+            }
+          </div>
+        </article>
+      `;
+      }
+
+      function returnLeadCard(lead) {
+        return `
+        <article class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                ${badge(lead.status)}
+                <span class="text-[10px] font-bold text-slate-300">#${escapeHtml(lead.id)}</span>
+              </div>
+              <h3 class="mt-2 text-base font-black text-slate-900">Return lead</h3>
+              <p class="mt-1 text-xs font-semibold text-slate-400">
+                Report #${escapeHtml(lead.reportId)} · ${escapeHtml(lead.foundLocation || "Location not specified")}
+              </p>
+            </div>
+
+            ${
+              lead.returnCaseId
+                ? `<a href="return-coordination.html?case=${encodeURIComponent(lead.returnCaseId)}" class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white">Open return thread →</a>`
+                : ""
+            }
+          </div>
+        </article>
+      `;
+      }
+
+      function caseCard(record) {
+        const report = ACTWorkflow.findReport(record.reportId);
+        const role = emailMatches(record.owner?.email) ? "Owner" : "Finder";
+
+        return `
+        <article class="rounded-2xl border border-actblue/15 bg-actblue/[0.035] p-5 transition hover:border-actblue/25">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                ${badge(record.status)}
+                <span class="text-[10px] font-black uppercase tracking-[0.08em] text-actblue">${role}</span>
+              </div>
+              <h3 class="mt-2 text-base font-black text-slate-900">${escapeHtml(report?.item || "Return coordination")}</h3>
+              <p class="mt-1 text-xs font-semibold text-slate-400">
+                Case #${escapeHtml(record.id)} · Secure participant thread
+              </p>
+            </div>
+            <a href="return-coordination.html?case=${encodeURIComponent(record.id)}" class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white">
+              Open thread →
+            </a>
+          </div>
+        </article>
+      `;
+      }
+
+      function notificationCard(item) {
+        return `
+        <article class="rounded-2xl border ${item.read ? "border-slate-200 bg-white" : "border-actyellow/40 bg-actyellow/[0.08]"} p-4">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                ${item.read ? "" : '<span class="h-2 w-2 rounded-full bg-actyellow"></span>'}
+                <span class="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">
+                  ${item.read ? "Notification" : "New"}
+                </span>
+              </div>
+              <p class="mt-2 text-sm font-bold leading-6 text-slate-700">${escapeHtml(item.message)}</p>
+              <p class="mt-1 text-[11px] font-semibold text-slate-400">
+                ${new Date(item.createdAt || Date.now()).toLocaleString()}
+              </p>
+            </div>
+            ${
+              item.link
+                ? `<a href="${escapeHtml(item.link)}" class="text-xs font-black text-actblue hover:underline">Open →</a>`
+                : ""
+            }
+          </div>
+        </article>
+      `;
+      }
+
+      function markNotificationsRead() {
+        const all = safeParse(ACTWorkflow.KEYS.notifications);
+        let changed = false;
+
+        const updated = all.map((item) => {
+          if (emailMatches(item.email) && !item.read) {
+            changed = true;
+            return { ...item, read: true };
+          }
+          return item;
+        });
+
+        if (changed) {
+          ACTWorkflow.write(ACTWorkflow.KEYS.notifications, updated);
+        }
+      }
+
+      function render() {
+        const reports = myReports();
+        const claims = myClaims();
+        const returns = myReturns();
+        const cases = myCases();
+        const notifications = myNotifications();
+
+        document.getElementById("reportCount").textContent = reports.length;
+        document.getElementById("claimCount").textContent = claims.length;
+        document.getElementById("caseCount").textContent = cases.filter(
+          (item) => item.status !== "returned",
+        ).length;
+        document.getElementById("notificationCount").textContent =
+          notifications.filter((item) => !item.read).length;
+
+        document.querySelectorAll("[data-tab]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === state.tab);
+        });
+
+        const list = document.getElementById("dashboardList");
+        const emptyState = document.getElementById("emptyState");
+        const sectionLabel = document.getElementById("sectionLabel");
+        const sectionTitle = document.getElementById("sectionTitle");
+        const emptyText = document.getElementById("emptyText");
+
+        let count = 0;
+
+        if (state.tab === "reports") {
+          count = reports.length;
+          sectionLabel.textContent = "My reports";
+          sectionTitle.textContent = "Submitted reports";
+          emptyText.textContent =
+            "Reports submitted while logged in will appear here.";
+          list.innerHTML = reports.map(reportCard).join("");
+        }
+
+        if (state.tab === "claims") {
+          count = claims.length;
+          sectionLabel.textContent = "My claims";
+          sectionTitle.textContent = "Ownership claims";
+          emptyText.textContent =
+            "Ownership claims submitted while logged in will appear here.";
+          list.innerHTML = claims.map(claimCard).join("");
+        }
+
+        if (state.tab === "returns") {
+          count = returns.length + cases.length;
+          sectionLabel.textContent = "Return activity";
+          sectionTitle.textContent = "Leads & secure coordination";
+          emptyText.textContent =
+            "Accepted claims and return leads will open secure coordination here.";
+
+          list.innerHTML = [
+            ...cases.map(caseCard),
+            ...returns.filter((lead) => !lead.returnCaseId).map(returnLeadCard),
+          ].join("");
+        }
+
+        if (state.tab === "notifications") {
+          markNotificationsRead();
+
+          const refreshed = myNotifications();
+
+          document.getElementById("notificationCount").textContent =
+            refreshed.filter((item) => !item.read).length;
+
+          count = refreshed.length;
+          sectionLabel.textContent = "Notifications";
+          sectionTitle.textContent = "Status updates";
+          emptyText.textContent =
+            "Important report, claim, and return updates will appear here.";
+          list.innerHTML = refreshed.map(notificationCard).join("");
+        }
+
+        emptyState.classList.toggle("hidden", count !== 0);
+      }
+
+      document.querySelectorAll("[data-tab]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.tab = button.dataset.tab;
+          render();
+        });
+      });
+
+      if (session) render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>Return Lost Item | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="session.js"></script>
+    <script src="workflow.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: { raleway: ["Raleway", "sans-serif"] },
+            boxShadow: {
+              soft: "0 12px 35px rgba(12, 46, 138, 0.10)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+      .nav-link:hover::after {
+        width: 55%;
+      }
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+      .nav-link.active::after {
+        width: 100%;
+      }
+      .field-error {
+        border-color: #e11d48 !important;
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.08) !important;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 88%
+        );
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+              >LOST &amp;</span
+            >
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+              >FOUND</span
+            >
+          </span>
+        </a>
+
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >Home</a
+          >
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >Lost Items</a
+          >
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >Found Items</a
+          >
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >Recent Reports</a
+          >
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >About</a
+          >
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+            >Help</a
+          >
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition hover:bg-actblue hover:text-white sm:inline-flex"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >Home</a
+          >
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >Lost Items</a
+          >
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >Found Items</a
+          >
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >Recent Reports</a
+          >
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >About</a
+          >
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >Help</a
+          >
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- =====================================================
+        RETURN ITEM HERO
+    ====================================================== -->
+      <section class="relative overflow-hidden bg-actblue">
+        <div class="intro-grid absolute inset-0"></div>
+
+        <div
+          class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-12 lg:px-8"
+        >
+          <!-- BACK -->
+          <a
+            id="backToItem"
+            href="lost-items.html"
+            class="inline-flex items-center gap-2 text-sm font-bold text-white/70 transition hover:text-white"
+          >
+            <span aria-hidden="true">←</span>
+            Back to item details
+          </a>
+
+          <div class="mt-6 grid gap-7 lg:grid-cols-[1fr_360px] lg:items-end">
+            <!-- LEFT -->
+            <div class="max-w-3xl">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+              >
+                <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+
+                Return Lead
+              </div>
+
+              <h1
+                class="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+              >
+                Found this lost item?
+                <span class="text-actyellow"> Help return it safely. </span>
+              </h1>
+
+              <p
+                class="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+              >
+                Tell ACT where you found or saw the item and what happened to
+                it. Your information helps reconnect the item with its original
+                reporter without exposing private contact details.
+              </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div
+              class="hidden rounded-[24px] border border-white/15 bg-white/[0.08] p-5 backdrop-blur-sm lg:block"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+              >
+                Return safely
+              </p>
+
+              <div class="mt-3 space-y-2.5">
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                  >
+                    1
+                  </span>
+
+                  <span>
+                    Tell us where and when you found or saw the item.
+                  </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    2
+                  </span>
+
+                  <span>
+                    Explain where the item is now and what happened to it.
+                  </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    3
+                  </span>
+
+                  <span>
+                    Wait for verification before secure return coordination.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="formState"
+        class="mx-auto max-w-7xl px-5 py-8 pb-20 sm:px-7 lg:px-8 lg:py-10"
+      >
+        <div class="grid gap-7 lg:grid-cols-[360px_minmax(0,1fr)]">
+          <aside class="h-fit lg:sticky lg:top-[104px]">
+            <div
+              class="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-soft"
+            >
+              <div class="relative aspect-[4/3] bg-slate-100">
+                <img
+                  id="summaryImage"
+                  src=""
+                  alt=""
+                  class="h-full w-full object-cover"
+                />
+                <span
+                  class="absolute left-4 top-4 rounded-full bg-actblue px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-white"
+                  >Lost</span
+                >
+              </div>
+              <div class="p-5">
+                <p
+                  id="summaryCategory"
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                ></p>
+                <h1
+                  id="summaryName"
+                  class="mt-2 text-xl font-black text-slate-900"
+                ></h1>
+                <p
+                  id="summaryMeta"
+                  class="mt-3 text-xs font-semibold leading-5 text-slate-500"
+                ></p>
+              </div>
+            </div>
+
+            <div
+              class="mt-4 rounded-[24px] border border-actyellow/40 bg-actyellow/[0.10] p-5"
+            >
+              <p class="text-sm font-black text-slate-900">
+                Return coordination stays private
+              </p>
+
+              <p class="mt-2 text-xs font-semibold leading-5 text-slate-500">
+                The owner’s private contact and verification details are not
+                shown publicly. ACT can use your return lead to coordinate the
+                next recovery step safely.
+              </p>
+            </div>
+          </aside>
+
+          <form
+            id="returnForm"
+            novalidate
+            class="rounded-[30px] border border-slate-200 bg-white p-6 shadow-soft sm:p-8"
+          >
+            <p
+              class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+            >
+              Lost item return
+            </p>
+            <h2
+              class="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl"
+            >
+              I found this item
+            </h2>
+            <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-500">
+              Tell ACT where the item was seen or found and what happened to it.
+              This helps the original reporter recover it without exposing
+              private contact details.
+            </p>
+
+            <!-- GUEST / ACCOUNT NOTICE -->
+            <div
+              id="returnIdentityNotice"
+              class="mt-7 rounded-2xl border border-actblue/10 bg-actblue/[0.035] p-4"
+            >
+              <div
+                class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div>
+                  <p
+                    id="returnIdentityTitle"
+                    class="text-sm font-black text-slate-900"
+                  >
+                    You can send this return lead as a guest.
+                  </p>
+
+                  <p
+                    id="returnIdentityText"
+                    class="mt-1 text-xs font-semibold leading-5 text-slate-500"
+                  >
+                    An ACT Lost &amp; Found account is not required to help
+                    return an item.
+                  </p>
+                </div>
+
+                <a
+                  id="returnLoginLink"
+                  href="login.html"
+                  class="shrink-0 text-sm font-black text-actblue hover:underline"
+                >
+                  Log in →
+                </a>
+              </div>
+            </div>
+
+            <div class="mt-8 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  for="foundLocation"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Where did you find or see it?
+                  <span class="text-pink-600">*</span></label
+                >
+                <input
+                  id="foundLocation"
+                  name="foundLocation"
+                  type="text"
+                  required
+                  maxlength="120"
+                  placeholder="e.g. Library entrance"
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="foundDate"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Date found / seen <span class="text-pink-600">*</span></label
+                >
+                <input
+                  id="foundDate"
+                  name="foundDate"
+                  type="date"
+                  required
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label
+                  for="custody"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Where is the item now?
+                  <span class="text-pink-600">*</span></label
+                >
+                <select
+                  id="custody"
+                  name="custody"
+                  required
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                >
+                  <option value="">Select one</option>
+                  <option value="with_finder">I currently have the item</option>
+                  <option value="turned_in">
+                    I turned it in to an ACT office / staff member
+                  </option>
+                  <option value="seen_only">
+                    I only saw the item and do not have it
+                  </option>
+                </select>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="note" class="text-sm font-extrabold text-slate-800"
+                  >Helpful details <span class="text-pink-600">*</span></label
+                >
+                <textarea
+                  id="note"
+                  name="note"
+                  required
+                  minlength="10"
+                  maxlength="500"
+                  rows="5"
+                  placeholder="Describe where it is now, its condition, or any other useful information..."
+                  class="mt-2.5 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold leading-6 outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                ></textarea>
+              </div>
+
+              <div>
+                <label
+                  for="finderName"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Your name <span class="text-pink-600">*</span></label
+                >
+                <input
+                  id="finderName"
+                  name="finderName"
+                  type="text"
+                  required
+                  maxlength="100"
+                  autocomplete="name"
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="finderEmail"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Email <span class="text-pink-600">*</span></label
+                >
+                <input
+                  id="finderEmail"
+                  name="finderEmail"
+                  type="email"
+                  required
+                  maxlength="120"
+                  autocomplete="email"
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label
+                  for="finderPhone"
+                  class="text-sm font-extrabold text-slate-800"
+                  >Phone
+                  <span class="font-semibold text-slate-400"
+                    >(optional)</span
+                  ></label
+                >
+                <input
+                  id="finderPhone"
+                  name="finderPhone"
+                  type="tel"
+                  maxlength="30"
+                  autocomplete="tel"
+                  placeholder="+63"
+                  class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                />
+              </div>
+            </div>
+
+            <label
+              class="mt-7 flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5"
+            >
+              <input
+                id="confirmReturn"
+                name="confirmReturn"
+                type="checkbox"
+                required
+                class="mt-1 h-4 w-4 rounded border-slate-300 text-actblue focus:ring-actblue"
+              />
+              <span class="text-xs font-semibold leading-5 text-slate-600">
+                I confirm that the information above is accurate to the best of
+                my knowledge.
+              </span>
+            </label>
+
+            <div class="mt-7 flex justify-end">
+              <button
+                type="submit"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark sm:w-auto"
+              >
+                Send return information <span>→</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="successState" class="hidden">
+        <div class="mx-auto max-w-3xl px-5 py-20 sm:px-7 lg:px-8">
+          <div
+            class="rounded-[30px] border border-slate-200 bg-white p-8 text-center shadow-soft sm:p-10"
+          >
+            <div
+              class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actyellow text-2xl font-black text-actblue"
+            >
+              ✓
+            </div>
+            <p
+              class="mt-6 text-[11px] font-black uppercase tracking-[0.16em] text-actblue"
+            >
+              Return information received
+            </p>
+            <h2 class="mt-2 text-2xl font-black text-slate-900 sm:text-3xl">
+              ACT can now review your lead.
+            </h2>
+            <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+              The original reporter’s contact information remains private. ACT
+              can use your information to coordinate the next recovery step.
+            </p>
+            <div
+              class="mx-auto mt-7 max-w-md rounded-2xl bg-slate-50 p-5 text-left"
+            >
+              <div class="flex justify-between gap-4">
+                <span class="text-xs font-bold text-slate-400">Return ID</span
+                ><strong
+                  id="successId"
+                  class="text-sm font-black text-actblue"
+                ></strong>
+              </div>
+              <div class="mt-3 flex justify-between gap-4">
+                <span class="text-xs font-bold text-slate-400">Status</span
+                ><span class="text-xs font-black uppercase text-amber-700"
+                  >Pending review</span
+                >
+              </div>
+
+              <div
+                id="guestReturnAccessRow"
+                class="mt-3 hidden justify-between gap-4"
+              >
+                <span class="text-xs font-bold text-slate-400"
+                  >Guest access code</span
+                >
+                <strong
+                  id="guestReturnAccessCode"
+                  class="text-sm font-black tracking-[0.12em] text-actblue"
+                ></strong>
+              </div>
+            </div>
+            <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <a
+                href="lost-items.html"
+                class="inline-flex items-center justify-center rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white hover:bg-actblueDark"
+                >Back to lost items</a
+              >
+              <a
+                id="guestReturnTrackLink"
+                href="guest-tracking.html"
+                class="hidden items-center justify-center rounded-xl border border-actblue/15 bg-actblue/[0.04] px-6 py-3.5 text-sm font-black text-actblue"
+                >Track guest return lead</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="notFoundState" class="hidden">
+        <div class="mx-auto max-w-3xl px-5 py-20 text-center sm:px-7 lg:px-8">
+          <h1 class="text-3xl font-black text-slate-900">
+            This lost report is unavailable.
+          </h1>
+          <p class="mt-3 text-sm leading-7 text-slate-500">
+            It may still be under review, may have been resolved, or the link
+            may be invalid.
+          </p>
+          <a
+            href="lost-items.html"
+            class="mt-7 inline-flex rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white"
+            >Browse lost items</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div
+          class="flex flex-col gap-6 border-b border-blue-800 pb-8 md:flex-row md:items-center md:justify-between"
+        >
+          <div class="flex items-center gap-4">
+            <img
+              src="images/act_logo.png"
+              alt="ACT Logo"
+              class="h-16 w-16 object-contain"
+            />
+            <div>
+              <h2 class="text-xl font-black">
+                Lost &amp; <span class="text-actyellow">Found</span>
+              </h2>
+              <p class="mt-1 text-sm text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+          <p class="text-sm text-blue-200">
+            Asian College of Technology · Cebu City
+          </p>
+        </div>
+        <p class="pt-6 text-center text-sm text-blue-200">
+          © 2026 ACT Lost &amp; Found. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const baseReports = [
+        {
+          id: 1,
+          type: "lost",
+          status: "active",
+          item: "Black Backpack",
+          category: "Bags",
+          color: "Black",
+          location: "Main Building",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          description:
+            "Black backpack with a small blue keychain on the front pocket.",
+          image:
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 2,
+          type: "found",
+          status: "active",
+          item: "Silver Watch",
+          category: "Personal Items",
+          color: "Silver",
+          location: "Library",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          description: "Silver wristwatch found near the reading tables.",
+          image:
+            "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 3,
+          type: "lost",
+          status: "active",
+          item: "Blue Wallet",
+          category: "Personal Items",
+          color: "Blue",
+          location: "Cafeteria",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          description:
+            "Navy-blue wallet with school and personal cards inside.",
+          image:
+            "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 4,
+          type: "found",
+          status: "active",
+          item: "Key Set",
+          category: "Keys",
+          color: "Silver",
+          location: "Room 204",
+          locationBase: "Main Building",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          description:
+            "Three keys on a simple metal ring found outside a classroom.",
+          image:
+            "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 5,
+          type: "found",
+          status: "active",
+          item: "Student ID",
+          category: "School Items",
+          color: "White",
+          location: "Student Lounge",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          description: "Student identification card found on a lounge chair.",
+          image:
+            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 6,
+          type: "lost",
+          status: "active",
+          item: "White Hoodie",
+          category: "Clothing",
+          color: "White",
+          location: "Gym",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          description:
+            "Plain white hoodie, medium size, possibly left after PE.",
+          image:
+            "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 7,
+          type: "found",
+          status: "active",
+          item: "Wireless Earbuds",
+          category: "Electronics",
+          color: "White",
+          location: "Computer Lab",
+          date: "Oct 1, 2026",
+          dateISO: "2026-10-01",
+          description: "White wireless earbuds in a small charging case.",
+          image:
+            "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=900&q=85",
+        },
+        {
+          id: 8,
+          type: "lost",
+          status: "active",
+          item: "Black Umbrella",
+          category: "Other",
+          color: "Black",
+          location: "Building A",
+          date: "Sep 30, 2026",
+          dateISO: "2026-09-30",
+          description: "Compact black folding umbrella with a curved handle.",
+          image:
+            "https://images.unsplash.com/photo-1438449805896-28f6e9b0d0ab?auto=format&fit=crop&w=900&q=85",
+        },
+      ];
+
+      function getStoredReports() {
+        try {
+          const stored = JSON.parse(
+            localStorage.getItem("act_reports") || "[]",
+          );
+          if (!Array.isArray(stored)) return baseReports;
+          return [
+            ...stored,
+            ...baseReports.filter(
+              (base) =>
+                !stored.some((item) => String(item.id) === String(base.id)),
+            ),
+          ];
+        } catch {
+          return baseReports;
+        }
+      }
+
+      function getReportFromUrl(expectedType) {
+        const id = new URLSearchParams(window.location.search).get("id");
+        if (!id) return null;
+
+        return (
+          getStoredReports().find((report) => {
+            const type = String(report.type || "").toLowerCase();
+            const status = String(report.status || "active").toLowerCase();
+
+            return (
+              String(report.id) === String(id) &&
+              type === expectedType &&
+              status === "active"
+            );
+          }) || null
+        );
+      }
+
+      function fallbackImage() {
+        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
+            <rect width="900" height="675" fill="#f1f5f9"/>
+            <circle cx="450" cy="270" r="75" fill="#0c2e8a" opacity=".08"/>
+            <path d="M405 285h90M450 240v90" stroke="#0c2e8a" stroke-width="16" stroke-linecap="round"/>
+            <text x="450" y="420" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#64748b">No item photo</text>
+          </svg>
+        `)}`;
+      }
+
+      function todayLocal() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function createId(prefix) {
+        return `${prefix}-${Date.now().toString().slice(-8)}`;
+      }
+
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open menu");
+      }
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuButton.setAttribute("aria-expanded", String(opening));
+        menuButton.setAttribute(
+          "aria-label",
+          opening ? "Close menu" : "Open menu",
+        );
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMobileMenu();
+      });
+
+      const currentSession = ACTAuth.getSession();
+
+      const returningAsUser = currentSession?.role === "user";
+
+      const report = getReportFromUrl("lost");
+      const formState = document.getElementById("formState");
+      const successState = document.getElementById("successState");
+      const notFoundState = document.getElementById("notFoundState");
+      const returnForm = document.getElementById("returnForm");
+      const foundDate = document.getElementById("foundDate");
+      foundDate.max = todayLocal();
+
+      const returnLoginLink = document.getElementById("returnLoginLink");
+
+      if (returnLoginLink) {
+        returnLoginLink.href = ACTAuth.loginUrl(ACTAuth.currentPage());
+      }
+
+      if (returningAsUser) {
+        if (currentSession.name) {
+          document.getElementById("finderName").value = currentSession.name;
+        }
+
+        if (currentSession.email) {
+          const finderEmail = document.getElementById("finderEmail");
+
+          finderEmail.value = currentSession.email;
+
+          finderEmail.readOnly = true;
+        }
+
+        const returnIdentityTitle = document.getElementById(
+          "returnIdentityTitle",
+        );
+
+        const returnIdentityText =
+          document.getElementById("returnIdentityText");
+
+        if (returnIdentityTitle) {
+          returnIdentityTitle.textContent =
+            "You're sending this return lead with your ACT account.";
+        }
+
+        if (returnIdentityText) {
+          returnIdentityText.textContent =
+            "This return lead will stay associated with your signed-in profile.";
+        }
+
+        if (returnLoginLink) {
+          returnLoginLink.classList.add("hidden");
+        }
+      }
+
+      if (!report) {
+        formState.classList.add("hidden");
+        notFoundState.classList.remove("hidden");
+      } else {
+        document.getElementById("backToItem").href =
+          `item-details.html?id=${encodeURIComponent(report.id)}`;
+        document.getElementById("summaryImage").src =
+          report.image || fallbackImage();
+        document.getElementById("summaryImage").alt =
+          `${report.item} report image`;
+        document.getElementById("summaryCategory").textContent =
+          report.category || "Other";
+        document.getElementById("summaryName").textContent =
+          report.item || "Lost item";
+        document.getElementById("summaryMeta").textContent =
+          `${report.location || "Location not specified"} · ${report.date || report.dateISO || "Date not specified"}`;
+      }
+
+      returnForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!report || !returnForm.checkValidity()) {
+          returnForm.reportValidity();
+          return;
+        }
+
+        const data = Object.fromEntries(new FormData(returnForm).entries());
+        const returnId = ACTWorkflow.id("R");
+        const guestCode = returningAsUser ? "" : ACTWorkflow.code(6);
+
+        const lead = {
+          id: returnId,
+          reportId: report.id,
+          reportType: "lost",
+          reportSnapshot: {
+            id: report.id,
+            type: report.type,
+            status: report.status,
+            item: report.item,
+            category: report.category,
+            color: report.color,
+            brand: report.brand || "",
+            location: report.location,
+            locationBase: report.locationBase || report.location,
+            date: report.date,
+            dateISO: report.dateISO,
+            description: report.description,
+            image: report.image || "",
+            privateDetail: report.privateDetail || "",
+            reporter: report.reporter || null,
+          },
+          status: "pending",
+          foundLocation: data.foundLocation.trim(),
+          foundDate: data.foundDate,
+          custody: data.custody,
+          note: data.note.trim(),
+          finder: {
+            name: data.finderName.trim(),
+            email: data.finderEmail.trim(),
+            phone: data.finderPhone.trim(),
+            mode: returningAsUser ? "user" : "guest",
+          },
+          guestAccessCode: guestCode,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        try {
+          const returns = ACTWorkflow.read(ACTWorkflow.KEYS.returns);
+          returns.unshift(lead);
+          ACTWorkflow.write(ACTWorkflow.KEYS.returns, returns);
+
+          if (returningAsUser) {
+            ACTWorkflow.notify(
+              currentSession.email,
+              `Your return lead ${returnId} was submitted and is pending review.`,
+              "user-dashboard.html",
+            );
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Your return information could not be saved in this browser.");
+          return;
+        }
+
+        formState.classList.add("hidden");
+        document.getElementById("successId").textContent = returnId;
+
+        if (!returningAsUser) {
+          ACTWorkflow.rememberGuestCase(returnId, guestCode, "return-lead");
+
+          const row = document.getElementById("guestReturnAccessRow");
+          const codeText = document.getElementById("guestReturnAccessCode");
+          const trackLink = document.getElementById("guestReturnTrackLink");
+
+          codeText.textContent = guestCode;
+          row.classList.remove("hidden");
+          row.classList.add("flex");
+          trackLink.classList.remove("hidden");
+          trackLink.classList.add("inline-flex");
+          trackLink.href = `guest-tracking.html?ref=${encodeURIComponent(returnId)}&code=${encodeURIComponent(guestCode)}`;
+        }
+
+        successState.classList.remove("hidden");
+        successState.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    </script>
+  </body>
+</html>

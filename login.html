@@ -1,0 +1,990 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="theme-color" content="#0c2e8a" />
+
+    <title>Log In | ACT Lost & Found</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+
+            boxShadow: {
+              soft: "0 18px 50px rgba(12,46,138,.12)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      /* =================================
+         PAGE ENTRANCE
+      ================================= */
+
+      .login-reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: loginReveal 0.7s ease forwards;
+      }
+
+      .login-delay-1 {
+        animation-delay: 0.1s;
+      }
+
+      .login-delay-2 {
+        animation-delay: 0.2s;
+      }
+
+      .login-delay-3 {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes loginReveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* =================================
+         FEATURE ROW
+      ================================= */
+
+      .login-feature {
+        transition:
+          transform 0.25s ease,
+          background-color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .login-feature:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.11);
+        border-color: rgba(255, 255, 255, 0.16);
+      }
+
+      /* =================================
+         DEMO ACCOUNT
+      ================================= */
+
+      .demo-account {
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          background-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .demo-account:hover {
+        transform: translateY(-2px);
+        border-color: rgba(12, 46, 138, 0.2);
+        background: white;
+        box-shadow: 0 10px 28px rgba(23, 32, 51, 0.06);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .login-reveal {
+          opacity: 1;
+          transform: none;
+          animation: none;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-slate-50 text-ink antialiased">
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+    <header
+      class="relative z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-5 sm:px-7 lg:px-8"
+      >
+        <!-- Logo -->
+        <a
+          href="index.html"
+          class="flex items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <!-- Back -->
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-extrabold text-actblue transition hover:-translate-y-0.5 hover:border-actblue/20 hover:bg-slate-50"
+        >
+          <span>←</span>
+          <span class="hidden sm:inline">Back to home</span>
+          <span class="sm:hidden">Home</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+    <main class="overflow-hidden bg-slate-50">
+      <!-- =================================================
+           LOGIN HERO
+      ================================================== -->
+      <section class="relative overflow-hidden bg-actblue text-white">
+        <!-- Background glow -->
+        <div
+          class="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-white/[0.05] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-actyellow/[0.12] blur-3xl"
+        ></div>
+
+        <!-- Decorative small dots -->
+        <div
+          class="pointer-events-none absolute left-[7%] top-[20%] hidden h-2 w-2 rounded-full bg-actyellow/50 lg:block"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute left-[44%] top-[12%] hidden h-1.5 w-1.5 rounded-full bg-white/25 lg:block"
+        ></div>
+
+        <!-- Diagonal ACT accent -->
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-36 w-72 bg-actyellow"
+          style="
+            clip-path: polygon(68% 42%, 100% 0, 100% 100%, 0 100%, 30% 78%);
+          "
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-24 w-52 bg-actblueDark"
+          style="clip-path: polygon(58% 100%, 100% 28%, 100% 100%)"
+        ></div>
+
+        <!-- Main layout -->
+        <div
+          class="relative mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-12 sm:px-7 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_440px] lg:items-center lg:px-8 lg:pb-20 lg:pt-16"
+        >
+          <!-- =================================================
+               LEFT CONTENT
+          ================================================== -->
+          <section class="login-reveal max-w-2xl">
+            <span
+              class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.15em] text-actyellow backdrop-blur"
+            >
+              <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+              ACT Lost &amp; Found
+            </span>
+
+            <h1
+              class="mt-6 max-w-2xl text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl lg:text-[54px]"
+            >
+              Your lost &amp; found activity,
+              <span class="text-actyellow">all in one place.</span>
+            </h1>
+
+            <p
+              class="mt-5 max-w-xl text-sm leading-7 text-white/70 sm:text-base sm:leading-8"
+            >
+              Sign in to manage reports, follow ownership claims, receive
+              updates, and continue verified return cases from your dashboard.
+            </p>
+
+            <!-- Feature rows -->
+            <div class="mt-8 hidden max-w-xl space-y-3 md:block">
+              <!-- 01 -->
+              <div
+                class="login-feature flex items-center gap-4 rounded-[18px] border border-white/10 bg-white/[0.07] p-4 backdrop-blur"
+              >
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-actyellow text-xs font-black text-actblue"
+                >
+                  01
+                </div>
+
+                <div>
+                  <p class="text-sm font-black text-white">
+                    Manage your reports
+                  </p>
+
+                  <p class="mt-1 text-xs leading-5 text-white/55">
+                    Keep your submitted Lost and Found reports organized.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 02 -->
+              <div
+                class="login-feature flex items-center gap-4 rounded-[18px] border border-white/10 bg-white/[0.07] p-4 backdrop-blur"
+              >
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-xs font-black text-white"
+                >
+                  02
+                </div>
+
+                <div>
+                  <p class="text-sm font-black text-white">
+                    Follow claim updates
+                  </p>
+
+                  <p class="mt-1 text-xs leading-5 text-white/55">
+                    Track ownership verification and claim progress.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 03 -->
+              <div
+                class="login-feature flex items-center gap-4 rounded-[18px] border border-white/10 bg-white/[0.07] p-4 backdrop-blur"
+              >
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-xs font-black text-white"
+                >
+                  03
+                </div>
+
+                <div>
+                  <p class="text-sm font-black text-white">
+                    Continue return cases
+                  </p>
+
+                  <p class="mt-1 text-xs leading-5 text-white/55">
+                    Access secure coordination after verification.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Guest note -->
+            <div
+              class="mt-7 inline-flex max-w-xl items-start gap-3 rounded-[18px] border border-actyellow/20 bg-actyellow/[0.08] px-4 py-3.5 backdrop-blur"
+            >
+              <span
+                class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+              >
+                i
+              </span>
+
+              <p class="text-xs font-semibold leading-5 text-white/70">
+                No account? You can still browse, report, claim, and help return
+                items as a guest.
+              </p>
+            </div>
+          </section>
+
+          <!-- =================================================
+               LOGIN CARD
+          ================================================== -->
+          <section
+            class="login-reveal login-delay-1 relative z-10 rounded-[30px] border border-white/50 bg-white p-6 text-ink shadow-[0_30px_75px_rgba(0,0,0,0.20)] sm:p-8 lg:translate-y-16"
+          >
+            <!-- Card heading -->
+            <div class="flex items-start justify-between gap-5">
+              <div>
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.16em] text-actblue"
+                >
+                  Account access
+                </p>
+
+                <h2
+                  class="mt-2 text-3xl font-black tracking-tight text-slate-900"
+                >
+                  Welcome back.
+                </h2>
+
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                  Sign in with an ACT demo account to continue.
+                </p>
+              </div>
+
+              <div
+                class="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-actblue/[0.06] text-actblue sm:flex"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Prototype notice -->
+            <div
+              class="mt-6 flex items-start gap-3 rounded-[18px] border border-actyellow/40 bg-actyellow/[0.09] p-4"
+            >
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+              >
+                i
+              </span>
+
+              <div>
+                <p class="text-xs font-black text-slate-800">
+                  Prototype access
+                </p>
+
+                <p class="mt-1 text-[11px] leading-5 text-slate-500">
+                  This prototype uses browser-only demo authentication and is
+                  not production security.
+                </p>
+              </div>
+            </div>
+
+            <!-- Login form -->
+            <form id="loginForm" class="mt-6 space-y-5" novalidate>
+              <!-- Email -->
+              <div>
+                <label
+                  for="email"
+                  class="text-sm font-extrabold text-slate-800"
+                >
+                  Email
+                </label>
+
+                <div class="relative mt-2">
+                  <div
+                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V6.75z"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.5 6l8.5 6.5L20.5 6"
+                      />
+                    </svg>
+                  </div>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    placeholder="name@act.edu.ph"
+                    class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-sm font-semibold outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                  />
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div>
+                <div class="flex items-center justify-between gap-3">
+                  <label
+                    for="password"
+                    class="text-sm font-extrabold text-slate-800"
+                  >
+                    Password
+                  </label>
+
+                  <button
+                    id="togglePassword"
+                    type="button"
+                    class="text-xs font-extrabold text-actblue transition hover:text-actblueDark"
+                    aria-label="Show password"
+                  >
+                    Show
+                  </button>
+                </div>
+
+                <div class="relative mt-2">
+                  <div
+                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M16.5 10.5V7.5a4.5 4.5 0 00-9 0v3"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.75 10.5h10.5A1.75 1.75 0 0119 12.25v6A1.75 1.75 0 0117.25 20H6.75A1.75 1.75 0 015 18.25v-6a1.75 1.75 0 011.75-1.75z"
+                      />
+                    </svg>
+                  </div>
+
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    minlength="4"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    class="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-12 pr-4 text-sm font-semibold outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                  />
+                </div>
+              </div>
+
+              <!-- Error -->
+              <div
+                id="loginError"
+                role="alert"
+                aria-live="polite"
+                class="hidden rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-bold leading-5 text-rose-700"
+              ></div>
+
+              <!-- Login -->
+              <button
+                type="submit"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark hover:shadow-lg disabled:cursor-wait disabled:opacity-75"
+              >
+                Log in
+                <span>→</span>
+              </button>
+
+              <!-- Divider -->
+              <div class="flex items-center gap-3">
+                <div class="h-px flex-1 bg-slate-200"></div>
+
+                <span
+                  class="text-[10px] font-black uppercase tracking-[0.12em] text-slate-400"
+                >
+                  or
+                </span>
+
+                <div class="h-px flex-1 bg-slate-200"></div>
+              </div>
+
+              <!-- Guest -->
+              <a
+                id="continueGuestLink"
+                href="index.html"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-black text-slate-600 transition hover:-translate-y-0.5 hover:border-actblue/20 hover:bg-slate-50 hover:text-actblue"
+              >
+                Continue as Guest
+                <span>→</span>
+              </a>
+            </form>
+
+            <!-- Demo accounts -->
+            <div class="mt-7 border-t border-slate-100 pt-6">
+              <div class="flex items-end justify-between gap-4">
+                <div>
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                  >
+                    Demo accounts
+                  </p>
+
+                  <p class="mt-1 text-[11px] leading-5 text-slate-400">
+                    Select one to automatically fill the form.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-4 grid gap-3">
+                <!-- Student -->
+                <button
+                  type="button"
+                  data-demo-email="student@act.edu.ph"
+                  data-demo-password="student123"
+                  class="demo-account group flex items-center gap-4 rounded-[18px] border border-slate-200 bg-slate-50 p-4 text-left"
+                >
+                  <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-actblue/[0.07] text-actblue"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="min-w-0 flex-1">
+                    <p class="text-xs font-black text-slate-800">
+                      Student / User
+                    </p>
+
+                    <p
+                      class="mt-1 truncate text-[10px] font-semibold text-slate-400"
+                    >
+                      student@act.edu.ph · student123
+                    </p>
+                  </div>
+
+                  <span
+                    class="text-sm font-black text-actblue transition-transform group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </button>
+
+                <!-- Admin -->
+                <button
+                  type="button"
+                  data-demo-email="admin@act.edu.ph"
+                  data-demo-password="admin123"
+                  class="demo-account group flex items-center gap-4 rounded-[18px] border border-slate-200 bg-slate-50 p-4 text-left"
+                >
+                  <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-actyellow/25 text-actblue"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 3l7 3v5c0 4.4-2.7 8.4-7 10-4.3-1.6-7-5.6-7-10V6l7-3z"
+                      />
+
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m9.5 12 1.7 1.7 3.6-3.8"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="min-w-0 flex-1">
+                    <p class="text-xs font-black text-slate-800">
+                      Admin / Moderator
+                    </p>
+
+                    <p
+                      class="mt-1 truncate text-[10px] font-semibold text-slate-400"
+                    >
+                      admin@act.edu.ph · admin123
+                    </p>
+                  </div>
+
+                  <span
+                    class="text-sm font-black text-actblue transition-transform group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- =================================================
+           SUPPORT AREA
+      ================================================== -->
+      <section class="bg-slate-50">
+        <div
+          class="mx-auto max-w-7xl px-5 pb-16 pt-14 sm:px-7 lg:px-8 lg:pb-14 lg:pt-24"
+        >
+          <div
+            class="login-reveal login-delay-2 grid overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_40px_rgba(23,32,51,0.05)] md:grid-cols-3"
+          >
+            <!-- Guest tracking -->
+            <a
+              href="guest-tracking.html"
+              class="group border-b border-slate-200 p-6 transition hover:bg-slate-50 md:border-b-0 md:border-r"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actyellow/25 text-sm font-black text-actblue"
+              >
+                #
+              </div>
+
+              <p class="mt-4 text-sm font-black text-slate-900">
+                Track a guest case
+              </p>
+
+              <p class="mt-2 text-xs leading-5 text-slate-500">
+                Use your Reference ID and Guest Access Code.
+              </p>
+
+              <span
+                class="mt-4 inline-flex items-center gap-2 text-xs font-black text-actblue"
+              >
+                Guest Tracking
+                <span class="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </a>
+
+            <!-- Browse -->
+            <a
+              href="all-reports.html"
+              class="group border-b border-slate-200 p-6 transition hover:bg-slate-50 md:border-b-0 md:border-r"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actblue/[0.07] text-actblue"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle cx="11" cy="11" r="6.5" />
+
+                  <path stroke-linecap="round" d="m16 16 4 4" />
+                </svg>
+              </div>
+
+              <p class="mt-4 text-sm font-black text-slate-900">
+                Browse without logging in
+              </p>
+
+              <p class="mt-2 text-xs leading-5 text-slate-500">
+                Search existing Lost and Found reports as a guest.
+              </p>
+
+              <span
+                class="mt-4 inline-flex items-center gap-2 text-xs font-black text-actblue"
+              >
+                Browse Reports
+                <span class="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </a>
+
+            <!-- Help -->
+            <a href="help.html" class="group p-6 transition hover:bg-slate-50">
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actblue text-sm font-black text-white"
+              >
+                ?
+              </div>
+
+              <p class="mt-4 text-sm font-black text-slate-900">Need help?</p>
+
+              <p class="mt-2 text-xs leading-5 text-slate-500">
+                Learn about reporting, claims, guest access, and returns.
+              </p>
+
+              <span
+                class="mt-4 inline-flex items-center gap-2 text-xs font-black text-actblue"
+              >
+                Open Help Center
+                <span class="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =================================================
+         SESSION
+    ================================================== -->
+    <script src="session.js"></script>
+
+    <script>
+      /* ==========================================
+         LOGIN ELEMENTS
+      ========================================== */
+
+      const loginForm = document.getElementById("loginForm");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const loginError = document.getElementById("loginError");
+      const togglePassword = document.getElementById("togglePassword");
+      const continueGuestLink = document.getElementById("continueGuestLink");
+
+      const submitButton = loginForm.querySelector('button[type="submit"]');
+
+      /* ==========================================
+         DEMO ACCOUNTS
+      ========================================== */
+
+      const DEMO_USERS = [
+        {
+          email: "student@act.edu.ph",
+          password: "student123",
+          role: "user",
+          name: "ACT Student",
+        },
+
+        {
+          email: "admin@act.edu.ph",
+          password: "admin123",
+          role: "admin",
+          name: "ACT Administrator",
+        },
+      ];
+
+      /* ==========================================
+         REDIRECT
+      ========================================== */
+
+      const params = new URLSearchParams(window.location.search);
+
+      const requestedRedirect = ACTAuth.safeLocalRedirect(
+        params.get("redirect"),
+      );
+
+      continueGuestLink.href = requestedRedirect || "index.html";
+
+      function destinationFor(user) {
+        if (user.role === "admin") {
+          return "admin-dashboard.html";
+        }
+
+        /*
+          Prevent normal users from being sent
+          directly into the admin dashboard.
+        */
+        if (
+          requestedRedirect &&
+          !requestedRedirect.includes("admin-dashboard.html")
+        ) {
+          return requestedRedirect;
+        }
+
+        return "user-dashboard.html";
+      }
+
+      /* ==========================================
+         SESSION
+      ========================================== */
+
+      function saveSession(user) {
+        const session = {
+          email: user.email,
+          role: user.role,
+          name: user.name,
+          loggedIn: true,
+          createdAt: new Date().toISOString(),
+        };
+
+        localStorage.setItem("act_session", JSON.stringify(session));
+      }
+
+      /* ==========================================
+         ERROR MESSAGE
+      ========================================== */
+
+      function showLoginError(message) {
+        loginError.textContent = message;
+        loginError.classList.remove("hidden");
+      }
+
+      function clearLoginError() {
+        loginError.textContent = "";
+        loginError.classList.add("hidden");
+      }
+
+      /* ==========================================
+         LOGIN
+      ========================================== */
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        clearLoginError();
+
+        if (!loginForm.checkValidity()) {
+          loginForm.reportValidity();
+          return;
+        }
+
+        const email = emailInput.value.trim().toLowerCase();
+
+        const password = passwordInput.value;
+
+        const user = DEMO_USERS.find((item) => {
+          return (
+            item.email.toLowerCase() === email && item.password === password
+          );
+        });
+
+        if (!user) {
+          showLoginError(
+            "Invalid email or password. Please check the demo account details and try again.",
+          );
+
+          passwordInput.focus();
+          return;
+        }
+
+        submitButton.disabled = true;
+
+        submitButton.innerHTML = `
+          <span>Logging in...</span>
+        `;
+
+        saveSession(user);
+
+        setTimeout(() => {
+          window.location.href = destinationFor(user);
+        }, 350);
+      });
+
+      /* ==========================================
+         SHOW / HIDE PASSWORD
+      ========================================== */
+
+      togglePassword.addEventListener("click", () => {
+        const passwordIsVisible = passwordInput.type === "text";
+
+        passwordInput.type = passwordIsVisible ? "password" : "text";
+
+        togglePassword.textContent = passwordIsVisible ? "Show" : "Hide";
+
+        togglePassword.setAttribute(
+          "aria-label",
+          passwordIsVisible ? "Show password" : "Hide password",
+        );
+      });
+
+      /* ==========================================
+         DEMO ACCOUNT BUTTONS
+      ========================================== */
+
+      document.querySelectorAll("[data-demo-email]").forEach((button) => {
+        button.addEventListener("click", () => {
+          emailInput.value = button.dataset.demoEmail;
+
+          passwordInput.value = button.dataset.demoPassword;
+
+          clearLoginError();
+
+          document.querySelectorAll("[data-demo-email]").forEach((item) => {
+            item.classList.remove(
+              "border-actblue",
+              "bg-actblue/[0.04]",
+              "shadow-[0_10px_28px_rgba(23,32,51,0.06)]",
+            );
+          });
+
+          button.classList.add(
+            "border-actblue",
+            "bg-actblue/[0.04]",
+            "shadow-[0_10px_28px_rgba(23,32,51,0.06)]",
+          );
+        });
+      });
+
+      /* ==========================================
+         EXISTING SESSION
+      ========================================== */
+
+      function handleExistingSession() {
+        const session = ACTAuth.getSession();
+
+        if (!session) return;
+
+        window.location.replace(destinationFor(session));
+      }
+
+      handleExistingSession();
+    </script>
+  </body>
+</html>

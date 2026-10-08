@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="theme-color" content="#0c2e8a" />
+
+    <title>Item Details | ACT Lost & Found</title>
+
+    <!-- Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+              paper: "#f8fafc",
+            },
+
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+
+            boxShadow: {
+              soft: "0 12px 35px rgba(12, 46, 138, 0.10)",
+              card: "0 8px 24px rgba(23, 32, 51, 0.08)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <!-- LOGO -->
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <!-- DESKTOP NAV -->
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <!-- LOGIN + MOBILE BUTTON -->
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition duration-200 hover:-translate-y-0.5 hover:bg-actblue hover:text-white hover:shadow-md sm:inline-flex"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+    <main>
+      <!-- =====================================================
+           BACK NAVIGATION
+      ====================================================== -->
+      <section class="mx-auto max-w-7xl px-5 pt-7 sm:px-7 lg:px-8">
+        <div
+          class="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <a
+            id="backToDirectory"
+            href="all-reports.html"
+            class="group inline-flex w-fit items-center gap-2 text-sm font-extrabold text-slate-500 transition hover:text-actblue"
+          >
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-actblue transition group-hover:border-actblue/20 group-hover:bg-actblue/[0.04]"
+              aria-hidden="true"
+            >
+              ←
+            </span>
+
+            <span id="backDirectoryText"> Back to reports </span>
+          </a>
+
+          <div
+            class="inline-flex w-fit items-center gap-2 rounded-full bg-actblue/[0.05] px-3 py-1.5"
+          >
+            <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+
+            <span
+              id="pageContext"
+              class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+            >
+              Item details
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           LOADING
+      ====================================================== -->
+      <section
+        id="loadingState"
+        class="mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-8"
+      >
+        <div
+          class="flex min-h-[360px] items-center justify-center rounded-[30px] border border-slate-200 bg-white"
+        >
+          <div class="text-center">
+            <div
+              class="mx-auto h-9 w-9 animate-spin rounded-full border-4 border-slate-200 border-t-actblue"
+            ></div>
+
+            <p class="mt-4 text-sm font-bold text-slate-400">
+              Loading report...
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           REPORT NOT FOUND
+      ====================================================== -->
+      <section
+        id="notFoundState"
+        class="mx-auto hidden max-w-7xl px-5 py-14 sm:px-7 lg:px-8"
+      >
+        <div
+          class="rounded-[30px] border border-dashed border-actblue/20 bg-white px-6 py-16 text-center shadow-[0_12px_35px_rgba(23,32,51,0.04)]"
+        >
+          <span
+            class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-actblue/[0.06] text-2xl text-actblue"
+          >
+            ?
+          </span>
+
+          <p
+            class="mt-5 text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+          >
+            Report unavailable
+          </p>
+
+          <h1 class="mt-2 text-2xl font-black text-slate-900 sm:text-3xl">
+            We couldn't find this active report.
+          </h1>
+
+          <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+            The report may have been removed, resolved, archived, or may not be
+            available in this browser.
+          </p>
+
+          <a
+            href="all-reports.html"
+            class="mt-7 inline-flex items-center justify-center rounded-xl bg-actblue px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+          >
+            Browse active reports
+          </a>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           ITEM DETAILS
+      ====================================================== -->
+      <section
+        id="itemDetailsState"
+        class="mx-auto hidden max-w-7xl px-5 py-7 pb-16 sm:px-7 lg:px-8 lg:py-9"
+      >
+        <div
+          class="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-stretch"
+        >
+          <!-- =================================================
+               LEFT — IMAGE
+          ================================================== -->
+          <div
+            class="relative aspect-[4/3] overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_45px_rgba(23,32,51,0.08)] lg:h-full lg:aspect-auto"
+          >
+            <div class="absolute inset-0 bg-slate-100">
+              <img
+                id="itemImage"
+                src=""
+                alt=""
+                class="h-full w-full object-cover"
+              />
+
+              <!-- subtle bottom gradient -->
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/30 to-transparent"
+              ></div>
+            </div>
+
+            <!-- TYPE BADGE -->
+            <span
+              id="imageTypeBadge"
+              class="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.13em] shadow-sm"
+            >
+              <span id="imageTypeDot" class="h-1.5 w-1.5 rounded-full"></span>
+
+              <span id="imageTypeText"> Report </span>
+            </span>
+
+            <!-- STATUS -->
+            <span
+              class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/95 px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.12em] text-actblue shadow-sm backdrop-blur"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+
+              Active
+            </span>
+          </div>
+
+          <!-- =================================================
+               RIGHT — DETAILS
+          ================================================== -->
+          <div class="self-start">
+            <!-- DETAILS CARD -->
+            <article
+              class="rounded-[30px] border border-slate-200 bg-white p-6 shadow-[0_16px_45px_rgba(23,32,51,0.07)] sm:p-7 lg:p-8"
+            >
+              <!-- BADGES -->
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span
+                    id="typeBadge"
+                    class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.13em]"
+                  >
+                    <span id="typeDot" class="h-1.5 w-1.5 rounded-full"></span>
+
+                    <span id="typeText"> Report </span>
+                  </span>
+
+                  <span
+                    class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.11em] text-emerald-700"
+                  >
+                    <span
+                      class="h-1.5 w-1.5 rounded-full bg-emerald-500"
+                    ></span>
+
+                    Active
+                  </span>
+                </div>
+
+                <span
+                  id="reportId"
+                  class="text-[10px] font-bold tracking-wide text-slate-300"
+                >
+                  #
+                </span>
+              </div>
+
+              <!-- TITLE -->
+              <div class="mt-5">
+                <p
+                  id="category"
+                  class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                >
+                  Category
+                </p>
+
+                <h1
+                  id="itemTitle"
+                  class="mt-2 text-3xl font-black leading-tight tracking-[-0.025em] text-slate-900 sm:text-4xl"
+                >
+                  Item
+                </h1>
+
+                <p
+                  id="brandColor"
+                  class="mt-2 text-sm font-semibold text-slate-400"
+                ></p>
+              </div>
+
+              <!-- META -->
+              <div class="mt-7 grid gap-3 sm:grid-cols-2">
+                <!-- LOCATION -->
+                <div
+                  class="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <span
+                      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue/[0.06] text-actblue"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"
+                        />
+
+                        <circle cx="12" cy="9" r="2.2" />
+                      </svg>
+                    </span>
+
+                    <div class="min-w-0">
+                      <p
+                        id="locationLabel"
+                        class="text-[9px] font-black uppercase tracking-[0.13em] text-slate-400"
+                      >
+                        Location
+                      </p>
+
+                      <p
+                        id="itemLocation"
+                        class="mt-1 break-words text-sm font-black leading-5 text-slate-700"
+                      >
+                        —
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DATE -->
+                <div
+                  class="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <span
+                      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue/[0.06] text-actblue"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <rect x="4" y="5" width="16" height="15" rx="2" />
+
+                        <path
+                          stroke-linecap="round"
+                          d="M8 3v4M16 3v4M4 10h16"
+                        />
+                      </svg>
+                    </span>
+
+                    <div>
+                      <p
+                        id="dateLabel"
+                        class="text-[9px] font-black uppercase tracking-[0.13em] text-slate-400"
+                      >
+                        Date
+                      </p>
+
+                      <p
+                        id="itemDate"
+                        class="mt-1 text-sm font-black leading-5 text-slate-700"
+                      >
+                        —
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TIME -->
+                <div
+                  id="timeCard"
+                  class="hidden rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <span
+                      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue/[0.06] text-actblue"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 7v5l3 2"
+                        />
+                      </svg>
+                    </span>
+
+                    <div>
+                      <p
+                        class="text-[9px] font-black uppercase tracking-[0.13em] text-slate-400"
+                      >
+                        Approx. time
+                      </p>
+
+                      <p
+                        id="itemTime"
+                        class="mt-1 text-sm font-black leading-5 text-slate-700"
+                      >
+                        —
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- COLOR -->
+                <div
+                  id="colorCard"
+                  class="hidden rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <span
+                      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue/[0.06] text-actblue"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <circle cx="12" cy="12" r="8" />
+
+                        <circle cx="9" cy="10" r=".7" fill="currentColor" />
+
+                        <circle cx="13" cy="8" r=".7" fill="currentColor" />
+
+                        <circle cx="16" cy="12" r=".7" fill="currentColor" />
+                      </svg>
+                    </span>
+
+                    <div>
+                      <p
+                        class="text-[9px] font-black uppercase tracking-[0.13em] text-slate-400"
+                      >
+                        Main color
+                      </p>
+
+                      <p
+                        id="itemColor"
+                        class="mt-1 text-sm font-black leading-5 text-slate-700"
+                      >
+                        —
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DESCRIPTION -->
+              <div class="mt-7 border-t border-slate-100 pt-6">
+                <div class="flex items-center gap-2">
+                  <span class="h-[3px] w-7 rounded-full bg-actyellow"></span>
+
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                  >
+                    Public description
+                  </p>
+                </div>
+
+                <p
+                  id="itemDescription"
+                  class="mt-3 whitespace-pre-line text-sm font-medium leading-7 text-slate-600"
+                >
+                  —
+                </p>
+              </div>
+            </article>
+
+            <!-- =================================================
+                 RECOVERY ACTION
+            ================================================== -->
+            <article
+              id="actionCard"
+              class="mt-4 overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_12px_35px_rgba(23,32,51,0.05)]"
+            >
+              <div class="h-1.5 w-full bg-actyellow"></div>
+
+              <div class="p-5 sm:p-6">
+                <p
+                  id="actionEyebrow"
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                >
+                  Recovery action
+                </p>
+
+                <h2
+                  id="actionTitle"
+                  class="mt-2 text-xl font-black text-slate-900"
+                >
+                  Can you help with this item?
+                </h2>
+
+                <p
+                  id="actionDescription"
+                  class="mt-2 text-xs font-semibold leading-6 text-slate-500"
+                >
+                  Continue with the secure recovery process.
+                </p>
+
+                <a
+                  id="primaryAction"
+                  href="#"
+                  class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-actblue px-5 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark hover:shadow-lg"
+                >
+                  Continue
+
+                  <span aria-hidden="true"> → </span>
+                </a>
+              </div>
+            </article>
+
+            <!-- =================================================
+                 PRIVACY NOTE
+            ================================================== -->
+            <div
+              class="mt-4 rounded-[24px] border border-actblue/10 bg-actblue p-5 text-white shadow-[0_12px_30px_rgba(12,46,138,0.12)] sm:p-6"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+              >
+                Privacy by design
+              </p>
+
+              <h3 class="mt-2 text-base font-black">
+                Public report ≠ private proof.
+              </h3>
+
+              <p class="mt-2 text-xs font-semibold leading-6 text-white/70">
+                Contact information and private ownership details are not shown
+                here. Verification happens separately before return coordination
+                begins.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SAFETY NOTE
+      ====================================================== -->
+      <section
+        id="safetySection"
+        class="mx-auto hidden max-w-7xl px-5 pb-20 sm:px-7 lg:px-8"
+      >
+        <div class="rounded-[28px] border border-slate-200 bg-white p-6 sm:p-7">
+          <div class="grid gap-5 md:grid-cols-[auto_1fr] md:items-start">
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-xl bg-actyellow text-actblue"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 3 4.5 6v5.4c0 4.7 3.2 8.1 7.5 9.6 4.3-1.5 7.5-4.9 7.5-9.6V6L12 3Z"
+                />
+
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m9.5 12 1.6 1.7 3.5-3.8"
+                />
+              </svg>
+            </span>
+
+            <div>
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+              >
+                Safe recovery
+              </p>
+
+              <h2 class="mt-1 text-lg font-black text-slate-900">
+                Keep sensitive information out of public view.
+              </h2>
+
+              <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-500">
+                Never share passwords, PINs, OTPs, unlock codes, banking
+                information, or other sensitive details to prove ownership.
+                Claim verification should use safe identifying information.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div class="grid gap-12 md:grid-cols-3 lg:gap-16">
+          <!-- BRAND -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="mb-5 h-24 w-24 object-contain"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow"> Found </span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm leading-6 text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- CONTACT -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+
+              <h3 class="text-lg font-extrabold">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mt-0.5 h-5 w-5 shrink-0 text-actyellow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-5h6v5"
+                  />
+                </svg>
+
+                <p>Asian College of Technology</p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mt-0.5 h-5 w-5 shrink-0 text-actyellow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21s7-5.5 7-12a7 7 0 1 0-14 0c0 6.5 7 12 7 12z"
+                  />
+
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 shrink-0 text-actyellow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"
+                  />
+                </svg>
+
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 shrink-0 text-actyellow"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V6.75z"
+                  />
+
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.5 6l8.5 6.5L20.5 6"
+                  />
+                </svg>
+
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- INFO -->
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+
+              <h3 class="text-lg font-extrabold">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-blue-100">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 border-t border-blue-800 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- =====================================================
+         SESSION
+    ====================================================== -->
+    <script src="session.js"></script>
+
+    <!-- =====================================================
+         ITEM DETAILS JS
+    ====================================================== -->
+    <script>
+      /* ==========================================
+         SAMPLE REPORTS
+
+         These are fallbacks so the details page
+         can still open the sample reports used
+         around the prototype.
+      ========================================== */
+      const sampleReports = [
+        {
+          id: "1",
+          type: "lost",
+          status: "active",
+          item: "Black Backpack",
+          category: "Bags",
+          color: "Black",
+          brand: "",
+          location: "Main Building",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          time: "",
+          description:
+            "Black backpack with a small blue keychain on the front pocket.",
+          image:
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "2",
+          type: "found",
+          status: "active",
+          item: "Silver Watch",
+          category: "Personal Items",
+          color: "Silver",
+          brand: "",
+          location: "Library",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          time: "",
+          description: "Silver wristwatch found near the reading tables.",
+          image:
+            "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "3",
+          type: "lost",
+          status: "active",
+          item: "Blue Wallet",
+          category: "Personal Items",
+          color: "Blue",
+          brand: "",
+          location: "Cafeteria",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          time: "",
+          description:
+            "Navy-blue wallet with school and personal cards inside.",
+          image:
+            "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "4",
+          type: "found",
+          status: "active",
+          item: "Key Set",
+          category: "Keys",
+          color: "Silver",
+          brand: "",
+          location: "Room 204",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          time: "",
+          description:
+            "Three keys on a simple metal ring found outside a classroom.",
+          image:
+            "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "5",
+          type: "found",
+          status: "active",
+          item: "Student ID",
+          category: "School Items",
+          color: "",
+          brand: "",
+          location: "Student Lounge",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          time: "",
+          description: "Student identification card found on a lounge chair.",
+          image: "",
+        },
+
+        {
+          id: "6",
+          type: "lost",
+          status: "active",
+          item: "Jacket",
+          category: "Clothing",
+          color: "Black",
+          brand: "",
+          location: "Gym",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          time: "",
+          description: "Dark jacket left around the gym area.",
+          image:
+            "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "7",
+          type: "found",
+          status: "active",
+          item: "Wireless Earbuds",
+          category: "Electronics",
+          color: "White",
+          brand: "",
+          location: "Computer Lab",
+          date: "Oct 1, 2026",
+          dateISO: "2026-10-01",
+          time: "",
+          description: "White wireless earbuds in a small charging case.",
+          image:
+            "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=85",
+        },
+
+        {
+          id: "8",
+          type: "lost",
+          status: "active",
+          item: "Black Umbrella",
+          category: "Other",
+          color: "Black",
+          brand: "",
+          location: "Building A",
+          date: "Sep 30, 2026",
+          dateISO: "2026-09-30",
+          time: "",
+          description: "Compact black folding umbrella with a curved handle.",
+          image:
+            "https://images.unsplash.com/photo-1438449805896-28f6e9b0d0ab?auto=format&fit=crop&w=1200&q=85",
+        },
+      ];
+
+      /* ==========================================
+         ELEMENTS
+      ========================================== */
+      const loadingState = document.getElementById("loadingState");
+
+      const notFoundState = document.getElementById("notFoundState");
+
+      const itemDetailsState = document.getElementById("itemDetailsState");
+
+      const safetySection = document.getElementById("safetySection");
+
+      const backToDirectory = document.getElementById("backToDirectory");
+
+      const backDirectoryText = document.getElementById("backDirectoryText");
+
+      const pageContext = document.getElementById("pageContext");
+
+      const itemImage = document.getElementById("itemImage");
+
+      const imageTypeBadge = document.getElementById("imageTypeBadge");
+
+      const imageTypeDot = document.getElementById("imageTypeDot");
+
+      const imageTypeText = document.getElementById("imageTypeText");
+
+      const typeBadge = document.getElementById("typeBadge");
+
+      const typeDot = document.getElementById("typeDot");
+
+      const typeText = document.getElementById("typeText");
+
+      const reportId = document.getElementById("reportId");
+
+      const category = document.getElementById("category");
+
+      const itemTitle = document.getElementById("itemTitle");
+
+      const brandColor = document.getElementById("brandColor");
+
+      const locationLabel = document.getElementById("locationLabel");
+
+      const dateLabel = document.getElementById("dateLabel");
+
+      const itemLocation = document.getElementById("itemLocation");
+
+      const itemDate = document.getElementById("itemDate");
+
+      const timeCard = document.getElementById("timeCard");
+
+      const itemTime = document.getElementById("itemTime");
+
+      const colorCard = document.getElementById("colorCard");
+
+      const itemColor = document.getElementById("itemColor");
+
+      const itemDescription = document.getElementById("itemDescription");
+
+      const actionEyebrow = document.getElementById("actionEyebrow");
+
+      const actionTitle = document.getElementById("actionTitle");
+
+      const actionDescription = document.getElementById("actionDescription");
+
+      const primaryAction = document.getElementById("primaryAction");
+
+      /* ==========================================
+         HELPERS
+      ========================================== */
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function fallbackImage() {
+        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1200"
+            height="900"
+            viewBox="0 0 1200 900"
+          >
+            <rect
+              width="1200"
+              height="900"
+              fill="#f1f5f9"
+            />
+
+            <circle
+              cx="600"
+              cy="370"
+              r="90"
+              fill="#0c2e8a"
+              opacity=".07"
+            />
+
+            <path
+              d="M545 370h110M600 315v110"
+              stroke="#0c2e8a"
+              stroke-width="18"
+              stroke-linecap="round"
+            />
+
+            <text
+              x="600"
+              y="555"
+              text-anchor="middle"
+              font-family="Arial, sans-serif"
+              font-size="40"
+              font-weight="700"
+              fill="#64748b"
+            >
+              No item photo
+            </text>
+          </svg>
+        `)}`;
+      }
+
+      function formatTime(value) {
+        if (!value) return "";
+
+        const parts = String(value).split(":");
+
+        if (parts.length < 2) {
+          return value;
+        }
+
+        const hour = Number(parts[0]);
+
+        const minute = parts[1];
+
+        const suffix = hour >= 12 ? "PM" : "AM";
+
+        const displayHour = hour % 12 || 12;
+
+        return `${displayHour}:${minute} ${suffix}`;
+      }
+
+      /* ==========================================
+         LOAD REPORTS
+      ========================================== */
+      function getStoredReports() {
+        try {
+          const parsed = JSON.parse(
+            localStorage.getItem("act_reports") || "[]",
+          );
+
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function getAllReports() {
+        const stored = getStoredReports();
+
+        return [
+          ...stored,
+          ...sampleReports.filter(
+            (sample) =>
+              !stored.some((report) => String(report.id) === String(sample.id)),
+          ),
+        ];
+      }
+
+      function getRequestedReport() {
+        const params = new URLSearchParams(window.location.search);
+
+        const requestedId = params.get("id");
+
+        if (!requestedId) {
+          return null;
+        }
+
+        return (
+          getAllReports().find(
+            (report) => String(report.id) === String(requestedId),
+          ) || null
+        );
+      }
+
+      /* ==========================================
+         RENDER
+      ========================================== */
+      function renderReport(report) {
+        const type = String(report.type || "")
+          .trim()
+          .toLowerCase();
+
+        const status = String(report.status || "active")
+          .trim()
+          .toLowerCase();
+
+        /* ------------------------------------------
+           Public details page:
+           only LOST / FOUND active reports.
+        ------------------------------------------ */
+        if (!["lost", "found"].includes(type) || status !== "active") {
+          showNotFound();
+          return;
+        }
+
+        /* ------------------------------------------
+           General
+        ------------------------------------------ */
+        document.title = `${report.item || "Item"} | ACT Lost & Found`;
+
+        reportId.textContent = `#${report.id}`;
+
+        category.textContent = report.category || "Other";
+
+        itemTitle.textContent = report.item || "Unnamed item";
+
+        itemLocation.textContent = report.location || "Location not provided";
+
+        itemDate.textContent =
+          report.date || report.dateISO || "Date not provided";
+
+        itemDescription.textContent =
+          report.description || "No public description was provided.";
+
+        /* ------------------------------------------
+           Image
+        ------------------------------------------ */
+        itemImage.src = report.image || fallbackImage();
+
+        itemImage.alt = report.item
+          ? `${report.item} report photo`
+          : "Lost and found item photo";
+
+        /* ------------------------------------------
+           Brand + color line
+        ------------------------------------------ */
+        const shortDetails = [report.brand, report.color].filter(Boolean);
+
+        if (shortDetails.length) {
+          brandColor.textContent = shortDetails.join(" · ");
+
+          brandColor.classList.remove("hidden");
+        } else {
+          brandColor.classList.add("hidden");
+        }
+
+        /* ------------------------------------------
+           Optional color
+        ------------------------------------------ */
+        if (report.color) {
+          itemColor.textContent = report.color;
+
+          colorCard.classList.remove("hidden");
+        } else {
+          colorCard.classList.add("hidden");
+        }
+
+        /* ------------------------------------------
+           Optional time
+        ------------------------------------------ */
+        if (report.time) {
+          itemTime.textContent = formatTime(report.time);
+
+          timeCard.classList.remove("hidden");
+        } else {
+          timeCard.classList.add("hidden");
+        }
+
+        /* ------------------------------------------
+           LOST
+        ------------------------------------------ */
+        if (type === "lost") {
+          const directory = "lost-items.html";
+
+          backToDirectory.href = directory;
+
+          backDirectoryText.textContent = "Back to Lost Items";
+
+          pageContext.textContent = "Lost item details";
+
+          locationLabel.textContent = "Last seen";
+
+          dateLabel.textContent = "Date lost";
+
+          imageTypeBadge.className =
+            "absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-actblue px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.13em] text-white shadow-sm";
+
+          imageTypeDot.className = "h-1.5 w-1.5 rounded-full bg-actyellow";
+
+          imageTypeText.textContent = "Lost";
+
+          typeBadge.className =
+            "inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.13em] text-rose-700";
+
+          typeDot.className = "h-1.5 w-1.5 rounded-full bg-rose-500";
+
+          typeText.textContent = "Lost";
+
+          actionEyebrow.textContent = "Help return this item";
+
+          actionTitle.textContent = "Did you find this item?";
+
+          actionDescription.textContent =
+            "Send the owner a secure return lead. Your contact information will not be posted publicly.";
+
+          primaryAction.href = `return-item.html?id=${encodeURIComponent(report.id)}`;
+
+          primaryAction.innerHTML = `
+            I found this item
+            <span aria-hidden="true">→</span>
+          `;
+        }
+
+        /* ------------------------------------------
+           FOUND
+        ------------------------------------------ */
+        if (type === "found") {
+          const directory = "found-items.html";
+
+          backToDirectory.href = directory;
+
+          backDirectoryText.textContent = "Back to Found Items";
+
+          pageContext.textContent = "Found item details";
+
+          locationLabel.textContent = "Found at";
+
+          dateLabel.textContent = "Date found";
+
+          imageTypeBadge.className =
+            "absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-actyellow px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.13em] text-actblue shadow-sm";
+
+          imageTypeDot.className = "h-1.5 w-1.5 rounded-full bg-actblue";
+
+          imageTypeText.textContent = "Found";
+
+          typeBadge.className =
+            "inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.13em] text-emerald-700";
+
+          typeDot.className = "h-1.5 w-1.5 rounded-full bg-emerald-500";
+
+          typeText.textContent = "Found";
+
+          actionEyebrow.textContent = "Ownership claim";
+
+          actionTitle.textContent = "Does this look like your item?";
+
+          actionDescription.textContent =
+            "Submit an ownership claim and describe details that are not visible in the public report.";
+
+          primaryAction.href = `claim-item.html?id=${encodeURIComponent(report.id)}`;
+
+          primaryAction.innerHTML = `
+            This might be mine
+            <span aria-hidden="true">→</span>
+          `;
+        }
+
+        /* ------------------------------------------
+           Show
+        ------------------------------------------ */
+        loadingState.classList.add("hidden");
+
+        notFoundState.classList.add("hidden");
+
+        itemDetailsState.classList.remove("hidden");
+
+        safetySection.classList.remove("hidden");
+      }
+
+      /* ==========================================
+         NOT FOUND
+      ========================================== */
+      function showNotFound() {
+        loadingState.classList.add("hidden");
+
+        itemDetailsState.classList.add("hidden");
+
+        safetySection.classList.add("hidden");
+
+        notFoundState.classList.remove("hidden");
+      }
+
+      /* ==========================================
+         MOBILE NAV
+      ========================================== */
+      const menuButton = document.getElementById("menuButton");
+
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+
+        menuButton.setAttribute("aria-expanded", "false");
+
+        menuButton.setAttribute("aria-label", "Open menu");
+      }
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+
+        mobileMenu.classList.toggle("hidden");
+
+        menuButton.setAttribute("aria-expanded", String(opening));
+
+        menuButton.setAttribute(
+          "aria-label",
+          opening ? "Close menu" : "Open menu",
+        );
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMobileMenu();
+        }
+      });
+
+      /* ==========================================
+         START
+      ========================================== */
+      const report = getRequestedReport();
+
+      if (report) {
+        renderReport(report);
+      } else {
+        showNotFound();
+      }
+    </script>
+  </body>
+</html>

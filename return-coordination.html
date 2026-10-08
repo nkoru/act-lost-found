@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>Return Coordination | ACT Lost & Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: { raleway: ["Raleway", "sans-serif"] },
+            boxShadow: { soft: "0 14px 40px rgba(12,46,138,.10)" },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 88%
+        );
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            id="backLink"
+            href="all-reports.html"
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition hover:bg-actblue hover:text-white sm:inline-flex"
+          >
+            ← Back
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="unauthorizedState" class="hidden">
+        <div
+          class="mx-auto flex min-h-[520px] max-w-3xl items-center px-5 py-16 sm:px-7 lg:px-8"
+        >
+          <div
+            class="w-full rounded-[30px] border border-slate-200 bg-white p-8 text-center shadow-soft sm:p-10"
+          >
+            <div
+              class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-actyellow text-2xl font-black text-actblue"
+            >
+              !
+            </div>
+
+            <p
+              class="mt-6 text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+            >
+              Secure access
+            </p>
+
+            <h1
+              class="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl"
+            >
+              Secure case access required
+            </h1>
+
+            <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+              Open this return thread from My Account, the Admin Dashboard, or
+              the guest tracking link connected to your case.
+            </p>
+
+            <div
+              class="mx-auto mt-6 max-w-lg rounded-2xl border border-actyellow/40 bg-actyellow/[0.10] p-4 text-left"
+            >
+              <p class="text-sm font-black text-slate-900">Guest user?</p>
+
+              <p class="mt-1 text-xs font-semibold leading-5 text-slate-500">
+                Use your Reference ID and 6-digit Guest Access Code to reopen
+                the correct case securely.
+              </p>
+            </div>
+
+            <a
+              href="guest-tracking.html"
+              class="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+            >
+              Go to Guest Tracking
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="caseState" class="hidden">
+        <!-- =====================================================
+            RETURN COORDINATION HERO
+        ====================================================== -->
+        <section class="relative overflow-hidden bg-actblue">
+          <div class="intro-grid absolute inset-0"></div>
+
+          <div
+            class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+          ></div>
+
+          <div
+            class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+          ></div>
+
+          <div
+            class="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-12 lg:px-8"
+          >
+            <div class="mt-1 grid gap-7 lg:grid-cols-[1fr_360px] lg:items-end">
+              <!-- LEFT -->
+              <div class="max-w-3xl">
+                <div
+                  class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+                >
+                  <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+                  Secure Return Coordination
+                </div>
+
+                <h1
+                  id="itemTitle"
+                  class="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+                >
+                  Item return
+                </h1>
+
+                <p
+                  id="caseMeta"
+                  class="mt-4 text-sm font-semibold text-white/70"
+                ></p>
+
+                <p
+                  id="guestReturnHint"
+                  class="mt-4 hidden max-w-2xl rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 text-xs font-semibold leading-5 text-white/70"
+                >
+                  Guest access is tied to your Reference ID and Guest Access
+                  Code. Use “Back to guest case” anytime to return here later.
+                </p>
+              </div>
+
+              <!-- RIGHT -->
+              <div
+                class="hidden rounded-[24px] border border-white/15 bg-white/[0.08] p-5 backdrop-blur-sm lg:block"
+              >
+                <div class="flex items-center justify-between gap-3">
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+                  >
+                    Return status
+                  </p>
+
+                  <span
+                    id="caseStatus"
+                    class="inline-flex w-fit rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em]"
+                  ></span>
+                </div>
+
+                <div class="mt-4 space-y-2.5">
+                  <div class="flex items-start gap-3 text-xs text-white/70">
+                    <span
+                      class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                    >
+                      1
+                    </span>
+
+                    <span>
+                      Coordinate a safe handoff through the private thread.
+                    </span>
+                  </div>
+
+                  <div class="flex items-start gap-3 text-xs text-white/70">
+                    <span
+                      class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                    >
+                      2
+                    </span>
+
+                    <span>
+                      Use the Return Code only during the actual handoff.
+                    </span>
+                  </div>
+
+                  <div class="flex items-start gap-3 text-xs text-white/70">
+                    <span
+                      class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                    >
+                      3
+                    </span>
+
+                    <span>
+                      Confirm the exchange before the case is marked Returned.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =====================================================
+            RETURN COORDINATION CONTENT
+        ====================================================== -->
+        <div class="mx-auto max-w-7xl px-5 py-8 pb-20 sm:px-7 lg:px-8 lg:py-10">
+          <div
+            class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start"
+          >
+            <div
+              class="h-fit overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-soft"
+            >
+              <div class="border-b border-slate-200 p-5">
+                <h2 class="text-lg font-black text-slate-900">Return thread</h2>
+                <p class="mt-1 text-xs font-semibold leading-5 text-slate-500">
+                  Only the verified case participants and ACT moderator can
+                  access this thread.
+                </p>
+              </div>
+
+              <div
+                id="messageList"
+                class="max-h-[520px] space-y-4 overflow-y-auto bg-slate-50/60 p-5"
+              ></div>
+
+              <form
+                id="messageForm"
+                class="border-t border-slate-200 bg-white p-4"
+              >
+                <label for="messageInput" class="sr-only">Message</label>
+                <div class="flex gap-3">
+                  <textarea
+                    id="messageInput"
+                    required
+                    maxlength="600"
+                    rows="2"
+                    placeholder="Write a return-coordination message..."
+                    class="min-h-[52px] flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                  ></textarea>
+                  <button
+                    type="submit"
+                    class="self-end rounded-xl bg-actblue px-5 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+                  >
+                    Send
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <aside class="space-y-4">
+              <div
+                class="rounded-[30px] border border-slate-200 bg-white p-5 shadow-soft"
+              >
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  Handoff verification
+                </p>
+                <h2 class="mt-2 text-lg font-black text-slate-900">
+                  Confirm the return
+                </h2>
+
+                <div
+                  id="ownerCodeBox"
+                  class="mt-5 hidden rounded-2xl border border-actyellow/40 bg-actyellow/[0.10] p-4"
+                >
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.12em] text-slate-500"
+                  >
+                    Your Return Code
+                  </p>
+                  <p
+                    id="returnCodeText"
+                    class="mt-2 text-2xl font-black tracking-[0.16em] text-actblue"
+                  ></p>
+                  <p
+                    class="mt-2 text-xs font-semibold leading-5 text-slate-500"
+                  >
+                    Give this code only during the actual handoff. It helps the
+                    finder or ACT staff verify the correct owner.
+                  </p>
+                </div>
+
+                <div id="finderCodeBox" class="mt-5 hidden">
+                  <label
+                    for="returnCodeInput"
+                    class="text-sm font-extrabold text-slate-800"
+                    >Owner's Return Code</label
+                  >
+                  <input
+                    id="returnCodeInput"
+                    maxlength="6"
+                    inputmode="numeric"
+                    placeholder="6 digits"
+                    class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-black tracking-[0.15em] outline-none placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                  />
+                  <p
+                    id="codeError"
+                    class="mt-2 hidden text-xs font-bold text-rose-600"
+                  >
+                    That code does not match this case.
+                  </p>
+                </div>
+
+                <div class="mt-5 grid gap-2 text-xs">
+                  <div
+                    class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3"
+                  >
+                    <span class="font-bold text-slate-500"
+                      >Owner received item</span
+                    >
+                    <span id="ownerConfirmState" class="font-black"></span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3"
+                  >
+                    <span class="font-bold text-slate-500"
+                      >Finder handed item over</span
+                    >
+                    <span id="finderConfirmState" class="font-black"></span>
+                  </div>
+                  <div
+                    class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3"
+                  >
+                    <span class="font-bold text-slate-500"
+                      >ACT staff confirmation</span
+                    >
+                    <span id="adminConfirmState" class="font-black"></span>
+                  </div>
+                </div>
+
+                <button
+                  id="confirmButton"
+                  type="button"
+                  class="mt-5 hidden w-full rounded-xl bg-actblue px-5 py-3.5 text-sm font-black text-white hover:bg-actblueDark"
+                ></button>
+
+                <div
+                  id="completedBox"
+                  class="mt-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4"
+                >
+                  <p class="text-sm font-black text-emerald-800">
+                    Return completed ✓
+                  </p>
+                  <p
+                    class="mt-1 text-xs font-semibold leading-5 text-emerald-700"
+                  >
+                    The linked report is now marked Returned.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="rounded-[24px] border border-actyellow/40 bg-actyellow/[0.10] p-5"
+              >
+                <p class="text-sm font-black text-slate-900">Safer handoff</p>
+                <p class="mt-2 text-xs font-semibold leading-5 text-slate-500">
+                  Prefer an ACT office, security desk, or another visible campus
+                  location. Never share passwords, PINs, OTPs, or banking
+                  information in the thread.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div class="grid gap-12 md:grid-cols-3 lg:gap-16">
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="mb-5 h-24 w-24 object-contain"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow">Found</span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm leading-6 text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">▣</span>
+                <p>Asian College of Technology</p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">●</span>
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">☎</span>
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">✉</span>
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-blue-100">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 border-t border-blue-800 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+    <script src="workflow.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const caseId = params.get("case");
+      const guestCode = params.get("code") || "";
+      const session = ACTAuth.getSession();
+
+      let returnCase = ACTWorkflow.findCase(caseId);
+      let viewerRole = null;
+      let viewerName = null;
+
+      function normalize(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase();
+      }
+
+      function resolveAccess() {
+        if (!returnCase) return false;
+
+        if (session?.role === "admin") {
+          viewerRole = "admin";
+          viewerName = session.name || "ACT Moderator";
+          return true;
+        }
+
+        if (session?.role === "user") {
+          const email = normalize(session.email);
+
+          if (email && email === normalize(returnCase.owner?.email)) {
+            viewerRole = "owner";
+            viewerName = session.name || returnCase.owner.name || "Owner";
+            return true;
+          }
+
+          if (email && email === normalize(returnCase.finder?.email)) {
+            viewerRole = "finder";
+            viewerName = session.name || returnCase.finder.name || "Finder";
+            return true;
+          }
+        }
+
+        if (guestCode) {
+          if (
+            returnCase.owner?.mode === "guest" &&
+            guestCode === String(returnCase.owner.accessCode || "")
+          ) {
+            viewerRole = "owner";
+            viewerName = returnCase.owner.name || "Guest owner";
+            return true;
+          }
+
+          if (
+            returnCase.finder?.mode === "guest" &&
+            guestCode === String(returnCase.finder.accessCode || "")
+          ) {
+            viewerRole = "finder";
+            viewerName = returnCase.finder.name || "Guest finder";
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      function badgeClass(status) {
+        if (status === "returned")
+          return "border-emerald-200 bg-emerald-50 text-emerald-700";
+        if (status === "pending_confirmation")
+          return "border-amber-200 bg-amber-50 text-amber-700";
+        return "border-blue-200 bg-blue-50 text-actblue";
+      }
+
+      function escapeHTML(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderMessages() {
+        const list = document.getElementById("messageList");
+        const messages = returnCase.messages || [];
+
+        list.innerHTML = messages
+          .map((message) => {
+            const mine =
+              viewerRole === message.senderRole ||
+              (viewerRole === "admin" && message.senderRole === "admin");
+
+            const safeSender = escapeHTML(
+              message.senderName || message.senderRole || "Participant"
+            );
+
+            const safeMessage = escapeHTML(message.text || "");
+
+            return `
+              <div class="flex ${mine ? "justify-end" : "justify-start"}">
+                <div class="max-w-[85%] rounded-2xl ${
+                  mine
+                    ? "bg-actblue text-white"
+                    : "border border-slate-200 bg-white text-slate-700"
+                } px-4 py-3">
+
+                  <div class="text-[10px] font-black uppercase tracking-[0.1em] ${
+                    mine ? "text-white/65" : "text-slate-400"
+                  }">
+                    ${safeSender}
+                  </div>
+
+                  <p class="mt-1 whitespace-pre-wrap text-sm font-semibold leading-6">${safeMessage}</p>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        list.scrollTop = list.scrollHeight;
+      }
+
+      function renderConfirmations() {
+        const c = returnCase.confirmations || {};
+        const yesNo = (value) =>
+          value
+            ? '<span class="text-emerald-700">Confirmed ✓</span>'
+            : '<span class="text-slate-400">Waiting</span>';
+
+        document.getElementById("ownerConfirmState").innerHTML = yesNo(c.owner);
+        document.getElementById("finderConfirmState").innerHTML = yesNo(
+          c.finder,
+        );
+        document.getElementById("adminConfirmState").innerHTML = yesNo(c.admin);
+
+        const ownerBox = document.getElementById("ownerCodeBox");
+        const finderBox = document.getElementById("finderCodeBox");
+        const button = document.getElementById("confirmButton");
+        const completed = document.getElementById("completedBox");
+
+        ownerBox.classList.add("hidden");
+        finderBox.classList.add("hidden");
+        button.classList.add("hidden");
+        completed.classList.toggle("hidden", returnCase.status !== "returned");
+
+        if (returnCase.status === "returned") return;
+
+        if (viewerRole === "owner") {
+          ownerBox.classList.remove("hidden");
+          document.getElementById("returnCodeText").textContent =
+            returnCase.returnCode;
+
+          if (!c.owner) {
+            button.textContent = "I received my item";
+            button.dataset.action = "owner";
+            button.classList.remove("hidden");
+          }
+        }
+
+        if (viewerRole === "finder") {
+          finderBox.classList.remove("hidden");
+
+          if (!c.finder) {
+            button.textContent = "Confirm handoff";
+            button.dataset.action = "finder";
+            button.classList.remove("hidden");
+          }
+        }
+
+        if (viewerRole === "admin" && !c.admin) {
+          ownerBox.classList.remove("hidden");
+          document.getElementById("returnCodeText").textContent =
+            returnCase.returnCode;
+          button.textContent = "Confirm ACT-managed handoff";
+          button.dataset.action = "admin";
+          button.classList.remove("hidden");
+        }
+      }
+
+      function guestReferenceForViewer() {
+        if (viewerRole === "owner") {
+          return returnCase.source === "claim"
+            ? returnCase.claimId
+            : returnCase.reportId;
+        }
+
+        if (viewerRole === "finder") {
+          return returnCase.source === "claim"
+            ? returnCase.reportId
+            : returnCase.returnLeadId;
+        }
+
+        return "";
+      }
+
+      function renderCase() {
+        const report = ACTWorkflow.findReport(returnCase.reportId);
+
+        document.getElementById("itemTitle").textContent =
+          report?.item || returnCase.item || "Item return";
+
+        document.getElementById("caseMeta").textContent =
+          `${returnCase.id} · ${viewerRole === "admin" ? "Moderator access" : viewerRole === "owner" ? "Owner access" : "Finder access"}`;
+
+        const status = document.getElementById("caseStatus");
+        status.textContent = String(
+          returnCase.status || "coordinating",
+        ).replaceAll("_", " ");
+        status.className = `inline-flex w-fit rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] ${badgeClass(returnCase.status)}`;
+
+        const backLink = document.getElementById("backLink");
+
+        if (viewerRole === "admin") {
+          backLink.href = "admin-dashboard.html";
+          backLink.textContent = "← Back to admin";
+        } else if (session?.role === "user") {
+          backLink.href = "user-dashboard.html";
+          backLink.textContent = "← Back to My Account";
+        } else {
+          const guestRef = guestReferenceForViewer();
+
+          backLink.href =
+            `guest-tracking.html?ref=${encodeURIComponent(guestRef)}` +
+            `&code=${encodeURIComponent(guestCode)}`;
+
+          backLink.textContent = "← Back to guest case";
+
+          document.getElementById("guestReturnHint").classList.remove("hidden");
+
+          ACTWorkflow.rememberGuestCase(
+            guestRef,
+            guestCode,
+            viewerRole === "finder" ? "return-lead" : "guest-case",
+          );
+        }
+
+        renderMessages();
+        renderConfirmations();
+      }
+
+      if (!returnCase || !resolveAccess()) {
+        document.getElementById("unauthorizedState").classList.remove("hidden");
+      } else {
+        document.getElementById("caseState").classList.remove("hidden");
+        renderCase();
+      }
+
+      document
+        .getElementById("messageForm")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const input = document.getElementById("messageInput");
+          const text = input.value.trim();
+
+          if (!text || !returnCase || !viewerRole) return;
+
+          ACTWorkflow.addMessage(returnCase.id, viewerRole, viewerName, text);
+
+          input.value = "";
+          returnCase = ACTWorkflow.findCase(returnCase.id);
+          renderMessages();
+        });
+
+      document.getElementById("confirmButton").addEventListener("click", () => {
+        const action = document.getElementById("confirmButton").dataset.action;
+
+        if (action === "finder") {
+          const entered = document
+            .getElementById("returnCodeInput")
+            .value.trim();
+          const error = document.getElementById("codeError");
+
+          if (entered !== String(returnCase.returnCode)) {
+            error.classList.remove("hidden");
+            return;
+          }
+
+          error.classList.add("hidden");
+        }
+
+        ACTWorkflow.confirmReturn(returnCase.id, action);
+        returnCase = ACTWorkflow.findCase(returnCase.id);
+        renderCase();
+      });
+    </script>
+  </body>
+</html>

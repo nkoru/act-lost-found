@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>About | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 16px 45px rgba(23,32,51,.08)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      /* =================================
+   ABOUT — SCROLL REVEALS
+================================= */
+
+      .about-reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .about-reveal-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+
+      .about-reveal-right {
+        opacity: 0;
+        transform: translateX(30px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+
+      .about-scene.show .about-reveal,
+      .about-scene.show .about-reveal-left,
+      .about-scene.show .about-reveal-right {
+        opacity: 1;
+        transform: translate(0);
+      }
+
+      .about-scene.show .about-delay-1 {
+        transition-delay: 0.12s;
+      }
+
+      .about-scene.show .about-delay-2 {
+        transition-delay: 0.24s;
+      }
+
+      .about-scene.show .about-delay-3 {
+        transition-delay: 0.36s;
+      }
+
+      .about-scene.show .about-delay-4 {
+        transition-delay: 0.48s;
+      }
+
+      .about-scene.show .about-delay-5 {
+        transition-delay: 0.6s;
+      }
+
+      /* =================================
+   ABOUT PROCESS
+================================= */
+
+      .about-process-step {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+
+      .about-process-step.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .about-process-step > .about-step-circle {
+        transform: scale(0.86);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      .about-process-step.show > .about-step-circle {
+        transform: scale(1);
+      }
+
+      .about-process-step.pulse > .about-step-circle {
+        transform: scale(1.12);
+      }
+
+      #aboutProcessProgress {
+        width: 0;
+      }
+
+      #aboutProcessProgress.load {
+        width: 100%;
+      }
+
+      /* =================================
+        SUBTLE CARD MOTION
+      ================================= */
+
+      .about-card {
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .about-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(12, 46, 138, 0.18);
+        box-shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        .about-reveal,
+        .about-reveal-left,
+        .about-reveal-right,
+        .about-process-step {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <!-- Logo -->
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link active text-sm font-bold text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <!-- Login / Mobile -->
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition duration-200 hover:-translate-y-0.5 hover:bg-actblue hover:text-white hover:shadow-md sm:inline-flex"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg bg-actblue/5 px-3 py-3 text-sm font-bold text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative overflow-hidden bg-actblue text-white">
+        <div
+          class="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-actyellow/10 blur-3xl"
+        ></div>
+        <div
+          class="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-white/5 blur-3xl"
+        ></div>
+
+        <!-- Shared ACT yellow + blue corner accent -->
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-32 w-56 bg-actyellow"
+          style="
+            clip-path: polygon(66% 44%, 100% 0, 100% 100%, 0 100%, 28% 77%);
+          "
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-24 w-44 bg-actblueDark"
+          style="clip-path: polygon(58% 100%, 100% 28%, 100% 100%)"
+        ></div>
+
+        <div
+          class="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-7 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:px-8 lg:py-20"
+        >
+          <div>
+            <span
+              class="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-actyellow"
+            >
+              About the system
+            </span>
+
+            <h1
+              class="mt-5 max-w-3xl text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl"
+            >
+              Helping the ACT community trace, verify, and return lost
+              belongings.
+            </h1>
+
+            <p
+              class="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+            >
+              ACT Lost &amp; Found is designed for students, staff, visitors,
+              and other members of the ACT community. It makes it easier to
+              report missing or found items, discover possible matches, verify
+              ownership, and coordinate a safer return.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="all-reports.html"
+                class="inline-flex items-center justify-center rounded-xl bg-actyellow px-6 py-3.5 text-sm font-black text-actblueDark transition hover:-translate-y-0.5"
+              >
+                Browse reports
+              </a>
+              <a
+                href="help.html"
+                class="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-black text-white transition hover:bg-white/15"
+              >
+                How the system works
+              </a>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div
+              class="rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.13em] text-actyellow"
+              >
+                Open access
+              </p>
+              <p class="mt-2 text-lg font-black">Guests can participate</p>
+              <p class="mt-2 text-xs leading-5 text-white/65">
+                Visitors do not need an ACT account just to report or help
+                return an item.
+              </p>
+            </div>
+            <div
+              class="rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.13em] text-actyellow"
+              >
+                Safer claims
+              </p>
+              <p class="mt-2 text-lg font-black">Ownership is verified</p>
+              <p class="mt-2 text-xs leading-5 text-white/65">
+                Private identifying details are withheld from public listings
+                and used during claim review.
+              </p>
+            </div>
+            <div
+              class="rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur sm:col-span-2"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.13em] text-actyellow"
+              >
+                Moderation
+              </p>
+              <p class="mt-2 text-lg font-black">
+                Normal reports can publish without waiting for an admin
+              </p>
+              <p class="mt-2 text-xs leading-5 text-white/65">
+                Automatic rule-based screening publishes normal submissions and
+                holds suspicious ones for moderator review.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="aboutPurpose"
+        class="about-scene relative overflow-hidden bg-slate-50"
+      >
+        <div
+          class="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-actblue/[0.04] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-actyellow/[0.12] blur-3xl"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-20 sm:px-7 lg:px-8 lg:py-24"
+        >
+          <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+            <!-- LEFT -->
+            <div class="about-reveal-left">
+              <div
+                class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-actblue"
+              >
+                <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+                What the system is for
+              </div>
+
+              <h2
+                class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+              >
+                Less searching.
+                <span class="text-actblue">More recovering.</span>
+              </h2>
+
+              <p
+                class="mt-5 max-w-xl text-sm leading-7 text-slate-500 sm:text-base"
+              >
+                ACT Lost &amp; Found keeps the recovery process focused on one
+                goal: reconnecting belongings with the right person without
+                turning the platform into another social feed.
+              </p>
+
+              <div
+                class="mt-7 rounded-[24px] border border-actyellow/40 bg-actyellow/[0.10] p-5"
+              >
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                >
+                  Designed around recovery
+                </p>
+
+                <p class="mt-2 text-sm font-bold leading-6 text-slate-700">
+                  No public comments. No likes. No unnecessary personal
+                  information. Just reporting, matching, verification, and
+                  return coordination.
+                </p>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="grid gap-4 sm:grid-cols-2">
+              <article
+                class="about-card about-reveal about-delay-1 relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-6 shadow-soft sm:row-span-2"
+              >
+                <div
+                  class="absolute left-0 top-0 h-full w-1.5 bg-actblue"
+                ></div>
+
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-2xl bg-actblue text-xl font-black text-white"
+                >
+                  ⌕
+                </div>
+
+                <p
+                  class="mt-6 text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  Discover
+                </p>
+
+                <h3 class="mt-2 text-xl font-black text-slate-900">
+                  Search before creating another report.
+                </h3>
+
+                <p class="mt-3 text-sm leading-7 text-slate-500">
+                  Browse Lost, Found, and Recent Reports first. A possible match
+                  may already be waiting.
+                </p>
+
+                <div
+                  class="mt-6 rounded-2xl bg-slate-50 p-4 text-xs font-semibold leading-5 text-slate-500"
+                >
+                  Item name · category · color · location · date
+                </div>
+              </article>
+
+              <article
+                class="about-card about-reveal about-delay-2 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-xl bg-actyellow/20 text-lg font-black text-actblue"
+                >
+                  ✓
+                </div>
+
+                <h3 class="mt-5 text-lg font-black text-slate-900">
+                  Verify ownership
+                </h3>
+
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                  Private proof is compared with details that are intentionally
+                  kept off the public listing.
+                </p>
+              </article>
+
+              <article
+                class="about-card about-reveal about-delay-3 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-xl bg-actblue/[0.07] text-lg font-black text-actblue"
+                >
+                  ↺
+                </div>
+
+                <h3 class="mt-5 text-lg font-black text-slate-900">
+                  Complete the return
+                </h3>
+
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                  Verified participants move into secure coordination before the
+                  case can be marked Returned.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="aboutProcess"
+        class="relative overflow-hidden border-y border-slate-200 bg-white"
+      >
+        <div
+          class="pointer-events-none absolute -left-20 top-1/3 h-52 w-52 rounded-full bg-actblue/[0.035] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute -right-16 bottom-0 h-52 w-52 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-20 sm:px-7 lg:px-8 lg:py-24"
+        >
+          <div class="mx-auto max-w-2xl text-center">
+            <div
+              class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-actblue"
+            >
+              <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+              How it works
+            </div>
+
+            <h2
+              class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+            >
+              From report to
+              <span class="text-actblue">successful return.</span>
+            </h2>
+
+            <p
+              class="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500 sm:text-base"
+            >
+              Each item moves through a clear recovery path designed to keep
+              public information useful and private information protected.
+            </p>
+          </div>
+
+          <div class="relative mt-14">
+            <!-- TRACK -->
+            <div
+              class="absolute left-[10%] right-[10%] top-8 hidden h-[3px] overflow-hidden rounded-full bg-slate-200 lg:block"
+            >
+              <div
+                id="aboutProcessProgress"
+                class="h-full w-0 rounded-full bg-gradient-to-r from-actblue via-actyellow to-actblue transition-[width] duration-[1800ms] ease-out"
+              ></div>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-5">
+              <div class="about-process-step relative text-center">
+                <div
+                  class="about-step-circle relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actblue text-lg font-black text-white shadow-lg shadow-actblue/15"
+                >
+                  01
+                </div>
+
+                <h3 class="mt-6 text-lg font-black text-slate-900">Report</h3>
+
+                <p
+                  class="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-500"
+                >
+                  Submit useful details about the missing or found item.
+                </p>
+              </div>
+
+              <div class="about-process-step relative text-center">
+                <div
+                  class="about-step-circle relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actyellow text-lg font-black text-actblue shadow-lg shadow-actyellow/20"
+                >
+                  02
+                </div>
+
+                <h3 class="mt-6 text-lg font-black text-slate-900">Screen</h3>
+
+                <p
+                  class="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-500"
+                >
+                  Normal submissions publish after rule-based validation while
+                  suspicious ones are held for review.
+                </p>
+              </div>
+
+              <div class="about-process-step relative text-center">
+                <div
+                  class="about-step-circle relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actblue text-lg font-black text-white shadow-lg shadow-actblue/15"
+                >
+                  03
+                </div>
+
+                <h3 class="mt-6 text-lg font-black text-slate-900">Match</h3>
+
+                <p
+                  class="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-500"
+                >
+                  Compare item details, category, color, location, and date.
+                </p>
+              </div>
+
+              <div class="about-process-step relative text-center">
+                <div
+                  class="about-step-circle relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actyellow text-lg font-black text-actblue shadow-lg shadow-actyellow/20"
+                >
+                  04
+                </div>
+
+                <h3 class="mt-6 text-lg font-black text-slate-900">Verify</h3>
+
+                <p
+                  class="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-500"
+                >
+                  Ownership proof is checked against private identifying
+                  details.
+                </p>
+              </div>
+
+              <div class="about-process-step relative text-center">
+                <div
+                  class="about-step-circle relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actblue text-xl font-black text-white shadow-lg shadow-actblue/15"
+                >
+                  ✓
+                </div>
+
+                <h3 class="mt-6 text-lg font-black text-slate-900">Return</h3>
+
+                <p
+                  class="mx-auto mt-2 max-w-xs text-sm leading-6 text-slate-500"
+                >
+                  Secure coordination and handoff confirmation close the case.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="aboutRoles"
+        class="about-scene relative overflow-hidden bg-slate-50"
+      >
+        <div class="mx-auto max-w-7xl px-5 py-20 sm:px-7 lg:px-8 lg:py-24">
+          <div class="about-reveal max-w-3xl">
+            <div
+              class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-actblue"
+            >
+              <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+              Who can use it
+            </div>
+
+            <h2
+              class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+            >
+              One system.
+              <span class="text-actblue">Three ways to participate.</span>
+            </h2>
+
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-500">
+              Account access changes how activity is tracked—not whether someone
+              is allowed to help recover an item.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-5 lg:grid-cols-3">
+            <!-- GUEST -->
+            <article
+              class="about-card about-reveal about-delay-1 relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-6"
+            >
+              <div class="absolute inset-x-0 top-0 h-1 bg-slate-300"></div>
+
+              <span
+                class="inline-flex rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-slate-500"
+              >
+                Guest / Public
+              </span>
+
+              <h3 class="mt-5 text-xl font-black text-slate-900">
+                Help without creating an account.
+              </h3>
+
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                Guests can participate immediately and use secure case
+                credentials to come back later.
+              </p>
+
+              <div class="mt-6 space-y-3 text-xs font-bold text-slate-600">
+                <p>✓ Browse and search reports</p>
+                <p>✓ Report lost or found items</p>
+                <p>✓ Submit ownership claims</p>
+                <p>✓ Submit return leads</p>
+              </div>
+
+              <div
+                class="mt-6 rounded-2xl bg-slate-50 p-4 text-xs font-semibold leading-5 text-slate-500"
+              >
+                Guest cases receive a Reference ID and 6-digit Guest Access
+                Code.
+              </div>
+            </article>
+
+            <!-- USER -->
+            <article
+              class="about-card about-reveal about-delay-2 relative overflow-hidden rounded-[28px] border border-actblue/15 bg-actblue/[0.035] p-6"
+            >
+              <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+
+              <span
+                class="inline-flex rounded-full bg-actblue px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-white"
+              >
+                Registered ACT User
+              </span>
+
+              <h3 class="mt-5 text-xl font-black text-slate-900">
+                Everything organized in one account.
+              </h3>
+
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                Registered users get a personal dashboard for ongoing reports,
+                claims, notifications, and return cases.
+              </p>
+
+              <div class="mt-6 space-y-3 text-xs font-bold text-slate-600">
+                <p>✓ My Reports and My Claims</p>
+                <p>✓ Status notifications</p>
+                <p>✓ Return activity</p>
+                <p>✓ Secure coordination access</p>
+              </div>
+
+              <div
+                class="mt-6 rounded-2xl border border-actblue/10 bg-white p-4 text-xs font-semibold leading-5 text-slate-500"
+              >
+                Signing in adds convenience—it does not block guests from
+                helping recover an item.
+              </div>
+            </article>
+
+            <!-- ADMIN -->
+            <article
+              class="about-card about-reveal about-delay-3 relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-6"
+            >
+              <div class="absolute inset-x-0 top-0 h-1 bg-actyellow"></div>
+
+              <span
+                class="inline-flex rounded-full bg-actyellow px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-actblue"
+              >
+                Admin / Moderator
+              </span>
+
+              <h3 class="mt-5 text-xl font-black text-slate-900">
+                Protect the recovery process.
+              </h3>
+
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                Moderators step in where verification, suspicious content, or
+                return supervision needs human review.
+              </p>
+
+              <div class="mt-6 space-y-3 text-xs font-bold text-slate-600">
+                <p>✓ Review flagged reports</p>
+                <p>✓ Verify ownership claims</p>
+                <p>✓ Review return leads</p>
+                <p>✓ Supervise completed returns</p>
+              </div>
+
+              <div
+                class="mt-6 rounded-2xl bg-actyellow/[0.10] p-4 text-xs font-semibold leading-5 text-slate-500"
+              >
+                Moderators can view private verification information that never
+                appears on public report pages.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="aboutDevelopers"
+        class="about-scene relative overflow-hidden border-y border-slate-200 bg-white"
+      >
+        <div
+          class="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-actblue/[0.04] blur-3xl"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-20 sm:px-7 lg:px-8 lg:py-24"
+        >
+          <div class="about-reveal mx-auto max-w-2xl text-center">
+            <div
+              class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-actblue"
+            >
+              <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+              Meet the developers
+              <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+            </div>
+
+            <h2
+              class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+            >
+              Built by students,
+              <span class="text-actblue">for the ACT community.</span>
+            </h2>
+
+            <p class="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-500">
+              A BSIT student project focused on making lost-item recovery more
+              organized, secure, and easier to understand.
+            </p>
+          </div>
+
+          <div class="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
+            <!-- BEATRICE -->
+            <article
+              class="about-card about-reveal-left about-delay-1 group relative overflow-hidden rounded-[30px] border border-slate-200 bg-slate-50 p-7"
+            >
+              <div
+                class="absolute right-0 top-0 h-32 w-32 rounded-bl-[100px] bg-actblue/[0.05]"
+              ></div>
+
+              <div class="relative flex items-center gap-5">
+                <div
+                  class="h-24 w-24 shrink-0 overflow-hidden rounded-[24px] border-4 border-white shadow-lg"
+                >
+                  <img
+                    src="images/beatrice.PNG"
+                    alt="Beatrice Nicole Ubod"
+                    class="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div>
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                  >
+                    Co-developer
+                  </p>
+
+                  <h3 class="mt-1 text-xl font-black text-slate-900">
+                    Beatrice Nicole Ubod
+                  </h3>
+
+                  <p class="mt-1 text-xs font-bold text-slate-400">
+                    BSIT · 3rd Year
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative mt-6 border-t border-slate-200 pt-5">
+                <p class="text-sm leading-7 text-slate-500">
+                  Contributing to system planning, interface design, workflow
+                  structure, and implementation of the ACT Lost &amp; Found
+                  experience.
+                </p>
+              </div>
+            </article>
+
+            <!-- MONALIZA -->
+            <article
+              class="about-card about-reveal-right about-delay-2 group relative overflow-hidden rounded-[30px] border border-slate-200 bg-slate-50 p-7"
+            >
+              <div
+                class="absolute right-0 top-0 h-32 w-32 rounded-bl-[100px] bg-actyellow/[0.12]"
+              ></div>
+
+              <div class="relative flex items-center gap-5">
+                <div
+                  class="h-24 w-24 shrink-0 overflow-hidden rounded-[24px] border-4 border-white shadow-lg"
+                >
+                  <img
+                    src="images/monaliza.PNG"
+                    alt="Monaliza Jane Sibomit"
+                    class="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div>
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                  >
+                    Co-developer
+                  </p>
+
+                  <h3 class="mt-1 text-xl font-black text-slate-900">
+                    Monaliza Jane Sibomit
+                  </h3>
+
+                  <p class="mt-1 text-xs font-bold text-slate-400">
+                    BSIT · 3rd Year
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative mt-6 border-t border-slate-200 pt-5">
+                <p class="text-sm leading-7 text-slate-500">
+                  Contributing to project development, user experience,
+                  interface refinement, and overall system presentation.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="aboutCTA"
+        class="about-scene relative overflow-hidden bg-slate-50"
+      >
+        <div
+          class="pointer-events-none absolute -left-24 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-actblue/[0.05] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-actyellow/[0.12] blur-3xl"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-8 lg:py-20"
+        >
+          <div
+            class="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_20px_55px_rgba(23,32,51,0.08)]"
+          >
+            <div class="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
+              <!-- LEFT -->
+              <div class="about-reveal-left p-7 sm:p-9 lg:p-10">
+                <div
+                  class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-[0.18em] text-actblue"
+                >
+                  <span class="h-[3px] w-10 rounded-full bg-actyellow"></span>
+                  Need to use the system?
+                </div>
+
+                <h2
+                  class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+                >
+                  Start by searching.
+                  <span class="text-actblue">
+                    Report only when you need to.
+                  </span>
+                </h2>
+
+                <p
+                  class="mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base"
+                >
+                  Someone may already have reported the item you're looking for.
+                  Browse existing reports first, then create a Lost or Found
+                  report if there isn't a match yet.
+                </p>
+
+                <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="all-reports.html"
+                    class="inline-flex items-center justify-center rounded-xl border border-actblue/15 bg-actblue/[0.04] px-5 py-3.5 text-sm font-black text-actblue transition hover:-translate-y-0.5 hover:bg-actblue/[0.08]"
+                  >
+                    Browse Reports
+                  </a>
+
+                  <a
+                    href="report-lost.html"
+                    class="inline-flex items-center justify-center rounded-xl bg-actblue px-5 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+                  >
+                    Report Lost
+                  </a>
+
+                  <a
+                    href="report-found.html"
+                    class="inline-flex items-center justify-center rounded-xl bg-actyellow px-5 py-3.5 text-sm font-black text-actblueDark transition hover:-translate-y-0.5"
+                  >
+                    Report Found
+                  </a>
+                </div>
+              </div>
+
+              <!-- RIGHT -->
+              <div
+                class="about-reveal-right about-delay-1 relative overflow-hidden bg-actblue p-7 text-white sm:p-9 lg:p-10"
+              >
+                <div
+                  class="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-actyellow/[0.13] blur-3xl"
+                ></div>
+
+                <div class="relative">
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+                  >
+                    Quick reminder
+                  </p>
+
+                  <h3 class="mt-3 text-2xl font-black tracking-tight">
+                    Search first. Protect private details. Verify before
+                    handoff.
+                  </h3>
+
+                  <div class="mt-6 space-y-4">
+                    <div class="flex items-start gap-3">
+                      <span
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                      >
+                        1
+                      </span>
+
+                      <p class="text-sm leading-6 text-white/75">
+                        Check Lost, Found, and Recent Reports before creating a
+                        new one.
+                      </p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                      <span
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-black text-white"
+                      >
+                        2
+                      </span>
+
+                      <p class="text-sm leading-6 text-white/75">
+                        Keep ownership proof and identifying details off the
+                        public page.
+                      </p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                      <span
+                        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-black text-white"
+                      >
+                        3
+                      </span>
+
+                      <p class="text-sm leading-6 text-white/75">
+                        Use secure coordination after ownership or return
+                        details are verified.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16">
+        <div class="grid md:grid-cols-3 gap-12 lg:gap-16">
+          <!-- Brand -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="w-24 h-24 object-contain mb-5"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow"> Found </span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm text-blue-200 leading-6">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <!-- School -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-5h6v5M8 10h.01M12 10h.01M16 10h.01"
+                  />
+                </svg>
+
+                <p>Asian College of Technology</p>
+              </div>
+
+              <!-- Address -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21s7-5.5 7-12a7 7 0 10-14 0c0 6.5 7 12 7 12z"
+                  />
+
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <!-- Phone -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"
+                  />
+                </svg>
+
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <!-- Email -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V6.75z"
+                  />
+
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.5 6l8.5 6.5L20.5 6"
+                  />
+                </svg>
+
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Information -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm text-blue-100 leading-7">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="border-t border-blue-800 mt-12 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+    <script>
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuButton.setAttribute("aria-expanded", String(opening));
+      });
+
+      /* ==========================================
+   ABOUT SECTION REVEALS
+========================================== */
+
+      const aboutScenes = document.querySelectorAll(".about-scene");
+
+      const aboutSceneObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              aboutSceneObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.18,
+        },
+      );
+
+      aboutScenes.forEach((scene) => {
+        aboutSceneObserver.observe(scene);
+      });
+
+      /* ==========================================
+   ABOUT PROCESS ANIMATION
+========================================== */
+
+      const aboutProcessSteps = document.querySelectorAll(
+        ".about-process-step",
+      );
+
+      const aboutProcessSection = document.getElementById("aboutProcess");
+
+      if (aboutProcessSection && aboutProcessSteps.length) {
+        const aboutProcessObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              const progress = document.getElementById("aboutProcessProgress");
+
+              if (progress) {
+                progress.classList.add("load");
+              }
+
+              aboutProcessSteps.forEach((step, index) => {
+                setTimeout(() => {
+                  step.classList.add("show");
+                  step.classList.add("pulse");
+
+                  setTimeout(() => {
+                    step.classList.remove("pulse");
+                  }, 300);
+                }, index * 300);
+              });
+
+              aboutProcessObserver.disconnect();
+            });
+          },
+          {
+            threshold: 0.25,
+          },
+        );
+
+        aboutProcessObserver.observe(aboutProcessSection);
+      }
+    </script>
+  </body>
+</html>

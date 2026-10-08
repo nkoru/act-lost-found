@@ -1,0 +1,2507 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+
+    <title>Report Lost Item | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+              paper: "#f8fafc",
+            },
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 12px 35px rgba(12, 46, 138, 0.10)",
+              card: "0 8px 24px rgba(23, 32, 51, 0.08)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+      .nav-link:hover::after {
+        width: 55%;
+      }
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 85%
+        );
+      }
+
+      .form-step {
+        display: none;
+      }
+      .form-step.active {
+        display: block;
+        animation: step-in 0.28s ease-out;
+      }
+      @keyframes step-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-node .step-circle {
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          transform 0.25s ease;
+      }
+      .step-node.current .step-circle {
+        background: #0c2e8a;
+        border-color: #0c2e8a;
+        color: white;
+        transform: scale(1.05);
+      }
+      .step-node.completed .step-circle {
+        background: #e0e007;
+        border-color: #e0e007;
+        color: #0c2e8a;
+      }
+      .step-node.current .step-label,
+      .step-node.completed .step-label {
+        color: #0c2e8a;
+      }
+
+      .field-error {
+        border-color: #e11d48 !important;
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.08) !important;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .form-step.active {
+          animation: none;
+        }
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <!-- Logo -->
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link active text-sm font-bold text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <!-- Login / Mobile -->
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition duration-200 hover:-translate-y-0.5 hover:bg-actblue hover:text-white hover:shadow-md sm:inline-flex"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg bg-actblue/5 px-3 py-3 text-sm font-bold text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        <!-- PAGE INTRO -->
+        <section class="relative overflow-hidden bg-actblue">
+          <div class="intro-grid absolute inset-0"></div>
+
+          <div
+            class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+          ></div>
+
+          <div
+            class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+          ></div>
+
+          <div
+            class="relative mx-auto max-w-7xl px-5 py-12 sm:px-7 sm:py-14 lg:px-8 lg:py-16"
+          >
+            <div
+              class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center"
+            >
+
+              <!-- LEFT -->
+              <div class="max-w-3xl">
+
+                <a
+                  href="index.html"
+                  class="inline-flex items-center gap-2 text-sm font-bold text-white/65 transition hover:text-white"
+                >
+                  <span aria-hidden="true">←</span>
+                  Back to home
+                </a>
+
+                <div
+                  class="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+                >
+                  <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+
+                  Lost Item Report
+                </div>
+
+                <h1
+                  class="mt-5 text-4xl font-black leading-[1.05] tracking-[-0.03em] text-white sm:text-5xl"
+                >
+                  Lost something at ACT?
+                  <span class="text-actyellow">
+                    Let’s trace it.
+                  </span>
+                </h1>
+
+                <p
+                  class="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+                >
+                  Share clear details about your missing item so the ACT community can
+                  recognize it and help connect your report with a possible found-item
+                  match.
+                </p>
+              </div>
+
+
+              <!-- RIGHT -->
+              <div class="hidden lg:block">
+                <div
+                  class="rounded-[26px] border border-white/15 bg-white/[0.08] p-6 backdrop-blur-sm"
+                >
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+                  >
+                    Before you submit
+                  </p>
+
+                  <h2 class="mt-2 text-xl font-black text-white">
+                    Give useful details, not sensitive ones.
+                  </h2>
+
+                  <div class="mt-5 grid gap-3">
+
+                    <!-- 1 -->
+                    <div
+                      class="flex items-start gap-3 rounded-xl bg-white/[0.07] p-3"
+                    >
+                      <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                      >
+                        1
+                      </span>
+
+                      <div>
+                        <p class="text-xs font-black text-white">
+                          Describe what went missing
+                        </p>
+
+                        <p
+                          class="mt-0.5 text-[11px] leading-5 text-white/55"
+                        >
+                          Add the category, color, brand, and recognizable features.
+                        </p>
+                      </div>
+                    </div>
+
+
+                    <!-- 2 -->
+                    <div
+                      class="flex items-start gap-3 rounded-xl bg-white/[0.07] p-3"
+                    >
+                      <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-black text-white"
+                      >
+                        2
+                      </span>
+
+                      <div>
+                        <p class="text-xs font-black text-white">
+                          Add where and when
+                        </p>
+
+                        <p
+                          class="mt-0.5 text-[11px] leading-5 text-white/55"
+                        >
+                          Include the last known location, date, and approximate time.
+                        </p>
+                      </div>
+                    </div>
+
+
+                    <!-- 3 -->
+                    <div
+                      class="flex items-start gap-3 rounded-xl bg-white/[0.07] p-3"
+                    >
+                      <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-black text-white"
+                      >
+                        3
+                      </span>
+
+                      <div>
+                        <p class="text-xs font-black text-white">
+                          Keep private proof private
+                        </p>
+
+                        <p
+                          class="mt-0.5 text-[11px] leading-5 text-white/55"
+                        >
+                          Never include passwords, PINs, OTPs, or sensitive information
+                          in the public description.
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- LOST / FOUND SWITCH -->
+        <section class="mx-auto max-w-7xl px-5 pt-7 sm:px-7 lg:px-8">
+          <div
+            class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div
+              class="inline-flex w-fit rounded-xl border border-slate-200 bg-white p-1 shadow-sm"
+            >
+              <a
+                href="report-lost.html"
+                class="rounded-lg bg-actblue px-5 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white shadow-sm"
+              >
+                Lost Item
+              </a>
+
+              <a
+                href="report-found.html"
+                class="rounded-lg px-5 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-slate-500 transition hover:bg-slate-50 hover:text-actblue"
+              >
+                Found Item
+              </a>
+            </div>
+
+            <!-- REPLACE THE OLD DRAFT TEXT WITH THIS -->
+            <div
+              class="inline-flex w-fit items-center gap-2 rounded-full bg-actblue/[0.05] px-3 py-1.5"
+            >
+              <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.1em] text-actblue"
+              >
+                Automatic validation before publishing
+              </p>
+            </div>
+          </div>
+        </section>
+
+      <!-- PROGRESS -->
+      <section class="mx-auto max-w-7xl px-5 pt-7 sm:px-7 lg:px-8">
+        <div
+          class="rounded-[24px] border border-slate-200 bg-white px-4 py-5 shadow-[0_10px_30px_rgba(23,32,51,0.05)] sm:px-6"
+        >
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+              >
+                Report progress
+              </p>
+
+              <p class="mt-1 text-xs font-semibold text-slate-400">
+                Complete each section before continuing.
+              </p>
+            </div>
+
+            <span
+              class="hidden rounded-full bg-actblue/[0.06] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-actblue sm:inline-flex"
+            >
+              Lost item report
+            </span>
+          </div>
+
+          <div class="relative">
+            <!-- TRACK -->
+            <div
+              class="absolute left-[12.5%] right-[12.5%] top-5 h-[3px] overflow-hidden rounded-full bg-slate-100"
+            >
+              <div
+                id="stepProgress"
+                class="h-full w-0 rounded-full bg-gradient-to-r from-actblue to-actyellow transition-[width] duration-500"
+              ></div>
+            </div>
+
+            <!-- STEPS -->
+            <div class="relative grid grid-cols-4 gap-1">
+              <!-- STEP 1 -->
+              <div class="step-node current text-center" data-step-node="1">
+                <span
+                  class="step-circle relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-actblue bg-actblue text-xs font-black text-white"
+                >
+                  1
+                </span>
+
+                <span
+                  class="step-label mt-2 block text-[9px] font-black uppercase tracking-[0.08em] text-slate-400 sm:text-xs"
+                >
+                  Item
+                </span>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="step-node text-center" data-step-node="2">
+                <span
+                  class="step-circle relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-xs font-black text-slate-400"
+                >
+                  2
+                </span>
+
+                <span
+                  class="step-label mt-2 block text-[9px] font-black uppercase tracking-[0.08em] text-slate-400 sm:text-xs"
+                >
+                  Location
+                </span>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="step-node text-center" data-step-node="3">
+                <span
+                  class="step-circle relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-xs font-black text-slate-400"
+                >
+                  3
+                </span>
+
+                <span
+                  class="step-label mt-2 block text-[9px] font-black uppercase tracking-[0.08em] text-slate-400 sm:text-xs"
+                >
+                  Proof
+                </span>
+              </div>
+
+              <!-- STEP 4 -->
+              <div class="step-node text-center" data-step-node="4">
+                <span
+                  class="step-circle relative z-10 mx-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-xs font-black text-slate-400"
+                >
+                  4
+                </span>
+
+                <span
+                  class="step-label mt-2 block text-[9px] font-black uppercase tracking-[0.08em] text-slate-400 sm:text-xs"
+                >
+                  Contact
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM -->
+      <section
+        id="reportFormArea"
+        class="mx-auto max-w-7xl px-5 py-7 pb-20 sm:px-7 lg:px-8"
+      >
+        <form id="lostReportForm" novalidate>
+          <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div>
+              <!-- STEP 1 -->
+              <section class="form-step active" data-step="1">
+                <div
+                  class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                >
+                  <div class="flex items-start gap-4">
+                    <span
+                      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-actblue text-sm font-black text-white"
+                      >01</span
+                    >
+                    <div>
+                      <p
+                        class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                      >
+                        Start with the item
+                      </p>
+                      <h2
+                        class="mt-1 text-xl font-black text-slate-900 sm:text-2xl"
+                      >
+                        What went missing?
+                      </h2>
+                      <p class="mt-1 text-sm leading-6 text-slate-500">
+                        Use details another person could recognize without
+                        revealing private ownership information.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-8 grid gap-5 sm:grid-cols-2">
+                    <!-- ITEM NAME -->
+                    <div class="sm:col-span-2">
+                      <label
+                        for="itemName"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Item name
+                        <span class="text-rose-500">*</span>
+                      </label>
+
+                      <p class="mt-1 text-xs text-slate-400">
+                        Use a short, recognizable name for the missing item.
+                      </p>
+
+                      <input
+                        id="itemName"
+                        name="itemName"
+                        type="text"
+                        required
+                        minlength="3"
+                        maxlength="80"
+                        placeholder="e.g. Black Nike backpack"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div>
+                      <label
+                        for="category"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Category
+                        <span class="text-rose-500">*</span>
+                      </label>
+
+                      <div class="relative mt-2.5">
+                        <select
+                          id="category"
+                          name="category"
+                          required
+                          class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 pr-11 text-sm font-semibold text-slate-700 outline-none transition focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                        >
+                          <option value="">Select category</option>
+                          <option>Bags</option>
+                          <option>Electronics</option>
+                          <option>Clothing</option>
+                          <option>Keys</option>
+                          <option>School Items</option>
+                          <option>Personal Items</option>
+                          <option>Other</option>
+                        </select>
+
+                        <!-- CUSTOM ARROW -->
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-actblue"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m6 9 6 6 6-6"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+
+                    <!-- COLOR -->
+                    <div>
+                      <label
+                        for="color"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Main color
+                        <span class="ml-1 text-xs font-semibold text-slate-400">
+                          (optional)
+                        </span>
+                      </label>
+
+                      <input
+                        id="color"
+                        name="color"
+                        type="text"
+                        maxlength="40"
+                        placeholder="e.g. Black"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+                    <!-- BRAND / MODEL -->
+                    <div class="sm:col-span-2">
+                      <label
+                        for="brand"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Brand or model
+                        <span class="ml-1 text-xs font-semibold text-slate-400">
+                          (optional)
+                        </span>
+                      </label>
+
+                      <input
+                        id="brand"
+                        name="brand"
+                        type="text"
+                        maxlength="60"
+                        placeholder="e.g. Nike / Lenovo / Casio"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="sm:col-span-2">
+                      <div class="flex items-end justify-between gap-3">
+                        <div>
+                          <label
+                            for="description"
+                            class="text-sm font-extrabold text-slate-800"
+                          >
+                            Public description
+                            <span class="text-rose-500">*</span>
+                          </label>
+
+                          <p class="mt-1 text-xs text-slate-400">
+                            Describe only details that are safe for anyone to
+                            see.
+                          </p>
+                        </div>
+
+                        <span
+                          id="descriptionCount"
+                          class="shrink-0 text-[11px] font-bold text-slate-400"
+                        >
+                          0 / 500
+                        </span>
+                      </div>
+
+                      <textarea
+                        id="description"
+                        name="description"
+                        required
+                        minlength="15"
+                        maxlength="500"
+                        rows="5"
+                        placeholder="Describe visible features, markings, stickers, scratches, or anything that can help identify the item..."
+                        class="mt-2.5 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      ></textarea>
+
+                      <!-- SAFETY NOTE -->
+                      <div
+                        class="mt-3 flex items-start gap-2.5 rounded-xl bg-actblue/[0.035] px-3.5 py-3"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="mt-0.5 h-4 w-4 shrink-0 text-actblue"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <circle cx="12" cy="12" r="9"></circle>
+                          <path
+                            stroke-linecap="round"
+                            d="M12 11v5M12 8h.01"
+                          ></path>
+                        </svg>
+
+                        <p
+                          class="text-[11px] font-semibold leading-5 text-slate-500"
+                        >
+                          Do not include passwords, PINs, student numbers, phone
+                          numbers, unlock codes, or other sensitive information
+                          here.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- STEP 2 -->
+              <section class="form-step" data-step="2">
+                <div
+                  class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                >
+                  <div class="flex items-start gap-4">
+                    <span
+                      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-actyellow text-sm font-black text-actblue"
+                      >02</span
+                    >
+                    <div>
+                      <p
+                        class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                      >
+                        Build the timeline
+                      </p>
+                      <h2
+                        class="mt-1 text-xl font-black text-slate-900 sm:text-2xl"
+                      >
+                        Where and when did you last have it?
+                      </h2>
+                      <p class="mt-1 text-sm leading-6 text-slate-500">
+                        Location and date are two of the strongest signals when
+                        comparing lost and found reports.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-8 grid gap-5 sm:grid-cols-2">
+
+                  <!-- LAST KNOWN LOCATION -->
+                  <div>
+                    <label
+                      for="location"
+                      class="text-sm font-extrabold text-slate-800"
+                    >
+                      Last known location
+                      <span class="text-rose-500">*</span>
+                    </label>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                      Choose the closest ACT area where you remember having the item.
+                    </p>
+
+                    <div class="relative mt-2.5">
+                      <select
+                        id="location"
+                        name="location"
+                        required
+                        class="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 pr-11 text-sm font-semibold text-slate-700 outline-none transition focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      >
+                        <option value="">Select location</option>
+                        <option>Main Building</option>
+                        <option>Library</option>
+                        <option>Cafeteria</option>
+                        <option>Student Lounge</option>
+                        <option>Computer Lab</option>
+                        <option>Gym</option>
+                        <option>Building A</option>
+                        <option>Building B</option>
+                        <option>Other</option>
+                      </select>
+
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-actblue"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="m6 9 6 6 6-6"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <!-- SPECIFIC LOCATION -->
+                  <div>
+                    <label
+                      for="specificLocation"
+                      class="text-sm font-extrabold text-slate-800"
+                    >
+                      More specific location
+                      <span class="ml-1 text-xs font-semibold text-slate-400">
+                        (optional)
+                      </span>
+                    </label>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                      Add a room, hallway, floor, or nearby landmark.
+                    </p>
+
+                    <input
+                      id="specificLocation"
+                      name="specificLocation"
+                      type="text"
+                      maxlength="100"
+                      placeholder="e.g. Room 204, near the window"
+                      class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                    />
+                  </div>
+
+
+                  <!-- DATE LOST -->
+                  <div>
+                    <label
+                      for="dateLost"
+                      class="text-sm font-extrabold text-slate-800"
+                    >
+                      Date lost
+                      <span class="text-rose-500">*</span>
+                    </label>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                      Select the date you last remember having the item.
+                    </p>
+
+                    <input
+                      id="dateLost"
+                      name="dateLost"
+                      type="date"
+                      required
+                      class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                    />
+                  </div>
+
+
+                  <!-- APPROXIMATE TIME -->
+                  <div>
+                    <label
+                      for="timeLost"
+                      class="text-sm font-extrabold text-slate-800"
+                    >
+                      Approximate time
+                      <span class="ml-1 text-xs font-semibold text-slate-400">
+                        (optional)
+                      </span>
+                    </label>
+
+                    <p class="mt-1 text-xs text-slate-400">
+                      An estimate is enough if you do not remember the exact time.
+                    </p>
+
+                    <input
+                      id="timeLost"
+                      name="timeLost"
+                      type="time"
+                      class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-700 outline-none transition focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                    />
+                  </div>
+
+                </div>
+
+
+                <!-- TIP -->
+                <div
+                  class="mt-6 flex items-start gap-3 rounded-xl border border-actyellow/35 bg-actyellow/[0.08] px-4 py-3.5"
+                >
+                  <span
+                    class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                  >
+                    !
+                  </span>
+
+                  <div>
+                    <p class="text-xs font-black text-actblue">
+                      Not completely sure?
+                    </p>
+
+                    <p class="mt-1 text-[11px] font-semibold leading-5 text-slate-500">
+                      Choose the closest location, date, or time you genuinely remember.
+                      Avoid guessing, since these details are used when comparing lost and
+                      found reports.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- STEP 3 -->
+              <section class="form-step" data-step="3">
+                <div
+                  class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                >
+                  <div class="flex items-start gap-4">
+                    <span
+                      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-actblue text-sm font-black text-white"
+                      >03</span
+                    >
+                    <div>
+                      <p
+                        class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                      >
+                        Help verify ownership
+                      </p>
+                      <h2
+                        class="mt-1 text-xl font-black text-slate-900 sm:text-2xl"
+                      >
+                        Photo and private detail
+                      </h2>
+                      <p class="mt-1 text-sm leading-6 text-slate-500">
+                        A photo helps matching. A private detail gives you
+                        something only the rightful owner is likely to know.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="mt-8 grid gap-6 lg:grid-cols-2">
+
+                  <!-- PHOTO -->
+                  <div>
+                    <div class="flex items-center justify-between gap-3">
+                      <label
+                        for="itemImage"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Item photo
+                        <span class="ml-1 text-xs font-semibold text-slate-400">
+                          (optional)
+                        </span>
+                      </label>
+
+                      <span
+                        class="rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-emerald-600"
+                      >
+                        Public
+                      </span>
+                    </div>
+
+                    <p class="mt-1 text-xs leading-5 text-slate-400">
+                      Add a clear photo if you have one. It can help others recognize the item.
+                    </p>
+
+                    <label
+                      for="itemImage"
+                      id="uploadBox"
+                      class="mt-3 flex min-h-[260px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center transition hover:border-actblue/30 hover:bg-actblue/[0.03]"
+                    >
+                      <!-- DEFAULT UPLOAD CONTENT -->
+                      <div
+                        id="uploadContent"
+                        class="flex flex-col items-center"
+                      >
+                        <span
+                          class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-actblue shadow-sm"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 16V4m0 0L8 8m4-4 4 4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"
+                            />
+                          </svg>
+                        </span>
+
+                        <span class="mt-4 text-sm font-black text-slate-700">
+                          Upload an item photo
+                        </span>
+
+                        <span class="mt-1 text-xs font-medium text-slate-400">
+                          JPG or PNG · maximum 5MB
+                        </span>
+
+                        <span
+                          class="mt-4 rounded-full bg-white px-3 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-slate-400 shadow-sm"
+                        >
+                          Stored locally for prototype
+                        </span>
+                      </div>
+
+                      <!-- IMAGE PREVIEW -->
+                      <div
+                        id="imagePreviewContainer"
+                        class="hidden w-full"
+                      >
+                        <img
+                          id="imagePreview"
+                          src=""
+                          alt="Selected item preview"
+                          class="mx-auto max-h-56 w-full rounded-xl object-contain"
+                        />
+
+                        <p
+                          id="imageFileName"
+                          class="mt-4 truncate text-sm font-extrabold text-slate-700"
+                        ></p>
+
+                        <p class="mt-1 text-xs font-bold text-actblue">
+                          Click to change photo
+                        </p>
+                      </div>
+                    </label>
+
+                    <input
+                      id="itemImage"
+                      name="itemImage"
+                      type="file"
+                      accept="image/jpeg,image/png"
+                      class="sr-only"
+                    />
+
+                    <p
+                      id="imageError"
+                      class="mt-2 hidden text-xs font-bold text-rose-500"
+                    ></p>
+                  </div>
+
+
+                  <!-- PRIVATE DETAIL -->
+                  <div>
+                    <div class="flex items-center justify-between gap-3">
+                      <label
+                        for="privateDetail"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Private identifying detail
+                        <span class="ml-1 text-xs font-semibold text-slate-400">
+                          (recommended)
+                        </span>
+                      </label>
+
+                      <span
+                        class="rounded-full bg-actblue/[0.07] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-actblue"
+                      >
+                        Private
+                      </span>
+                    </div>
+
+                    <p class="mt-1 text-xs leading-5 text-slate-400">
+                      Add something distinctive that should not appear in the public report.
+                    </p>
+
+                    <textarea
+                      id="privateDetail"
+                      name="privateDetail"
+                      rows="8"
+                      maxlength="500"
+                      placeholder="Example: A small tear inside the left strap, initials under the inner pocket, or another detail only the owner would likely know."
+                      class="mt-3 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                    ></textarea>
+
+                    <!-- PRIVATE EXPLANATION -->
+                    <div
+                      class="mt-4 rounded-2xl border border-actblue/10 bg-actblue/[0.035] p-4"
+                    >
+                      <div class="flex items-start gap-3">
+                        <span
+                          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue text-white"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                            <path stroke-linecap="round" d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                          </svg>
+                        </span>
+
+                        <div>
+                          <p class="text-xs font-black text-slate-900">
+                            This information stays private
+                          </p>
+
+                          <p class="mt-1 text-[11px] font-semibold leading-5 text-slate-500">
+                            It can be used during ownership verification and will not appear
+                            on public item cards or the public report page.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- SAFETY WARNING -->
+                    <div
+                      class="mt-3 flex items-start gap-2.5 rounded-xl border border-rose-100 bg-rose-50/60 px-3.5 py-3"
+                    >
+                      <span class="mt-0.5 text-sm">!</span>
+
+                      <p class="text-[11px] font-semibold leading-5 text-slate-500">
+                        Do not enter passwords, PINs, OTPs, banking details, unlock codes,
+                        or complete sensitive identification numbers.
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+                </div>
+              </section>
+
+              <!-- STEP 4 -->
+              <section class="form-step" data-step="4">
+                <div
+                  class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                >
+                  <div class="flex items-start gap-4">
+                    <span
+                      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-actyellow text-sm font-black text-actblue"
+                      >04</span
+                    >
+                    <div>
+                      <p
+                        class="text-[10px] font-black uppercase tracking-[0.15em] text-actblue"
+                      >
+                        Final step
+                      </p>
+                      <h2
+                        class="mt-1 text-xl font-black text-slate-900 sm:text-2xl"
+                      >
+                        How can ACT reach you?
+                      </h2>
+                      <p class="mt-1 text-sm leading-6 text-slate-500">
+                        Guest reports are allowed. Your contact details stay
+                        private and are used for report updates and possible
+                        matches.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- ACCOUNT / GUEST NOTICE -->
+                  <div
+                    class="mt-7 rounded-2xl border border-actblue/10 bg-actblue/[0.035] p-5"
+                  >
+                    <div
+                      class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div class="flex items-start gap-3">
+                        <span
+                          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-actblue text-white"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15 19a6 6 0 0 0-12 0M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM17 11h4m-2-2v4"
+                            />
+                          </svg>
+                        </span>
+
+                        <div>
+                          <p
+                            id="reporterModeTitle"
+                            class="text-sm font-black text-slate-900"
+                          >
+                            You can submit without an account.
+                          </p>
+
+                          <p
+                            id="reporterModeText"
+                            class="mt-1 text-xs leading-5 text-slate-500"
+                          >
+                            Continue as a guest, or log in if you want this report
+                            connected to your ACT Lost &amp; Found account.
+                          </p>
+                        </div>
+                      </div>
+
+                      <a
+                        id="reporterModeLink"
+                        href="login.html"
+                        data-force-login
+                        class="inline-flex shrink-0 items-center justify-center rounded-xl border border-actblue/20 bg-white px-4 py-2.5 text-xs font-black text-actblue transition hover:border-actblue hover:bg-actblue/[0.04]"
+                      >
+                        Log in
+                        <span class="ml-2">→</span>
+                      </a>
+                    </div>
+                  </div>
+
+
+                  <!-- CONTACT FIELDS -->
+                  <div class="mt-7 grid gap-5 sm:grid-cols-2">
+
+                    <!-- NAME -->
+                    <div>
+                      <label
+                        for="reporterName"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Name
+                        <span class="text-rose-500">*</span>
+                      </label>
+
+                      <p class="mt-1 text-xs text-slate-400">
+                        Used to identify you during report updates.
+                      </p>
+
+                      <input
+                        id="reporterName"
+                        name="reporterName"
+                        type="text"
+                        required
+                        maxlength="100"
+                        autocomplete="name"
+                        placeholder="Your name"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div>
+                      <label
+                        for="reporterEmail"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Email
+                        <span class="text-rose-500">*</span>
+                      </label>
+
+                      <p class="mt-1 text-xs text-slate-400">
+                        Used for report and recovery updates.
+                      </p>
+
+                      <input
+                        id="reporterEmail"
+                        name="reporterEmail"
+                        type="email"
+                        required
+                        maxlength="120"
+                        autocomplete="email"
+                        placeholder="name@example.com"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="sm:col-span-2">
+                      <label
+                        for="reporterPhone"
+                        class="text-sm font-extrabold text-slate-800"
+                      >
+                        Phone number
+                        <span class="ml-1 text-xs font-semibold text-slate-400">
+                          (optional)
+                        </span>
+                      </label>
+
+                      <p class="mt-1 text-xs text-slate-400">
+                        This will not be displayed publicly.
+                      </p>
+
+                      <input
+                        id="reporterPhone"
+                        name="reporterPhone"
+                        type="tel"
+                        maxlength="30"
+                        autocomplete="tel"
+                        placeholder="+63"
+                        class="mt-2.5 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-actblue focus:bg-white focus:ring-4 focus:ring-actblue/10"
+                      />
+                    </div>
+
+                  </div>
+
+
+                  <!-- PRIVACY NOTE -->
+                  <div
+                    class="mt-6 flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white text-actblue shadow-sm"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                        <path stroke-linecap="round" d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                      </svg>
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-800">
+                        Your contact information stays private
+                      </p>
+
+                      <p class="mt-1 text-[11px] font-semibold leading-5 text-slate-500">
+                        Your name, email, and phone number are used for case communication
+                        and are not shown in the public report directory.
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <!-- CONFIRMATION -->
+                  <label
+                    for="confirmAccuracy"
+                    class="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-actblue/20"
+                  >
+                    <input
+                      id="confirmAccuracy"
+                      name="confirmAccuracy"
+                      type="checkbox"
+                      required
+                      class="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-actblue focus:ring-actblue"
+                    />
+
+                    <div>
+                      <p class="text-xs font-black text-slate-800">
+                        I confirm the information above is accurate.
+                      </p>
+
+                      <p class="mt-1 text-[11px] font-semibold leading-5 text-slate-500">
+                        I understand that the report will go through automatic validation.
+                        Normal reports may appear publicly after validation, while suspicious
+                        submissions may be held for moderator review.
+                      </p>
+                    </div>
+                  </label>
+              </section>
+
+              <!-- CONTROLS -->
+              <div
+                id="formControls"
+                class="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <button
+                  id="backButton"
+                  type="button"
+                  class="hidden items-center justify-center gap-2 rounded-xl
+                        border border-slate-200 bg-white px-5 py-3.5
+                        text-sm font-black text-slate-500 transition
+                        hover:border-actblue/25 hover:text-actblue"
+                >
+                  ← Back
+                </button>
+
+                <div class="ml-auto flex w-full gap-3 sm:w-auto">
+                  <button
+                    id="nextButton"
+                    type="button"
+                    class="inline-flex w-full items-center justify-center gap-2
+                          rounded-xl bg-actblue px-6 py-3.5
+                          text-sm font-black text-white transition
+                          hover:-translate-y-0.5 hover:bg-actblueDark
+                          hover:shadow-lg sm:w-auto"
+                  >
+                    Continue <span>→</span>
+                  </button>
+
+                  <button
+                    id="submitLostReport"
+                    type="submit"
+                    class="hidden w-full items-center justify-center gap-2
+                          rounded-xl bg-actyellow px-6 py-3.5
+                          text-sm font-black text-actblue transition
+                          hover:-translate-y-0.5 hover:bg-yellow-300
+                          hover:shadow-lg sm:w-auto"
+                  >
+                    Submit Lost Report <span>→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SIDE PANEL -->
+            <aside class="h-fit lg:sticky lg:top-[104px]">
+
+              <!-- MATCHING GUIDE -->
+              <div
+                class="rounded-[26px] border border-slate-200 bg-white p-6 shadow-[0_12px_35px_rgba(23,32,51,0.06)]"
+              >
+                <span
+                  class="flex h-11 w-11 items-center justify-center rounded-xl bg-actyellow text-actblue"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m12 3 1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3Z"
+                    />
+                  </svg>
+                </span>
+
+                <p
+                  class="mt-5 text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                >
+                  Better report
+                </p>
+
+                <h3 class="mt-1 text-lg font-black tracking-tight text-slate-900">
+                  Better details, better matches.
+                </h3>
+
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                  ACT compares the information in your report with found-item reports.
+                  Clear details make possible matches easier to recognize.
+                </p>
+
+                <div class="mt-6 space-y-3">
+
+                  <!-- ITEM -->
+                  <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3.5 py-3">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-xs font-black text-actblue"
+                    >
+                      ✓
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Item details
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold text-slate-400">
+                        Category, color, brand, and description
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <!-- LOCATION -->
+                  <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3.5 py-3">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-xs font-black text-actblue"
+                    >
+                      ✓
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Location &amp; timeline
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold text-slate-400">
+                        Where and when the item went missing
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <!-- PHOTO -->
+                  <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3.5 py-3">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-xs font-black text-actblue"
+                    >
+                      ✓
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Visible features
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold text-slate-400">
+                        Photo, markings, scratches, or other clues
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <!-- PRIVATE DETAIL -->
+                  <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3.5 py-3">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                    >
+                      ✓
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Ownership detail
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold text-slate-400">
+                        A private detail that can help verification
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <!-- PRIVACY CARD -->
+              <div
+                class="mt-4 overflow-hidden rounded-[26px] bg-actblue p-6 text-white shadow-[0_14px_35px_rgba(12,46,138,0.16)]"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="h-[3px] w-7 rounded-full bg-actyellow"></span>
+
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+                  >
+                    Privacy by design
+                  </p>
+                </div>
+
+                <h3 class="mt-3 text-lg font-black tracking-tight">
+                  Public report ≠ private proof.
+                </h3>
+
+                <p class="mt-2 text-xs font-semibold leading-5 text-white/65">
+                  Only information needed to help identify the lost item should appear
+                  publicly.
+                </p>
+
+                <div class="mt-5 grid gap-2">
+
+                  <div class="rounded-xl bg-white/[0.07] px-3.5 py-3">
+                    <div class="flex items-center justify-between gap-3">
+                      <span class="text-xs font-black text-white">
+                        Public
+                      </span>
+
+                      <span
+                        class="rounded-full bg-emerald-400/15 px-2 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-emerald-200"
+                      >
+                        Visible
+                      </span>
+                    </div>
+
+                    <p class="mt-1 text-[10px] font-semibold leading-4 text-white/50">
+                      Item name, description, location, date, and uploaded photo.
+                    </p>
+                  </div>
+
+                  <div class="rounded-xl bg-white/[0.07] px-3.5 py-3">
+                    <div class="flex items-center justify-between gap-3">
+                      <span class="text-xs font-black text-white">
+                        Private
+                      </span>
+
+                      <span
+                        class="rounded-full bg-actyellow/15 px-2 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-actyellow"
+                      >
+                        Protected
+                      </span>
+                    </div>
+
+                    <p class="mt-1 text-[10px] font-semibold leading-4 text-white/50">
+                      Contact information and private identifying details used for
+                      verification.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+
+            </aside>
+          </div>
+        </form>
+
+        <!-- SUCCESS -->
+        <section id="successState" class="hidden">
+          <div
+            class="mx-auto max-w-3xl overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_45px_rgba(23,32,51,0.08)]"
+          >
+            <!-- TOP -->
+            <div class="relative bg-actblue px-7 py-8 text-center text-white sm:px-10">
+              <div
+                class="pointer-events-none absolute inset-0 opacity-[0.10]"
+                style="
+                  background-image: radial-gradient(
+                    rgba(255,255,255,.9) 1px,
+                    transparent 1px
+                  );
+                  background-size: 22px 22px;
+                "
+              ></div>
+
+              <div class="relative">
+                <span
+                  id="successIcon"
+                  class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-actyellow text-2xl font-black text-actblue"
+                >
+                  ✓
+                </span>
+
+                <p
+                  class="mt-5 text-[10px] font-black uppercase tracking-[0.16em] text-actyellow"
+                >
+                  Report received
+                </p>
+
+                <h2
+                  id="successTitle"
+                  class="mt-2 text-2xl font-black tracking-tight sm:text-3xl"
+                >
+                  Your lost-item report was submitted.
+                </h2>
+
+                <p
+                  id="successMessage"
+                  class="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/70"
+                >
+                  Your report has gone through automatic validation.
+                </p>
+              </div>
+            </div>
+
+            <!-- DETAILS -->
+            <div class="p-7 sm:p-9">
+              <div
+                class="mx-auto max-w-lg rounded-2xl border border-slate-200 bg-slate-50 p-5"
+              >
+                <!-- REPORT ID -->
+                <div class="flex items-center justify-between gap-4">
+                  <div>
+                    <p
+                      class="text-[10px] font-black uppercase tracking-[0.12em] text-slate-400"
+                    >
+                      Reference ID
+                    </p>
+
+                    <p class="mt-1 text-xs font-semibold text-slate-500">
+                      Keep this for your records.
+                    </p>
+                  </div>
+
+                  <strong
+                    id="successReportId"
+                    class="rounded-lg bg-white px-3 py-2 text-sm font-black text-actblue shadow-sm"
+                  ></strong>
+                </div>
+
+                <div class="my-4 border-t border-slate-200"></div>
+
+                <!-- STATUS -->
+                <div class="flex items-center justify-between gap-4">
+                  <span class="text-xs font-bold text-slate-400">
+                    Report status
+                  </span>
+
+                  <span
+                    id="successStatusBadge"
+                    class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em]"
+                  >
+                    <span
+                      id="successStatusDot"
+                      class="h-1.5 w-1.5 rounded-full"
+                    ></span>
+
+                    <span id="successStatusText"></span>
+                  </span>
+                </div>
+
+                <!-- GUEST ACCESS -->
+                <div
+                  id="guestAccessRow"
+                  class="mt-4 hidden border-t border-slate-200 pt-4"
+                >
+                  <div class="w-full">
+                    <div
+                      class="flex flex-col gap-4 rounded-xl border border-actyellow/40 bg-actyellow/[0.08] p-4 sm:flex-row sm:items-center sm:justify-between"
+                    >
+                      <div>
+                        <p
+                          class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+                        >
+                          Guest Access Code
+                        </p>
+
+                        <p class="mt-1 text-xs font-semibold text-slate-500">
+                          Save this code together with your Reference ID.
+                        </p>
+                      </div>
+
+                      <strong
+                        id="guestAccessCode"
+                        class="rounded-lg bg-white px-4 py-2 text-lg font-black tracking-[0.18em] text-actblue shadow-sm"
+                      ></strong>
+                    </div>
+
+                    <a
+                      id="guestTrackLink"
+                      href="guest-tracking.html"
+                      class="mt-3 hidden w-full items-center justify-center rounded-xl bg-actblue px-4 py-3 text-xs font-black text-white transition hover:bg-actblueDark"
+                    >
+                      Track this guest case →
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- WHAT HAPPENS NEXT -->
+              <div class="mx-auto mt-7 max-w-lg">
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                >
+                  What happens next?
+                </p>
+
+                <div class="mt-3 grid gap-2.5">
+                  <div class="flex items-start gap-3 rounded-xl bg-slate-50 p-3.5">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue text-[10px] font-black text-white"
+                    >
+                      1
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Your report is saved
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold leading-4 text-slate-400">
+                        The system keeps your report and its verification details.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 rounded-xl bg-slate-50 p-3.5">
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                    >
+                      2
+                    </span>
+
+                    <div>
+                      <p class="text-xs font-black text-slate-700">
+                        Possible matches can be checked
+                      </p>
+
+                      <p class="mt-0.5 text-[10px] font-semibold leading-4 text-slate-400">
+                        Compare your report with found items reported across ACT.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ACTIONS -->
+              <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                <a
+                  href="lost-items.html"
+                  class="inline-flex items-center justify-center gap-2 rounded-xl bg-actblue px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-actblueDark"
+                >
+                  Browse lost items
+                  <span>→</span>
+                </a>
+
+                <a
+                  href="index.html"
+                  class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-black text-slate-600 transition hover:border-actblue/20 hover:text-actblue"
+                >
+                  Back to home
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16">
+        <div class="grid md:grid-cols-3 gap-12 lg:gap-16">
+          <!-- Brand -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="w-24 h-24 object-contain mb-5"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow"> Found </span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm text-blue-200 leading-6">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <!-- School -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-5h6v5M8 10h.01M12 10h.01M16 10h.01"
+                  />
+                </svg>
+
+                <p>Asian College of Technology</p>
+              </div>
+
+              <!-- Address -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21s7-5.5 7-12a7 7 0 10-14 0c0 6.5 7 12 7 12z"
+                  />
+
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <!-- Phone -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"
+                  />
+                </svg>
+
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <!-- Email -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V6.75z"
+                  />
+
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.5 6l8.5 6.5L20.5 6"
+                  />
+                </svg>
+
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Information -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm text-blue-100 leading-7">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="border-t border-blue-800 mt-12 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+
+    <script src="workflow.js"></script>
+
+    <script>
+      const form = document.getElementById("lostReportForm");
+      const formArea = document.getElementById("reportFormArea");
+      const steps = [...document.querySelectorAll(".form-step")];
+      const stepNodes = [...document.querySelectorAll(".step-node")];
+      const progress = document.getElementById("stepProgress");
+      const backButton = document.getElementById("backButton");
+      const nextButton = document.getElementById("nextButton");
+      const submitButton = document.getElementById("submitLostReport");
+      const successState = document.getElementById("successState");
+      const successReportId = document.getElementById("successReportId");
+      const successStatusBadge =
+        document.getElementById("successStatusBadge");
+      const successStatusDot =
+        document.getElementById("successStatusDot");
+      const successStatusText =
+        document.getElementById("successStatusText");
+      const description = document.getElementById("description");
+      const descriptionCount = document.getElementById("descriptionCount");
+      const dateLost = document.getElementById("dateLost");
+      const reporterName = document.getElementById("reporterName");
+      const reporterEmail = document.getElementById("reporterEmail");
+      const reporterModeTitle = document.getElementById("reporterModeTitle");
+      const reporterModeText = document.getElementById("reporterModeText");
+      const reporterModeLink = document.getElementById("reporterModeLink");
+      const successTitle = document.getElementById("successTitle");
+      const successMessage = document.getElementById("successMessage");
+      const successStatus = document.getElementById("successStatus");
+      const guestAccessRow = document.getElementById("guestAccessRow");
+      const guestAccessCode = document.getElementById("guestAccessCode");
+      const guestTrackLink = document.getElementById("guestTrackLink");
+
+      const currentSession = ACTAuth.getSession();
+      const reportingAsUser = currentSession?.role === "user";
+
+      if (reportingAsUser) {
+        if (currentSession.name) {
+          reporterName.value = currentSession.name;
+        }
+
+        if (currentSession.email) {
+          reporterEmail.value = currentSession.email;
+          reporterEmail.readOnly = true;
+        }
+
+        reporterModeTitle.textContent = `Reporting as ${currentSession.name || "Registered ACT User"}`;
+
+        reporterModeText.textContent =
+          "This report will be attached to your account so you can track it from My Reports.";
+
+        reporterModeLink.href = "user-dashboard.html";
+
+        reporterModeLink.removeAttribute("data-force-login");
+        reporterModeLink.textContent = "My Account →";
+      }
+
+      let currentStep = 1;
+      let imageDataUrl = "";
+
+      // Never allow a future lost date.
+      dateLost.max = new Date().toISOString().split("T")[0];
+
+      function updateStepUI() {
+        steps.forEach((step) =>
+          step.classList.toggle(
+            "active",
+            Number(step.dataset.step) === currentStep,
+          ),
+        );
+
+        stepNodes.forEach((node, index) => {
+          const stepNumber = index + 1;
+          node.classList.toggle("current", stepNumber === currentStep);
+          node.classList.toggle("completed", stepNumber < currentStep);
+          const circle = node.querySelector(".step-circle");
+          circle.textContent = stepNumber < currentStep ? "✓" : stepNumber;
+        });
+
+        progress.style.width = `${((currentStep - 1) / 3) * 100}%`;
+        backButton.classList.toggle("hidden", currentStep === 1);
+        backButton.classList.toggle("inline-flex", currentStep !== 1);
+        nextButton.classList.toggle("hidden", currentStep === 4);
+        submitButton.classList.toggle("hidden", currentStep !== 4);
+        submitButton.classList.toggle("inline-flex", currentStep === 4);
+      }
+
+      function fieldsForStep(stepNumber) {
+        const section = document.querySelector(
+          `.form-step[data-step="${stepNumber}"]`,
+        );
+        return [...section.querySelectorAll("input, select, textarea")];
+      }
+
+      function validateStep(stepNumber) {
+        const fields = fieldsForStep(stepNumber);
+        let firstInvalid = null;
+
+        fields.forEach((field) => {
+          field.classList.remove("field-error");
+          if (!field.checkValidity()) {
+            field.classList.add("field-error");
+            if (!firstInvalid) firstInvalid = field;
+          }
+        });
+
+        if (firstInvalid) {
+          firstInvalid.reportValidity();
+          firstInvalid.focus({ preventScroll: true });
+          firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+          return false;
+        }
+        return true;
+      }
+
+      form.addEventListener("input", (event) => {
+        if (event.target.matches("input, select, textarea"))
+          event.target.classList.remove("field-error");
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (!validateStep(currentStep)) return;
+        currentStep = Math.min(4, currentStep + 1);
+        updateStepUI();
+        document
+          .getElementById("reportFormArea")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      backButton.addEventListener("click", () => {
+        currentStep = Math.max(1, currentStep - 1);
+        updateStepUI();
+        document
+          .getElementById("reportFormArea")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      description.addEventListener("input", () => {
+        descriptionCount.textContent = `${description.value.length} / 500`;
+      });
+
+      // IMAGE PREVIEW + COMPRESSION FOR LOCALSTORAGE PROTOTYPE
+      const itemImage = document.getElementById("itemImage");
+      const uploadContent = document.getElementById("uploadContent");
+      const imagePreviewContainer = document.getElementById(
+        "imagePreviewContainer",
+      );
+      const imagePreview = document.getElementById("imagePreview");
+      const imageFileName = document.getElementById("imageFileName");
+      const imageError = document.getElementById("imageError");
+
+      function resetImageUI() {
+        imageDataUrl = "";
+        uploadContent.classList.remove("hidden");
+        imagePreviewContainer.classList.add("hidden");
+        imagePreview.src = "";
+        imageFileName.textContent = "";
+      }
+
+      function compressImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = reject;
+          reader.onload = () => {
+            const img = new Image();
+            img.onerror = reject;
+            img.onload = () => {
+              const maxSide = 1000;
+              const scale = Math.min(
+                1,
+                maxSide / Math.max(img.width, img.height),
+              );
+              const canvas = document.createElement("canvas");
+              canvas.width = Math.max(1, Math.round(img.width * scale));
+              canvas.height = Math.max(1, Math.round(img.height * scale));
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              resolve(canvas.toDataURL("image/jpeg", 0.72));
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      itemImage.addEventListener("change", async function () {
+        const file = this.files[0];
+        imageError.textContent = "";
+        imageError.classList.add("hidden");
+
+        if (!file) {
+          resetImageUI();
+          return;
+        }
+
+        const allowedTypes = ["image/jpeg", "image/png"];
+        if (!allowedTypes.includes(file.type)) {
+          this.value = "";
+          resetImageUI();
+          imageError.textContent = "Please upload a JPG or PNG image.";
+          imageError.classList.remove("hidden");
+          return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          this.value = "";
+          resetImageUI();
+          imageError.textContent = "The image must be 5MB or smaller.";
+          imageError.classList.remove("hidden");
+          return;
+        }
+
+        try {
+          imageDataUrl = await compressImage(file);
+          imagePreview.src = imageDataUrl;
+          imageFileName.textContent = file.name;
+          uploadContent.classList.add("hidden");
+          imagePreviewContainer.classList.remove("hidden");
+        } catch {
+          this.value = "";
+          resetImageUI();
+          imageError.textContent =
+            "We could not read that image. Please choose another file.";
+          imageError.classList.remove("hidden");
+        }
+      });
+
+      // Shared rule-based moderation lives in workflow.js.
+
+      function formatDisplayDate(isoDate) {
+        const date = new Date(`${isoDate}T00:00:00`);
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }).format(date);
+      }
+
+      function createReportId() {
+        const stamp = Date.now().toString().slice(-8);
+        return `L-${stamp}`;
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!validateStep(4)) return;
+
+        const data = Object.fromEntries(new FormData(form).entries());
+        const moderation = ACTWorkflow.moderation({
+          item: data.itemName,
+          brand: data.brand,
+          color: data.color,
+          location: data.location,
+          specificLocation: data.specificLocation,
+          description: data.description,
+          dateISO: data.dateLost,
+        });
+        const flags = moderation.flags;
+        const reportId = createReportId();
+        const guestCode = reportingAsUser ? "" : ACTWorkflow.code(6);
+        const locationDisplay = data.specificLocation?.trim()
+          ? `${data.location} · ${data.specificLocation.trim()}`
+          : data.location;
+
+        const report = {
+          id: reportId,
+          type: "lost",
+          status: flags.length ? "flagged" : "active",
+          item: data.itemName.trim(),
+          category: data.category,
+          brand: data.brand.trim(),
+          color: data.color.trim(),
+          location: locationDisplay,
+          locationBase: data.location,
+          specificLocation: data.specificLocation.trim(),
+          date: formatDisplayDate(data.dateLost),
+          dateISO: data.dateLost,
+          time: data.timeLost || "",
+          description: data.description.trim(),
+          image: imageDataUrl || "",
+          privateDetail: data.privateDetail.trim(),
+          reporter: {
+            name: data.reporterName.trim(),
+            email: data.reporterEmail.trim(),
+            phone: data.reporterPhone.trim(),
+            mode: reportingAsUser ? "user" : "guest",
+          },
+          guestAccessCode: guestCode,
+          moderation: {
+            ...moderation,
+            reviewed: false,
+          },
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        try {
+          ACTWorkflow.upsertReport(report);
+
+          if (reportingAsUser) {
+            ACTWorkflow.notify(
+              currentSession.email,
+              flags.length
+                ? `Your lost-item report ${reportId} was submitted and is pending moderator review.`
+                : `Your lost-item report ${reportId} passed validation and is now active.`,
+              "user-dashboard.html",
+            );
+          } else {
+            ACTWorkflow.rememberGuestCase(
+              reportId,
+              guestCode,
+              "report",
+            );
+          }
+        } catch (error) {
+          console.error(error);
+          alert(
+            "The report could not be saved in this browser. If you attached a large image, try submitting without the image.",
+          );
+          return;
+        }
+
+        form.classList.add("hidden");
+
+        successReportId.textContent = reportId;
+
+        if (!reportingAsUser) {
+          guestAccessCode.textContent =
+            guestCode;
+
+          guestAccessRow.classList.remove(
+            "hidden",
+          );
+
+          guestAccessRow.classList.add(
+            "flex",
+          );
+
+          guestTrackLink.href =
+            `guest-tracking.html?ref=${encodeURIComponent(
+              reportId,
+            )}&code=${encodeURIComponent(
+              guestCode,
+            )}`;
+
+          guestTrackLink.classList.remove(
+            "hidden",
+          );
+
+          guestTrackLink.classList.add(
+            "inline-flex",
+          );
+        }
+
+        if (flags.length) {
+          // Suspicious submission → moderator review
+          successTitle.textContent =
+            "Your report was received and needs review.";
+
+          successMessage.textContent =
+            "Automatic validation detected something that needs moderator review. The report will stay out of the public directory until it is cleared.";
+
+          successStatusText.textContent = "Pending review";
+
+          successStatusBadge.className =
+            "inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-amber-800";
+
+          successStatusDot.className =
+            "h-1.5 w-1.5 rounded-full bg-amber-500";
+        } else {
+          // Normal submission → publish
+          successTitle.textContent =
+            "Your report is now in the ACT directory.";
+
+          successMessage.textContent =
+            "Your report passed automatic validation and can now appear in active lost-item listings.";
+
+          successStatusText.textContent = "Active";
+
+          successStatusBadge.className =
+            "inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.1em] text-emerald-700";
+
+          successStatusDot.className =
+            "h-1.5 w-1.5 rounded-full bg-emerald-500";
+        }
+
+        successState.classList.remove("hidden");
+
+        successState.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+        });
+
+      // SHARED MOBILE NAVIGATION
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open menu");
+      }
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuButton.setAttribute("aria-expanded", String(opening));
+        menuButton.setAttribute(
+          "aria-label",
+          opening ? "Close menu" : "Open menu",
+        );
+      });
+
+      mobileMenu
+        .querySelectorAll("a")
+        .forEach((link) => link.addEventListener("click", closeMobileMenu));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMobileMenu();
+      });
+
+      updateStepUI();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2037 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>Admin Dashboard | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 12px 35px rgba(12, 46, 138, 0.10)",
+              card: "0 8px 24px rgba(23, 32, 51, 0.08)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+
+      .tab-button.active,
+      .tab-button.active:hover {
+        background: #0c2e8a;
+        color: white;
+        cursor: default;
+      }
+
+      .subfilter.active,
+      .subfilter.active:hover {
+        border-color: #0c2e8a;
+        background: #0c2e8a;
+        color: white;
+        cursor: default;
+      }
+
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      .intro-grid {
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        mask-image: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.75),
+          transparent 88%
+        );
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <div
+            class="hidden items-center gap-2 rounded-xl bg-actblue px-3.5 py-2.5 text-xs font-black text-white xl:inline-flex"
+          >
+            <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+            <span id="adminName">Admin</span>
+          </div>
+
+          <button
+            id="logoutButton"
+            type="button"
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-4 py-2.5 text-sm font-extrabold text-actblue transition hover:bg-actblue hover:text-white sm:inline-flex"
+          >
+            Log out
+          </button>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Help
+          </a>
+
+          <button
+            type="button"
+            data-logout
+            class="mt-2 block w-full rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white transition hover:bg-actblueDark"
+          >
+            Log out
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- =================================================
+          ADMIN HERO
+      ================================================== -->
+      <section class="relative overflow-hidden bg-actblue">
+        <div class="intro-grid absolute inset-0"></div>
+
+        <div
+          class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-2 w-1/3 bg-actyellow"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-10 sm:px-7 sm:py-12 lg:px-8"
+        >
+          <div class="grid gap-7 lg:grid-cols-[1fr_360px] lg:items-end">
+            <!-- LEFT -->
+            <div class="max-w-3xl">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.15em] text-white backdrop-blur-sm"
+              >
+                <span class="h-2 w-2 rounded-full bg-actyellow"></span>
+                Moderation Console
+              </div>
+
+              <h1
+                class="mt-5 text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+              >
+                Admin Dashboard
+              </h1>
+
+              <p
+                class="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+              >
+                Review flagged reports, verify ownership claims, accept return
+                leads, and supervise secure return coordination.
+              </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div
+              class="hidden rounded-[24px] border border-white/15 bg-white/[0.08] p-5 backdrop-blur-sm lg:block"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.14em] text-actyellow"
+              >
+                Admin focus
+              </p>
+
+              <div class="mt-3 space-y-2.5">
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-actyellow text-[10px] font-black text-actblue"
+                  >
+                    1
+                  </span>
+
+                  <span>
+                    Review suspicious or flagged reports before publishing.
+                  </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    2
+                  </span>
+
+                  <span>
+                    Verify private ownership proof and return leads.
+                  </span>
+                </div>
+
+                <div class="flex items-start gap-3 text-xs text-white/70">
+                  <span
+                    class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[10px] font-black text-white"
+                  >
+                    3
+                  </span>
+
+                  <span> Supervise secure handoff and completed returns. </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+          DASHBOARD
+      ================================================== -->
+      <section
+        class="mx-auto max-w-7xl px-5 py-10 pb-20 sm:px-7 lg:px-8 lg:py-12 lg:pb-20"
+      >
+        <!-- STATS -->
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <button
+            type="button"
+            data-jump-tab="reports"
+            data-jump-filter="pending"
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,32,51,0.05)] transition hover:-translate-y-0.5 hover:border-actblue/20"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400"
+            >
+              Pending reports
+            </p>
+            <p
+              id="pendingReportCount"
+              class="mt-2 text-3xl font-black text-actblue"
+            >
+              0
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-jump-tab="reports"
+            data-jump-filter="flagged"
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,32,51,0.05)] transition hover:-translate-y-0.5 hover:border-actyellow/70"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actyellow"></div>
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400"
+            >
+              Flagged reports
+            </p>
+            <p
+              id="flaggedReportCount"
+              class="mt-2 text-3xl font-black text-amber-600"
+            >
+              0
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-jump-tab="claims"
+            data-jump-filter="pending"
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,32,51,0.05)] transition hover:-translate-y-0.5 hover:border-actblue/20"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400"
+            >
+              Pending claims
+            </p>
+            <p
+              id="pendingClaimCount"
+              class="mt-2 text-3xl font-black text-actblue"
+            >
+              0
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-jump-tab="returns"
+            data-jump-filter="pending"
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,32,51,0.05)] transition hover:-translate-y-0.5 hover:border-actblue/20"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-actblue"></div>
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400"
+            >
+              Return leads
+            </p>
+            <p
+              id="pendingReturnCount"
+              class="mt-2 text-3xl font-black text-actblue"
+            >
+              0
+            </p>
+          </button>
+
+          <button
+            type="button"
+            data-jump-tab="resolved"
+            class="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,32,51,0.05)] transition hover:-translate-y-0.5 hover:border-emerald-200"
+          >
+            <div class="absolute inset-x-0 top-0 h-1 bg-emerald-500"></div>
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-slate-400"
+            >
+              Returned / archived
+            </p>
+            <p
+              id="resolvedCount"
+              class="mt-2 text-3xl font-black text-emerald-600"
+            >
+              0
+            </p>
+          </button>
+        </div>
+
+        <!-- MAIN PANEL -->
+        <div
+          class="mt-8 overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_14px_40px_rgba(23,32,51,0.06)]"
+        >
+          <!-- TABS -->
+          <div class="border-b border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                data-tab="reports"
+                class="tab-button active rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500 transition"
+              >
+                Reports
+              </button>
+
+              <button
+                type="button"
+                data-tab="claims"
+                class="tab-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500 transition hover:bg-slate-50 hover:text-actblue"
+              >
+                Claims
+              </button>
+
+              <button
+                type="button"
+                data-tab="returns"
+                class="tab-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500 transition hover:bg-slate-50 hover:text-actblue"
+              >
+                Return Leads
+              </button>
+
+              <button
+                type="button"
+                data-tab="resolved"
+                class="tab-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.08em] text-slate-500 transition hover:bg-slate-50 hover:text-actblue"
+              >
+                Resolved
+              </button>
+            </div>
+          </div>
+
+          <!-- TOOLBAR -->
+          <div
+            class="flex flex-col gap-4 border-b border-slate-100 bg-slate-50/70 p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div id="subfilters" class="flex flex-wrap gap-2"></div>
+
+            <div class="relative w-full lg:max-w-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-4.35-4.35M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"
+                />
+              </svg>
+
+              <input
+                id="adminSearch"
+                type="search"
+                autocomplete="off"
+                placeholder="Search..."
+                class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm font-semibold outline-none placeholder:text-slate-400 focus:border-actblue focus:ring-4 focus:ring-actblue/10"
+              />
+            </div>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="p-4 sm:p-5">
+            <div
+              class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <p
+                  id="sectionEyebrow"
+                  class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+                >
+                  Report moderation
+                </p>
+                <h2
+                  id="sectionTitle"
+                  class="mt-1 text-xl font-black text-slate-900"
+                >
+                  Reports
+                </h2>
+              </div>
+
+              <p id="resultCount" class="text-xs font-bold text-slate-400"></p>
+            </div>
+
+            <div id="adminList" class="grid gap-4"></div>
+
+            <div
+              id="emptyState"
+              class="hidden rounded-[24px] border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center"
+            >
+              <div
+                class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-actblue/[0.07] text-xl font-black text-actblue"
+              >
+                ✓
+              </div>
+
+              <p class="mt-4 text-sm font-black text-slate-800">
+                Nothing here right now.
+              </p>
+
+              <p
+                class="mx-auto mt-2 max-w-md text-xs font-semibold leading-5 text-slate-400"
+              >
+                Try another status filter or search term.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <div class="grid gap-12 md:grid-cols-3 lg:gap-16">
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="mb-5 h-24 w-24 object-contain"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow">Found</span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm leading-6 text-blue-200">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">▣</span>
+                <p>Asian College of Technology</p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="mt-0.5 text-actyellow">●</span>
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">☎</span>
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-actyellow">✉</span>
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-5 flex items-center gap-3">
+              <div class="h-7 w-1.5 rounded-full bg-actyellow"></div>
+              <h3 class="text-lg font-extrabold">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-blue-100">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 border-t border-blue-800 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- =================================================
+        REVIEW MODAL
+    ================================================== -->
+    <div
+      id="reviewModal"
+      class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/45 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reviewTitle"
+    >
+      <div
+        class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[30px] border border-slate-200 bg-white shadow-2xl"
+      >
+        <div
+          class="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-slate-200 bg-slate-50/95 px-5 py-4 backdrop-blur sm:px-6"
+        >
+          <div>
+            <p
+              id="reviewEyebrow"
+              class="text-[10px] font-black uppercase tracking-[0.14em] text-actblue"
+            >
+              Review
+            </p>
+            <h2 id="reviewTitle" class="mt-1 text-xl font-black text-slate-900">
+              Record details
+            </h2>
+          </div>
+
+          <button
+            id="closeModal"
+            type="button"
+            class="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-xl font-bold text-slate-500 transition hover:border-actblue/20 hover:text-actblue"
+            aria-label="Close review"
+          >
+            ×
+          </button>
+        </div>
+
+        <div id="reviewBody" class="p-5 sm:p-6"></div>
+
+        <div
+          id="reviewActions"
+          class="sticky bottom-0 flex flex-wrap justify-end gap-2 border-t border-slate-200 bg-slate-50/95 px-5 py-4 backdrop-blur sm:px-6"
+        ></div>
+      </div>
+    </div>
+
+    <!-- =================================================
+        TOAST
+    ================================================== -->
+    <div
+      id="toast"
+      class="pointer-events-none fixed bottom-5 left-1/2 z-[90] hidden -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-2xl"
+      aria-live="polite"
+    ></div>
+
+    <script src="session.js"></script>
+    <script src="workflow.js"></script>
+
+    <script>
+      /* ==========================================
+        ADMIN SESSION
+      ========================================== */
+
+      const adminSession = ACTAuth.requireAdmin();
+
+      if (adminSession) {
+        document.getElementById("adminName").textContent =
+          adminSession.name || "Admin";
+      }
+
+      /* ==========================================
+   MOBILE NAVIGATION
+========================================== */
+
+      const menuButton = document.getElementById("menuButton");
+
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+
+        menuButton.setAttribute("aria-expanded", "false");
+
+        menuButton.setAttribute("aria-label", "Open menu");
+      }
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+
+        mobileMenu.classList.toggle("hidden");
+
+        menuButton.setAttribute("aria-expanded", String(opening));
+
+        menuButton.setAttribute(
+          "aria-label",
+          opening ? "Close menu" : "Open menu",
+        );
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMobileMenu();
+        }
+      });
+
+      /* ==========================================
+           DEMO PUBLIC REPORTS
+      ========================================== */
+      const baseReports = [
+        {
+          id: 1,
+          type: "lost",
+          status: "active",
+          item: "Black Backpack",
+          category: "Bags",
+          color: "Black",
+          brand: "",
+          location: "Main Building",
+          locationBase: "Main Building",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          description:
+            "Black backpack with a small blue keychain on the front pocket.",
+          image:
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-04T10:30:00+08:00",
+        },
+        {
+          id: 2,
+          type: "found",
+          status: "active",
+          item: "Silver Watch",
+          category: "Personal Items",
+          color: "Silver",
+          brand: "",
+          location: "Library",
+          locationBase: "Library",
+          date: "Oct 4, 2026",
+          dateISO: "2026-10-04",
+          description: "Silver wristwatch found near the reading tables.",
+          image:
+            "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-04T09:10:00+08:00",
+        },
+        {
+          id: 3,
+          type: "lost",
+          status: "active",
+          item: "Blue Wallet",
+          category: "Personal Items",
+          color: "Blue",
+          brand: "",
+          location: "Cafeteria",
+          locationBase: "Cafeteria",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          description:
+            "Navy-blue wallet with school and personal cards inside.",
+          image:
+            "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-03T15:20:00+08:00",
+        },
+        {
+          id: 4,
+          type: "found",
+          status: "active",
+          item: "Key Set",
+          category: "Keys",
+          color: "Silver",
+          brand: "",
+          location: "Room 204",
+          locationBase: "Main Building",
+          date: "Oct 3, 2026",
+          dateISO: "2026-10-03",
+          description:
+            "Three keys on a simple metal ring found outside a classroom.",
+          image:
+            "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-03T13:00:00+08:00",
+        },
+        {
+          id: 5,
+          type: "found",
+          status: "active",
+          item: "Student ID",
+          category: "School Items",
+          color: "White",
+          brand: "",
+          location: "Student Lounge",
+          locationBase: "Student Lounge",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          description: "Student identification card found on a lounge chair.",
+          image:
+            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-02T16:10:00+08:00",
+        },
+        {
+          id: 6,
+          type: "lost",
+          status: "active",
+          item: "White Hoodie",
+          category: "Clothing",
+          color: "White",
+          brand: "",
+          location: "Gym",
+          locationBase: "Gym",
+          date: "Oct 2, 2026",
+          dateISO: "2026-10-02",
+          description:
+            "Plain white hoodie, medium size, possibly left after PE.",
+          image:
+            "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-02T12:45:00+08:00",
+        },
+        {
+          id: 7,
+          type: "found",
+          status: "active",
+          item: "Wireless Earbuds",
+          category: "Electronics",
+          color: "White",
+          brand: "",
+          location: "Computer Lab",
+          locationBase: "Computer Lab",
+          date: "Oct 1, 2026",
+          dateISO: "2026-10-01",
+          description: "White wireless earbuds in a small charging case.",
+          image:
+            "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-10-01T17:10:00+08:00",
+        },
+        {
+          id: 8,
+          type: "lost",
+          status: "active",
+          item: "Black Umbrella",
+          category: "Other",
+          color: "Black",
+          brand: "",
+          location: "Building A",
+          locationBase: "Building A",
+          date: "Sep 30, 2026",
+          dateISO: "2026-09-30",
+          description: "Compact black folding umbrella with a curved handle.",
+          image:
+            "https://images.unsplash.com/photo-1438449805896-28f6e9b0d0ab?auto=format&fit=crop&w=900&q=85",
+          createdAt: "2026-09-30T17:35:00+08:00",
+        },
+      ];
+
+      const state = {
+        tab: "reports",
+        filter: "all",
+        search: "",
+        selectedKind: null,
+        selectedId: null,
+      };
+
+      const filterMap = {
+        reports: ["all", "pending", "flagged", "active", "rejected"],
+        claims: ["all", "pending", "verified", "rejected"],
+        returns: ["all", "pending", "resolved", "rejected"],
+        resolved: ["all", "returned", "archived"],
+      };
+
+      const tabTitles = {
+        reports: {
+          eyebrow: "Report moderation",
+          title: "Reports",
+          placeholder: "Search report, category, location...",
+        },
+        claims: {
+          eyebrow: "Ownership verification",
+          title: "Claims",
+          placeholder: "Search claimant, item, claim ID...",
+        },
+        returns: {
+          eyebrow: "Recovery coordination",
+          title: "Return Leads",
+          placeholder: "Search finder, item, return ID...",
+        },
+        resolved: {
+          eyebrow: "Recovery history",
+          title: "Resolved Items",
+          placeholder: "Search resolved items...",
+        },
+      };
+
+      const adminList = document.getElementById("adminList");
+      const emptyState = document.getElementById("emptyState");
+      const subfilters = document.getElementById("subfilters");
+      const adminSearch = document.getElementById("adminSearch");
+      const sectionEyebrow = document.getElementById("sectionEyebrow");
+      const sectionTitle = document.getElementById("sectionTitle");
+      const resultCount = document.getElementById("resultCount");
+
+      const reviewModal = document.getElementById("reviewModal");
+      const reviewEyebrow = document.getElementById("reviewEyebrow");
+      const reviewTitle = document.getElementById("reviewTitle");
+      const reviewBody = document.getElementById("reviewBody");
+      const reviewActions = document.getElementById("reviewActions");
+      const closeModal = document.getElementById("closeModal");
+      const toast = document.getElementById("toast");
+
+      function escapeHtml(value) {
+        return String(value ?? "").replace(
+          /[&<>'"]/g,
+          (char) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              "'": "&#039;",
+              '"': "&quot;",
+            })[char],
+        );
+      }
+
+      function safeParse(key) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) || "[]");
+          return Array.isArray(value) ? value : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveArray(key, value) {
+        if (window.ACTWorkflow) {
+          ACTWorkflow.write(key, value);
+        } else {
+          localStorage.setItem(key, JSON.stringify(value));
+        }
+      }
+
+      function getStoredReports() {
+        return safeParse("act_reports");
+      }
+
+      function getAllReports() {
+        const stored = getStoredReports();
+
+        return [
+          ...stored,
+          ...baseReports.filter(
+            (base) =>
+              !stored.some((item) => String(item.id) === String(base.id)),
+          ),
+        ];
+      }
+
+      function getClaims() {
+        return safeParse("act_claims");
+      }
+
+      function getReturns() {
+        return safeParse("act_returns");
+      }
+
+      function saveReport(updatedReport) {
+        const reports = getStoredReports();
+        const index = reports.findIndex(
+          (report) => String(report.id) === String(updatedReport.id),
+        );
+
+        if (index >= 0) {
+          reports[index] = updatedReport;
+        } else {
+          reports.unshift(updatedReport);
+        }
+
+        saveArray("act_reports", reports);
+      }
+
+      function updateReportStatus(reportId, status) {
+        const report = getAllReports().find(
+          (item) => String(item.id) === String(reportId),
+        );
+
+        if (!report) return false;
+
+        saveReport({
+          ...report,
+          status,
+          updatedAt: new Date().toISOString(),
+        });
+
+        return true;
+      }
+
+      function updateCollectionStatus(key, id, status) {
+        const list = safeParse(key);
+        const index = list.findIndex((item) => String(item.id) === String(id));
+
+        if (index < 0) return false;
+
+        list[index] = {
+          ...list[index],
+          status,
+          updatedAt: new Date().toISOString(),
+        };
+
+        saveArray(key, list);
+        return true;
+      }
+
+      function statusBadge(status) {
+        const normalized = String(status || "pending").toLowerCase();
+
+        const classes = {
+          pending: "bg-amber-50 text-amber-700 border-amber-200",
+          flagged: "bg-rose-50 text-rose-700 border-rose-200",
+          active: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          rejected: "bg-slate-100 text-slate-500 border-slate-200",
+          verified: "bg-blue-50 text-actblue border-blue-200",
+          resolved: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          returned: "bg-emerald-50 text-emerald-700 border-emerald-200",
+          archived: "bg-slate-100 text-slate-600 border-slate-200",
+          claim_requested: "bg-blue-50 text-actblue border-blue-200",
+        };
+
+        return `
+          <span class="inline-flex rounded-full border px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.11em] ${classes[normalized] || classes.pending}">
+            ${escapeHtml(normalized.replaceAll("_", " "))}
+          </span>
+        `;
+      }
+
+      function typeBadge(type) {
+        const lost = String(type).toLowerCase() === "lost";
+
+        return `
+          <span class="inline-flex rounded-full px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.11em] ${
+            lost ? "bg-actblue text-white" : "bg-actyellow text-actblue"
+          }">
+            ${lost ? "Lost" : "Found"}
+          </span>
+        `;
+      }
+
+      function formatDateTime(value) {
+        if (!value) return "Not recorded";
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        }).format(date);
+      }
+
+      function findReport(reportId) {
+        return getAllReports().find(
+          (report) => String(report.id) === String(reportId),
+        );
+      }
+
+      function notifyRegisteredUser(mode, email, message) {
+        if (mode !== "user" || !email) {
+          return;
+        }
+
+        ACTWorkflow.notify(email, message, "user-dashboard.html");
+      }
+
+      function currentList() {
+        if (state.tab === "reports") {
+          return getAllReports().filter((report) => {
+            const status = String(report.status || "active").toLowerCase();
+
+            const filterMatch =
+              state.filter === "all" || status === state.filter;
+
+            const q = state.search.trim().toLowerCase();
+
+            const haystack = [
+              report.id,
+              report.item,
+              report.type,
+              report.category,
+              report.location,
+              report.description,
+              report.reporter?.name,
+              report.reporter?.email,
+            ]
+              .join(" ")
+              .toLowerCase();
+
+            return filterMatch && (!q || haystack.includes(q));
+          });
+        }
+
+        if (state.tab === "claims") {
+          return getClaims().filter((claim) => {
+            const status = String(claim.status || "pending").toLowerCase();
+
+            const filterMatch =
+              state.filter === "all" || status === state.filter;
+
+            const linked = findReport(claim.reportId);
+
+            const q = state.search.trim().toLowerCase();
+
+            const haystack = [
+              claim.id,
+              claim.reportId,
+              linked?.item,
+              claim.claimant?.name,
+              claim.claimant?.email,
+              claim.reason,
+              claim.lastLocation,
+            ]
+              .join(" ")
+              .toLowerCase();
+
+            return filterMatch && (!q || haystack.includes(q));
+          });
+        }
+
+        if (state.tab === "returns") {
+          return getReturns().filter((lead) => {
+            const status = String(lead.status || "pending").toLowerCase();
+
+            const filterMatch =
+              state.filter === "all" || status === state.filter;
+
+            const linked = findReport(lead.reportId);
+
+            const q = state.search.trim().toLowerCase();
+
+            const haystack = [
+              lead.id,
+              lead.reportId,
+              linked?.item,
+              lead.finder?.name,
+              lead.finder?.email,
+              lead.foundLocation,
+              lead.note,
+            ]
+              .join(" ")
+              .toLowerCase();
+
+            return filterMatch && (!q || haystack.includes(q));
+          });
+        }
+
+        return getAllReports().filter((report) => {
+          const status = String(report.status || "").toLowerCase();
+
+          const isResolved = status === "returned" || status === "archived";
+
+          const filterMatch = state.filter === "all" || status === state.filter;
+
+          const q = state.search.trim().toLowerCase();
+
+          const haystack = [
+            report.id,
+            report.item,
+            report.type,
+            report.category,
+            report.location,
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          return isResolved && filterMatch && (!q || haystack.includes(q));
+        });
+      }
+
+      function renderStats() {
+        const reports = getAllReports();
+        const claims = getClaims();
+        const returns = getReturns();
+
+        document.getElementById("pendingReportCount").textContent =
+          reports.filter(
+            (report) =>
+              String(report.status || "active").toLowerCase() === "pending",
+          ).length;
+
+        document.getElementById("flaggedReportCount").textContent =
+          reports.filter(
+            (report) => String(report.status || "").toLowerCase() === "flagged",
+          ).length;
+
+        document.getElementById("pendingClaimCount").textContent =
+          claims.filter(
+            (claim) =>
+              String(claim.status || "pending").toLowerCase() === "pending",
+          ).length;
+
+        document.getElementById("pendingReturnCount").textContent =
+          returns.filter(
+            (lead) =>
+              String(lead.status || "pending").toLowerCase() === "pending",
+          ).length;
+
+        document.getElementById("resolvedCount").textContent = reports.filter(
+          (report) => {
+            const status = String(report.status || "").toLowerCase();
+
+            return status === "returned" || status === "archived";
+          },
+        ).length;
+      }
+
+      function renderSubfilters() {
+        subfilters.innerHTML = filterMap[state.tab]
+          .map(
+            (filter) => `
+                <button
+                  type="button"
+                  data-filter="${escapeHtml(filter)}"
+                  class="subfilter ${
+                    state.filter === filter ? "active" : ""
+                  } rounded-full border border-slate-200 bg-white px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.09em] text-slate-500 transition hover:border-actblue/20 hover:text-actblue"
+                >
+                  ${escapeHtml(filter.replaceAll("_", " "))}
+                </button>
+              `,
+          )
+          .join("");
+
+        subfilters.querySelectorAll("[data-filter]").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.filter = button.dataset.filter;
+
+            renderAll();
+          });
+        });
+      }
+
+      function reportCard(report) {
+        return `
+          <article class="flex flex-col gap-4 rounded-[20px] border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white sm:flex-row sm:items-center">
+            <div class="h-24 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 sm:w-28">
+              <img
+                src="${escapeHtml(report.image || "")}"
+                alt="${escapeHtml(report.item || "Item")}"
+                class="h-full w-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                ${typeBadge(report.type)}
+                ${statusBadge(report.status || "active")}
+                <span class="text-[10px] font-bold text-slate-300">
+                  #${escapeHtml(report.id)}
+                </span>
+              </div>
+
+              <h3 class="mt-2 text-base font-black text-slate-900">
+                ${escapeHtml(report.item || "Untitled report")}
+              </h3>
+
+              <p class="mt-1 line-clamp-2 text-xs font-semibold leading-5 text-slate-500">
+                ${escapeHtml(report.description || "No description provided.")}
+              </p>
+
+              <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold text-slate-400">
+                <span>${escapeHtml(report.category || "Other")}</span>
+                <span>${escapeHtml(report.location || "Location not specified")}</span>
+                <span>${escapeHtml(report.date || report.dateISO || "Date not specified")}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              data-review-kind="report"
+              data-review-id="${escapeHtml(report.id)}"
+              class="shrink-0 rounded-xl border border-actblue/15 bg-actblue/[0.04] px-4 py-2.5 text-xs font-black text-actblue transition hover:bg-actblue hover:text-white"
+            >
+              Review
+            </button>
+          </article>
+        `;
+      }
+
+      function claimCard(claim) {
+        const report = findReport(claim.reportId);
+
+        return `
+          <article class="flex flex-col gap-4 rounded-[20px] border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white sm:flex-row sm:items-center">
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                ${statusBadge(claim.status || "pending")}
+                <span class="text-[10px] font-bold text-slate-300">
+                  #${escapeHtml(claim.id)}
+                </span>
+              </div>
+
+              <h3 class="mt-2 text-base font-black text-slate-900">
+                ${escapeHtml(claim.claimant?.name || "Unnamed claimant")}
+                <span class="font-semibold text-slate-400">→</span>
+                ${escapeHtml(report?.item || `Report ${claim.reportId}`)}
+              </h3>
+
+              <p class="mt-1 line-clamp-2 text-xs font-semibold leading-5 text-slate-500">
+                ${escapeHtml(claim.reason || "No claim reason provided.")}
+              </p>
+
+              <div class="mt-2 text-[11px] font-bold text-slate-400">
+                Submitted ${escapeHtml(formatDateTime(claim.createdAt))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              data-review-kind="claim"
+              data-review-id="${escapeHtml(claim.id)}"
+              class="shrink-0 rounded-xl border border-actblue/15 bg-actblue/[0.04] px-4 py-2.5 text-xs font-black text-actblue transition hover:bg-actblue hover:text-white"
+            >
+              Review claim
+            </button>
+          </article>
+        `;
+      }
+
+      function returnCard(lead) {
+        const report = findReport(lead.reportId);
+
+        return `
+          <article class="flex flex-col gap-4 rounded-[20px] border border-slate-200 bg-slate-50/60 p-5 transition hover:border-actblue/20 hover:bg-white sm:flex-row sm:items-center">
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                ${statusBadge(lead.status || "pending")}
+                <span class="text-[10px] font-bold text-slate-300">
+                  #${escapeHtml(lead.id)}
+                </span>
+              </div>
+
+              <h3 class="mt-2 text-base font-black text-slate-900">
+                ${escapeHtml(report?.item || `Report ${lead.reportId}`)}
+              </h3>
+
+              <p class="mt-1 line-clamp-2 text-xs font-semibold leading-5 text-slate-500">
+                ${escapeHtml(lead.note || "No return note provided.")}
+              </p>
+
+              <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-bold text-slate-400">
+                <span>${escapeHtml(lead.finder?.name || "Unnamed finder")}</span>
+                <span>${escapeHtml(lead.foundLocation || "Location not specified")}</span>
+                <span>${escapeHtml(lead.foundDate || "Date not specified")}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              data-review-kind="return"
+              data-review-id="${escapeHtml(lead.id)}"
+              class="shrink-0 rounded-xl border border-actblue/15 bg-actblue/[0.04] px-4 py-2.5 text-xs font-black text-actblue transition hover:-translate-y-0.5 hover:bg-actblue hover:text-white"
+            >
+              Review lead
+            </button>
+          </article>
+        `;
+      }
+
+      function renderList() {
+        const list = currentList();
+
+        sectionEyebrow.textContent = tabTitles[state.tab].eyebrow;
+
+        sectionTitle.textContent = tabTitles[state.tab].title;
+
+        adminSearch.placeholder = tabTitles[state.tab].placeholder;
+
+        resultCount.textContent = `${list.length} ${list.length === 1 ? "record" : "records"}`;
+
+        emptyState.classList.toggle("hidden", list.length !== 0);
+
+        if (state.tab === "claims") {
+          adminList.innerHTML = list.map(claimCard).join("");
+        } else if (state.tab === "returns") {
+          adminList.innerHTML = list.map(returnCard).join("");
+        } else {
+          adminList.innerHTML = list.map(reportCard).join("");
+        }
+
+        adminList.querySelectorAll("[data-review-kind]").forEach((button) => {
+          button.addEventListener("click", () => {
+            openReview(button.dataset.reviewKind, button.dataset.reviewId);
+          });
+        });
+      }
+
+      function renderTabs() {
+        document.querySelectorAll("[data-tab]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === state.tab);
+        });
+      }
+
+      function renderAll() {
+        renderStats();
+        renderTabs();
+        renderSubfilters();
+        renderList();
+      }
+
+      function detailRow(label, value) {
+        return `
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-[9px] font-black uppercase tracking-[0.12em] text-slate-400">
+              ${escapeHtml(label)}
+            </p>
+            <p class="mt-1.5 break-words text-sm font-bold leading-6 text-slate-800">
+              ${escapeHtml(value || "Not provided")}
+            </p>
+          </div>
+        `;
+      }
+
+      function actionButton(label, action, style) {
+        return `
+          <button
+            type="button"
+            data-modal-action="${escapeHtml(action)}"
+            class="rounded-xl px-4 py-2.5 text-xs font-black transition ${style}"
+          >
+            ${escapeHtml(label)}
+          </button>
+        `;
+      }
+
+      function reportReview(record) {
+        reviewEyebrow.textContent = `${String(record.type || "report").toUpperCase()} REPORT`;
+
+        reviewTitle.textContent = record.item || "Report details";
+
+        reviewBody.innerHTML = `
+          <div class="flex flex-wrap items-center gap-2">
+            ${typeBadge(record.type)}
+            ${statusBadge(record.status || "active")}
+            <span class="text-[10px] font-bold text-slate-300">
+              #${escapeHtml(record.id)}
+            </span>
+          </div>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            ${detailRow("Category", record.category)}
+            ${detailRow("Color", record.color)}
+            ${detailRow("Brand / Model", record.brand)}
+            ${detailRow("Location", record.location)}
+            ${detailRow("Date", record.date || record.dateISO)}
+            ${detailRow("Time", record.time)}
+          </div>
+
+          <div class="mt-4">
+            ${detailRow("Public description", record.description)}
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-actyellow/40 bg-actyellow/[0.08] p-4">
+            <p class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue">
+              Private verification detail
+            </p>
+            <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">
+              ${escapeHtml(record.privateDetail || "No private detail was submitted.")}
+            </p>
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            ${detailRow("Automatic moderation score", record.moderation?.score != null ? `${record.moderation.score}/100` : "Not scored")}
+            ${detailRow(
+              "Moderation result",
+              record.moderation?.autoValidated
+                ? "Auto-validated / safe to publish"
+                : "Held for moderator review",
+            )}
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            ${detailRow("Reporter", record.reporter?.name)}
+            ${detailRow("Reporter email", record.reporter?.email)}
+            ${detailRow("Reporter phone", record.reporter?.phone)}
+            ${detailRow(
+              "Moderation flags",
+              Array.isArray(record.moderation?.flags) &&
+                record.moderation.flags.length
+                ? record.moderation.flags.join(", ")
+                : "None",
+            )}
+          </div>
+        `;
+
+        const status = String(record.status || "active").toLowerCase();
+
+        let actions = "";
+
+        if (status === "pending" || status === "flagged") {
+          actions += actionButton(
+            "Approve report",
+            "approve-report",
+            "bg-actblue text-white hover:bg-actblueDark",
+          );
+
+          if (status !== "flagged") {
+            actions += actionButton(
+              "Flag for review",
+              "flag-report",
+              "border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100",
+            );
+          }
+
+          actions += actionButton(
+            "Reject",
+            "reject-report",
+            "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100",
+          );
+        } else if (status === "active") {
+          actions += actionButton(
+            "Archive",
+            "archive-report",
+            "border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100",
+          );
+        }
+
+        reviewActions.innerHTML =
+          actions ||
+          `<span class="text-xs font-bold text-slate-400">No moderation actions available.</span>`;
+      }
+
+      function claimReview(record) {
+        const report = findReport(record.reportId);
+
+        reviewEyebrow.textContent = "OWNERSHIP CLAIM";
+
+        reviewTitle.textContent = report?.item || `Claim ${record.id}`;
+
+        reviewBody.innerHTML = `
+          <div class="flex flex-wrap items-center gap-2">
+            ${statusBadge(record.status || "pending")}
+            <span class="text-[10px] font-bold text-slate-300">
+              #${escapeHtml(record.id)}
+            </span>
+          </div>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            ${detailRow("Claimant", record.claimant?.name)}
+            ${detailRow("Email", record.claimant?.email)}
+            ${detailRow("Phone", record.claimant?.phone)}
+            ${detailRow("Linked report", report?.item || record.reportId)}
+            ${detailRow("Last location", record.lastLocation)}
+            ${detailRow("Date last seen", record.lastDate)}
+          </div>
+
+          <div class="mt-4">
+            ${detailRow("Why they believe it is theirs", record.reason)}
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-actyellow/40 bg-actyellow/[0.08] p-4">
+            <p class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue">
+              Private ownership proof
+            </p>
+            <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">
+              ${escapeHtml(record.ownershipProof || "No private ownership proof submitted.")}
+            </p>
+          </div>
+
+          ${
+            report?.privateDetail
+              ? `
+                <div class="mt-4 rounded-2xl border border-actblue/10 bg-actblue/[0.04] p-4">
+                  <p class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue">
+                    Finder's withheld verification detail
+                  </p>
+                  <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">
+                    ${escapeHtml(report.privateDetail)}
+                  </p>
+                </div>
+              `
+              : ""
+          }
+        `;
+
+        const status = String(record.status || "pending").toLowerCase();
+
+        if (status === "pending") {
+          reviewActions.innerHTML = [
+            actionButton(
+              "Verify & open return coordination",
+              "verify-claim",
+              "bg-actblue text-white hover:bg-actblueDark",
+            ),
+            actionButton(
+              "Reject claim",
+              "reject-claim",
+              "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100",
+            ),
+          ].join("");
+        } else if (record.returnCaseId) {
+          reviewActions.innerHTML = `
+            <a
+              href="return-coordination.html?case=${encodeURIComponent(record.returnCaseId)}"
+              class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white hover:bg-actblueDark"
+            >
+              Open return coordination
+            </a>
+          `;
+        } else {
+          reviewActions.innerHTML = `<span class="text-xs font-bold text-slate-400">This claim has already been processed.</span>`;
+        }
+      }
+
+      function returnReview(record) {
+        const report = findReport(record.reportId);
+
+        reviewEyebrow.textContent = "RETURN LEAD";
+
+        reviewTitle.textContent = report?.item || `Return ${record.id}`;
+
+        const custodyLabels = {
+          with_finder: "Finder currently has the item",
+          turned_in: "Turned in to ACT office / staff",
+          seen_only: "Seen only; finder does not have item",
+        };
+
+        reviewBody.innerHTML = `
+          <div class="flex flex-wrap items-center gap-2">
+            ${statusBadge(record.status || "pending")}
+            <span class="text-[10px] font-bold text-slate-300">
+              #${escapeHtml(record.id)}
+            </span>
+          </div>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            ${detailRow("Finder", record.finder?.name)}
+            ${detailRow("Email", record.finder?.email)}
+            ${detailRow("Phone", record.finder?.phone)}
+            ${detailRow("Linked report", report?.item || record.reportId)}
+            ${detailRow("Found / seen at", record.foundLocation)}
+            ${detailRow("Found date", record.foundDate)}
+          </div>
+
+          <div class="mt-4">
+            ${detailRow(
+              "Current custody",
+              custodyLabels[record.custody] || record.custody,
+            )}
+          </div>
+
+          <div class="mt-4">
+            ${detailRow("Helpful details", record.note)}
+          </div>
+        `;
+
+        const status = String(record.status || "pending").toLowerCase();
+
+        if (status === "pending") {
+          reviewActions.innerHTML = [
+            actionButton(
+              "Accept & open return coordination",
+              "accept-return",
+              "bg-actblue text-white hover:bg-actblueDark",
+            ),
+            actionButton(
+              "Dismiss lead",
+              "reject-return",
+              "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100",
+            ),
+          ].join("");
+        } else if (record.returnCaseId) {
+          reviewActions.innerHTML = `
+            <a
+              href="return-coordination.html?case=${encodeURIComponent(record.returnCaseId)}"
+              class="rounded-xl bg-actblue px-4 py-2.5 text-xs font-black text-white hover:bg-actblueDark"
+            >
+              Open return coordination
+            </a>
+          `;
+        } else {
+          reviewActions.innerHTML = `<span class="text-xs font-bold text-slate-400">This return lead has already been processed.</span>`;
+        }
+      }
+
+      function openReview(kind, id) {
+        state.selectedKind = kind;
+        state.selectedId = id;
+
+        let record = null;
+
+        if (kind === "report") {
+          record = findReport(id);
+          if (record) reportReview(record);
+        } else if (kind === "claim") {
+          record = getClaims().find((item) => String(item.id) === String(id));
+          if (record) claimReview(record);
+        } else if (kind === "return") {
+          record = getReturns().find((item) => String(item.id) === String(id));
+          if (record) returnReview(record);
+        }
+
+        if (!record) return;
+
+        reviewModal.classList.remove("hidden");
+        reviewModal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+      }
+
+      function closeReview() {
+        reviewModal.classList.add("hidden");
+        reviewModal.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+
+        state.selectedKind = null;
+        state.selectedId = null;
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.remove("hidden");
+
+        window.clearTimeout(showToast.timer);
+
+        showToast.timer = window.setTimeout(() => {
+          toast.classList.add("hidden");
+        }, 2200);
+      }
+
+      function handleModalAction(action) {
+        const id = state.selectedId;
+
+        if (!id) return;
+
+        if (action === "approve-report") {
+          const report = findReport(id);
+
+          updateReportStatus(id, "active");
+
+          if (report) {
+            ACTWorkflow.updateReport(id, {
+              moderation: {
+                ...(report.moderation || {}),
+                reviewed: true,
+                reviewedAt: new Date().toISOString(),
+                decision: "approved",
+              },
+            });
+
+            notifyRegisteredUser(
+              report.reporter?.mode,
+              report.reporter?.email,
+              `Your ${report.type || "item"} report ${report.id} was approved and is now active.`,
+            );
+          }
+
+          showToast("Report approved and published.");
+        }
+
+        if (action === "flag-report") {
+          updateReportStatus(id, "flagged");
+          showToast("Report flagged for review.");
+        }
+
+        if (action === "reject-report") {
+          const report = findReport(id);
+
+          updateReportStatus(id, "rejected");
+
+          if (report) {
+            notifyRegisteredUser(
+              report.reporter?.mode,
+              report.reporter?.email,
+              `Your ${report.type || "item"} report ${report.id} was rejected after review.`,
+            );
+          }
+
+          showToast("Report rejected.");
+        }
+
+        if (action === "archive-report") {
+          const report = findReport(id);
+
+          updateReportStatus(id, "archived");
+
+          if (report) {
+            notifyRegisteredUser(
+              report.reporter?.mode,
+              report.reporter?.email,
+              `Your report ${report.id} was archived.`,
+            );
+          }
+
+          showToast("Report archived.");
+        }
+
+        if (action === "verify-claim") {
+          const returnCase = ACTWorkflow.createCaseFromClaim(id);
+
+          if (returnCase) {
+            showToast("Claim verified. Secure return coordination opened.");
+          }
+        }
+
+        if (action === "reject-claim") {
+          const claim = getClaims().find(
+            (item) => String(item.id) === String(id),
+          );
+
+          ACTWorkflow.updateById(ACTWorkflow.KEYS.claims, id, {
+            status: "rejected",
+          });
+
+          if (claim) {
+            notifyRegisteredUser(
+              claim.claimant?.mode,
+              claim.claimant?.email,
+              `Your ownership claim ${claim.id} was rejected after review.`,
+            );
+          }
+
+          showToast("Claim rejected.");
+        }
+
+        if (action === "accept-return") {
+          const returnCase = ACTWorkflow.createCaseFromReturnLead(id);
+
+          if (returnCase) {
+            showToast("Return lead accepted. Secure coordination opened.");
+          }
+        }
+
+        if (action === "reject-return") {
+          const lead = getReturns().find(
+            (item) => String(item.id) === String(id),
+          );
+
+          ACTWorkflow.updateById(ACTWorkflow.KEYS.returns, id, {
+            status: "rejected",
+          });
+
+          if (lead) {
+            notifyRegisteredUser(
+              lead.finder?.mode,
+              lead.finder?.email,
+              `Your return lead ${lead.id} was dismissed after review.`,
+            );
+          }
+
+          showToast("Return lead dismissed.");
+        }
+
+        closeReview();
+        renderAll();
+      }
+
+      document.querySelectorAll("[data-tab]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.tab = button.dataset.tab;
+
+          state.filter = "all";
+          state.search = "";
+          adminSearch.value = "";
+
+          renderAll();
+        });
+      });
+
+      document.querySelectorAll("[data-jump-tab]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.tab = button.dataset.jumpTab;
+
+          state.filter = button.dataset.jumpFilter || "all";
+
+          state.search = "";
+          adminSearch.value = "";
+
+          document
+            .querySelector("[data-tab='" + state.tab + "']")
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+
+          renderAll();
+        });
+      });
+
+      adminSearch.addEventListener("input", (event) => {
+        state.search = event.target.value;
+
+        renderList();
+      });
+
+      closeModal.addEventListener("click", closeReview);
+
+      reviewModal.addEventListener("click", (event) => {
+        if (event.target === reviewModal) {
+          closeReview();
+        }
+      });
+
+      reviewActions.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-modal-action]");
+
+        if (!button) return;
+
+        handleModalAction(button.dataset.modalAction);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          !reviewModal.classList.contains("hidden")
+        ) {
+          closeReview();
+        }
+      });
+
+      if (adminSession) {
+        renderAll();
+      }
+    </script>
+  </body>
+</html>

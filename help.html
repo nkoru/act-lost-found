@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c2e8a" />
+    <title>Help | ACT Lost & Found</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              actblue: "#0c2e8a",
+              actblueDark: "#08236c",
+              actyellow: "#e0e007",
+              ink: "#172033",
+            },
+            fontFamily: {
+              raleway: ["Raleway", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 16px 45px rgba(23,32,51,.08)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      details > summary {
+        list-style: none;
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+      details[open] .faq-plus {
+        transform: rotate(45deg);
+      }
+
+      /* =================================
+   NAVIGATION
+================================= */
+
+      .nav-link {
+        position: relative;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: #e0e007;
+        transform: translateX(-50%);
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 55%;
+      }
+
+      .nav-link.active {
+        color: #0c2e8a;
+        font-weight: 800;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      /* =================================
+   HELP SCROLL REVEALS
+================================= */
+
+      .help-reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      .help-reveal-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+
+      .help-reveal-right {
+        opacity: 0;
+        transform: translateX(30px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+
+      .help-scene.show .help-reveal,
+      .help-scene.show .help-reveal-left,
+      .help-scene.show .help-reveal-right {
+        opacity: 1;
+        transform: translate(0);
+      }
+
+      .help-scene.show .help-delay-1 {
+        transition-delay: 0.12s;
+      }
+
+      .help-scene.show .help-delay-2 {
+        transition-delay: 0.24s;
+      }
+
+      .help-scene.show .help-delay-3 {
+        transition-delay: 0.36s;
+      }
+
+      .help-scene.show .help-delay-4 {
+        transition-delay: 0.48s;
+      }
+
+      /* =================================
+   HELP CARDS
+================================= */
+
+      .help-card {
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .help-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(12, 46, 138, 0.2);
+        box-shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+      }
+
+      /* FAQ */
+      details {
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          background-color 0.25s ease;
+      }
+
+      details:hover {
+        border-color: rgba(12, 46, 138, 0.18);
+      }
+
+      details[open] {
+        border-color: rgba(12, 46, 138, 0.18);
+        box-shadow: 0 12px 30px rgba(23, 32, 51, 0.06);
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        .help-reveal,
+        .help-reveal-left,
+        .help-reveal-right {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50 text-ink antialiased">
+    <header
+      class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_4px_20px_rgba(12,46,138,0.04)] backdrop-blur"
+    >
+      <div
+        class="mx-auto flex h-[76px] max-w-7xl items-center px-5 sm:px-7 lg:px-8"
+      >
+        <!-- Logo -->
+        <a
+          href="index.html"
+          class="flex shrink-0 items-center gap-3"
+          aria-label="ACT Lost and Found home"
+        >
+          <img
+            src="images/act_logo.png"
+            alt="ACT logo"
+            class="h-11 w-auto object-contain sm:h-12"
+          />
+
+          <span class="hidden h-10 w-1 rounded-full bg-actblue sm:block"></span>
+
+          <span class="hidden leading-none sm:block">
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              LOST &amp;
+            </span>
+
+            <span
+              class="block text-[15px] font-extrabold tracking-tight text-actblue"
+            >
+              FOUND
+            </span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav
+          class="mx-auto hidden items-center gap-7 lg:flex"
+          aria-label="Primary navigation"
+        >
+          <a
+            href="index.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="nav-link text-sm font-semibold text-slate-600 transition hover:text-actblue"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="nav-link active text-sm font-bold text-actblue"
+          >
+            Help
+          </a>
+        </nav>
+
+        <!-- Login / Mobile -->
+        <div class="ml-auto flex items-center gap-2">
+          <a
+            href="login.html"
+            data-auth-link
+            class="hidden items-center justify-center rounded-xl border-2 border-actblue px-5 py-2.5 text-sm font-extrabold text-actblue transition duration-200 hover:-translate-y-0.5 hover:bg-actblue hover:text-white hover:shadow-md sm:inline-flex"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+
+          <button
+            id="menuButton"
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-actblue lg:hidden"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-slate-200 bg-white lg:hidden"
+      >
+        <nav class="mx-auto max-w-7xl px-5 py-4" aria-label="Mobile navigation">
+          <a
+            href="index.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Home
+          </a>
+
+          <a
+            href="lost-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Lost Items
+          </a>
+
+          <a
+            href="found-items.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Found Items
+          </a>
+
+          <a
+            href="all-reports.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Recent Reports
+          </a>
+
+          <a
+            href="about.html"
+            class="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            About
+          </a>
+
+          <a
+            href="help.html"
+            class="block rounded-lg bg-actblue/5 px-3 py-3 text-sm font-bold text-actblue"
+          >
+            Help
+          </a>
+
+          <a
+            href="login.html"
+            data-auth-link
+            class="mt-2 block rounded-lg bg-actblue px-3 py-3 text-center text-sm font-bold text-white"
+          >
+            <span data-auth-label>Log In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative overflow-hidden bg-actblue text-white">
+        <!-- Glow accents -->
+        <div
+          class="pointer-events-none absolute -right-20 top-0 h-80 w-80 rounded-full bg-actyellow/10 blur-3xl"
+        ></div>
+
+        <div
+          class="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-white/5 blur-3xl"
+        ></div>
+
+        <!-- Main-page diagonal accents -->
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-32 w-56 bg-actyellow"
+          style="
+            clip-path: polygon(66% 44%, 100% 0, 100% 100%, 0 100%, 28% 77%);
+          "
+        ></div>
+
+        <div
+          class="pointer-events-none absolute bottom-0 right-0 h-24 w-44 bg-actblueDark"
+          style="clip-path: polygon(58% 100%, 100% 28%, 100% 100%)"
+        ></div>
+
+        <div
+          class="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:py-20"
+        >
+          <!-- LEFT -->
+          <div>
+            <span
+              class="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-actyellow"
+            >
+              Help center
+            </span>
+
+            <h1
+              class="mt-5 max-w-3xl text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl"
+            >
+              What do you need
+              <span class="text-actyellow">help with?</span>
+            </h1>
+
+            <p
+              class="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base"
+            >
+              Find quick guidance for reporting items, guest tracking, ownership
+              claims, moderation, return coordination, and account access.
+            </p>
+
+            <a
+              href="#reporting"
+              class="mt-7 inline-flex items-center gap-2 rounded-xl bg-actyellow px-5 py-3.5 text-sm font-black text-actblueDark transition hover:-translate-y-0.5"
+            >
+              Explore Help
+              <span>↓</span>
+            </a>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="grid gap-3 sm:grid-cols-2">
+            <a
+              href="#reporting"
+              class="group rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actyellow text-lg font-black text-actblue"
+              >
+                +
+              </div>
+
+              <p class="mt-4 text-sm font-black">Report an item</p>
+
+              <p class="mt-1 text-xs leading-5 text-white/60">
+                Lost or found something?
+              </p>
+
+              <span
+                class="mt-4 inline-flex text-xs font-black text-actyellow transition-transform group-hover:translate-x-1"
+              >
+                Learn more →
+              </span>
+            </a>
+
+            <a
+              href="#guest-tracking"
+              class="group rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg font-black"
+              >
+                #
+              </div>
+
+              <p class="mt-4 text-sm font-black">Guest tracking</p>
+
+              <p class="mt-1 text-xs leading-5 text-white/60">
+                Use your Reference ID + code.
+              </p>
+
+              <span
+                class="mt-4 inline-flex text-xs font-black text-actyellow transition-transform group-hover:translate-x-1"
+              >
+                Track a case →
+              </span>
+            </a>
+
+            <a
+              href="#claims"
+              class="group rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-lg font-black"
+              >
+                ✓
+              </div>
+
+              <p class="mt-4 text-sm font-black">Claim an item</p>
+
+              <p class="mt-1 text-xs leading-5 text-white/60">
+                Prove ownership securely.
+              </p>
+
+              <span
+                class="mt-4 inline-flex text-xs font-black text-actyellow transition-transform group-hover:translate-x-1"
+              >
+                See the process →
+              </span>
+            </a>
+
+            <a
+              href="#return"
+              class="group rounded-[24px] border border-white/15 bg-white/10 p-5 backdrop-blur transition hover:-translate-y-1 hover:bg-white/15"
+            >
+              <div
+                class="flex h-10 w-10 items-center justify-center rounded-xl bg-actyellow text-lg font-black text-actblue"
+              >
+                ↺
+              </div>
+
+              <p class="mt-4 text-sm font-black">Return coordination</p>
+
+              <p class="mt-1 text-xs leading-5 text-white/60">
+                Coordinate and confirm handoff.
+              </p>
+
+              <span
+                class="mt-4 inline-flex text-xs font-black text-actyellow transition-transform group-hover:translate-x-1"
+              >
+                How returns work →
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="reporting"
+        class="help-scene mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-8 lg:py-20"
+      >
+        <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+          <div class="help-reveal-left">
+            <p
+              class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+            >
+              Reporting
+            </p>
+            <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900">
+              Lost something? Found something?
+            </h2>
+            <p class="mt-4 text-sm leading-7 text-slate-500">
+              Search first. If you do not see a useful match, submit a Lost or
+              Found report with enough detail to help identify the item.
+            </p>
+
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="report-lost.html"
+                class="rounded-xl bg-actblue px-5 py-3 text-center text-sm font-black text-white"
+                >Report Lost Item</a
+              >
+              <a
+                href="report-found.html"
+                class="rounded-xl bg-actyellow px-5 py-3 text-center text-sm font-black text-actblueDark"
+                >Report Found Item</a
+              >
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div
+              class="help-card help-reveal help-delay-1 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+              >
+                Public details
+              </p>
+              <p class="mt-2 text-sm font-black text-slate-900">
+                Describe enough to be useful
+              </p>
+              <p class="mt-2 text-xs leading-5 text-slate-500">
+                Include item name, category, color, location, date, brand, and a
+                useful description.
+              </p>
+            </div>
+            <div
+              class="help-card help-reveal help-delay-2 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+            >
+              <p
+                class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+              >
+                Private details
+              </p>
+              <p class="mt-2 text-sm font-black text-slate-900">
+                Keep proof out of the public post
+              </p>
+              <p class="mt-2 text-xs leading-5 text-slate-500">
+                Use withheld identifying details for ownership verification
+                rather than exposing them publicly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="guest-tracking"
+        class="help-scene border-y border-slate-200 bg-white"
+      >
+        <div
+          class="mx-auto grid max-w-7xl gap-8 px-5 py-14 sm:px-7 lg:grid-cols-[1fr_.9fr] lg:items-center lg:px-8"
+        >
+          <div class="help-reveal-left">
+            <p
+              class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+            >
+              Guest tracking
+            </p>
+            <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900">
+              No ACT account? You can still track your case.
+            </h2>
+            <p class="mt-4 text-sm leading-7 text-slate-500">
+              After a guest submits a report, ownership claim, or return lead,
+              the system gives a Reference ID and 6-digit Guest Access Code.
+              Keep both values.
+            </p>
+
+            <a
+              href="guest-tracking.html"
+              class="mt-6 inline-flex rounded-xl bg-actblue px-5 py-3 text-sm font-black text-white"
+            >
+              Track Guest Case →
+            </a>
+          </div>
+
+          <div
+            class="help-card help-reveal-right help-delay-1 rounded-[28px] border border-actblue/10 bg-actblue/[0.03] p-6 shadow-soft"
+          >
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+            >
+              Example
+            </p>
+            <div class="mt-4 rounded-2xl bg-white p-4">
+              <p class="text-xs font-bold text-slate-400">Reference ID</p>
+              <p class="mt-1 text-lg font-black text-slate-900">R-K8F3X2</p>
+              <p class="mt-4 text-xs font-bold text-slate-400">
+                Guest Access Code
+              </p>
+              <p class="mt-1 text-lg font-black tracking-[0.14em] text-actblue">
+                482931
+              </p>
+            </div>
+            <p class="mt-4 text-xs font-semibold leading-5 text-slate-500">
+              On the same browser, Recent Guest Cases may also appear
+              automatically so you can reopen tracking or the secure return
+              chat.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="claims"
+        class="help-scene mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-8 lg:py-20"
+      >
+        <div class="help-reveal max-w-3xl">
+          <p
+            class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+          >
+            Ownership claims
+          </p>
+          <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900">
+            “This might be mine” does not mean automatic approval.
+          </h2>
+          <p class="mt-4 text-sm leading-7 text-slate-500">
+            Claimants provide details that are not visible in the public
+            listing. A moderator compares those answers with the finder’s
+            withheld information before a claim is verified.
+          </p>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <div
+            class="help-card help-reveal help-delay-1 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+          >
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+            >
+              1. Submit proof
+            </p>
+            <p class="mt-2 text-sm font-black text-slate-900">
+              Explain why it is yours
+            </p>
+            <p class="mt-2 text-xs leading-5 text-slate-500">
+              Give accurate, specific ownership information rather than
+              guessing.
+            </p>
+          </div>
+          <div
+            class="help-card help-reveal help-delay-2 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+          >
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+            >
+              2. Moderator review
+            </p>
+            <p class="mt-2 text-sm font-black text-slate-900">
+              Compare private details
+            </p>
+            <p class="mt-2 text-xs leading-5 text-slate-500">
+              Moderators review evidence without exposing private details
+              publicly.
+            </p>
+          </div>
+          <div
+            class="help-card help-reveal help-delay-3 rounded-[26px] border border-slate-200 bg-white p-6 shadow-soft"
+          >
+            <p
+              class="text-[10px] font-black uppercase tracking-[0.12em] text-actblue"
+            >
+              3. Verified claim
+            </p>
+            <p class="mt-2 text-sm font-black text-slate-900">
+              Open secure return coordination
+            </p>
+            <p class="mt-2 text-xs leading-5 text-slate-500">
+              Only after verification do the participants move into the return
+              stage.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="return" class="help-scene relative overflow-hidden bg-white">
+        <div
+          class="pointer-events-none absolute -right-20 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-actyellow/[0.10] blur-3xl"
+        ></div>
+
+        <div
+          class="relative mx-auto max-w-7xl px-5 py-16 sm:px-7 lg:px-8 lg:py-20"
+        >
+          <div
+            class="overflow-hidden rounded-[32px] border border-slate-200 bg-actblue shadow-[0_20px_55px_rgba(12,46,138,0.16)]"
+          >
+            <div class="grid gap-0 lg:grid-cols-[1fr_0.9fr]">
+              <!-- LEFT -->
+              <div class="help-reveal-left p-7 text-white sm:p-9 lg:p-10">
+                <p
+                  class="text-[11px] font-black uppercase tracking-[0.15em] text-actyellow"
+                >
+                  Return coordination
+                </p>
+
+                <h2 class="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
+                  How does the owner talk to the finder?
+                </h2>
+
+                <p class="mt-4 text-sm leading-7 text-white/70">
+                  Once a claim is verified or a return lead is accepted, a
+                  secure case thread opens for the owner, finder, and moderator.
+                  It is not a public chat.
+                </p>
+
+                <div
+                  class="mt-6 rounded-2xl border border-white/10 bg-white/[0.07] p-4"
+                >
+                  <p
+                    class="text-[10px] font-black uppercase tracking-[0.13em] text-actyellow"
+                  >
+                    Private by design
+                  </p>
+
+                  <p class="mt-2 text-xs font-semibold leading-5 text-white/65">
+                    Only verified participants and authorized moderation access
+                    the return thread.
+                  </p>
+                </div>
+              </div>
+
+              <!-- RIGHT -->
+              <div
+                class="help-reveal-right help-delay-1 bg-white p-7 sm:p-9 lg:p-10"
+              >
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  Return confirmation
+                </p>
+
+                <h3 class="mt-2 text-xl font-black text-slate-900">
+                  A return is not complete until the handoff is confirmed.
+                </h3>
+
+                <div class="mt-6 space-y-3">
+                  <div
+                    class="flex items-center gap-3 rounded-xl bg-slate-50 p-3.5"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                    >
+                      1
+                    </span>
+
+                    <p class="text-xs font-bold text-slate-600">
+                      Owner receives a Return Code.
+                    </p>
+                  </div>
+
+                  <div
+                    class="flex items-center gap-3 rounded-xl bg-slate-50 p-3.5"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue text-xs font-black text-white"
+                    >
+                      2
+                    </span>
+
+                    <p class="text-xs font-bold text-slate-600">
+                      Finder checks the code during handoff.
+                    </p>
+                  </div>
+
+                  <div
+                    class="flex items-center gap-3 rounded-xl bg-slate-50 p-3.5"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                    >
+                      3
+                    </span>
+
+                    <p class="text-xs font-bold text-slate-600">
+                      The participants confirm the exchange.
+                    </p>
+                  </div>
+
+                  <div
+                    class="flex items-center gap-3 rounded-xl bg-slate-50 p-3.5"
+                  >
+                    <span
+                      class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-actblue text-xs font-black text-white"
+                    >
+                      ✓
+                    </span>
+
+                    <p class="text-xs font-bold text-slate-600">
+                      The case can then be marked Returned.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="help-scene mx-auto max-w-5xl px-5 py-16 sm:px-7 lg:px-8 lg:py-20"
+      >
+        <div class="help-reveal text-center">
+          <p
+            class="text-[11px] font-black uppercase tracking-[0.15em] text-actblue"
+          >
+            Frequently asked questions
+          </p>
+          <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900">
+            Quick answers
+          </h2>
+        </div>
+
+        <div class="mt-8 space-y-3">
+          <details
+            class="help-reveal help-delay-1 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              Can I report an item without an ACT account?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              Yes. Guests can submit Lost and Found reports. You will receive a
+              Reference ID and Guest Access Code for tracking.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-2 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              Why did my report get flagged?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              The prototype uses rule-based screening. A report may be held for
+              review if it contains spam-like wording, public contact
+              information, unsafe content, an invalid future date, a very short
+              description, or a possible duplicate.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-3 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              Does automatic moderation prove a report is true?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              No. Automatic moderation only checks whether a submission appears
+              complete and safe enough to publish. Ownership is handled
+              separately through claim verification.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-4 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              I am a guest. How do I get back to the return chat?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              Open Guest Tracking and use your Reference ID plus Guest Access
+              Code. If Return Coordination is already open, you will see an
+              “Open return chat” button. On the same browser, a Recent Guest
+              Cases shortcut may also appear.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-1 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              Why should I log in if guests can use the system?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              Registered users get My Reports, My Claims, notifications, easier
+              status tracking, and direct access to secure return coordination
+              from My Account.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-1 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              What information should never be posted publicly?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              Do not post passwords, PINs, OTPs, unlock codes, banking
+              information, full serial numbers, or detailed proof-of-ownership
+              information in public descriptions.
+            </p>
+          </details>
+
+          <details
+            class="help-reveal help-delay-1 group rounded-[20px] border border-slate-200 bg-white p-5 transition"
+          >
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-4 text-sm font-black text-slate-900"
+            >
+              When is an item marked Returned?
+              <span
+                class="faq-plus flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-actblue/[0.07] text-lg font-bold text-actblue transition-all"
+                >+</span
+              >
+            </summary>
+            <p
+              class="mt-4 border-t border-slate-100 pt-4 text-sm leading-7 text-slate-500"
+            >
+              The system marks a return complete after the owner and finder both
+              confirm the handoff, or when an ACT moderator confirms an
+              ACT-managed return.
+            </p>
+          </details>
+        </div>
+
+        <!-- =========================================
+            CONTINUE WITH YOUR CASE
+        ========================================== -->
+        <div
+          class="help-reveal mt-12 overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_16px_45px_rgba(23,32,51,0.06)]"
+        >
+          <div class="grid gap-0 lg:grid-cols-[0.85fr_1.15fr] lg:items-stretch">
+            <!-- LEFT -->
+            <div
+              class="relative overflow-hidden bg-actblue p-7 text-white sm:p-8"
+            >
+              <div
+                class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-actyellow/[0.12] blur-3xl"
+              ></div>
+
+              <div class="relative">
+                <p
+                  class="text-[10px] font-black uppercase tracking-[0.15em] text-actyellow"
+                >
+                  Need more help?
+                </p>
+
+                <h3 class="mt-2 text-2xl font-black tracking-tight">
+                  Continue with your case.
+                </h3>
+
+                <p class="mt-3 max-w-md text-sm leading-6 text-white/70">
+                  Already submitted something? Use the option that matches how
+                  you entered the system.
+                </p>
+
+                <div
+                  class="mt-6 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.07] px-4 py-3"
+                >
+                  <span
+                    class="flex h-7 w-7 items-center justify-center rounded-lg bg-actyellow text-xs font-black text-actblue"
+                  >
+                    i
+                  </span>
+
+                  <p class="text-xs font-semibold text-white/75">
+                    Keep your case details private.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="grid gap-4 p-6 sm:p-7 md:grid-cols-2">
+              <!-- GUEST -->
+              <a
+                href="guest-tracking.html"
+                class="group rounded-[22px] border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-actblue/20 hover:bg-white hover:shadow-[0_12px_30px_rgba(23,32,51,0.07)]"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-xl bg-actyellow/20 text-lg font-black text-actblue"
+                >
+                  #
+                </div>
+
+                <p
+                  class="mt-4 text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  Guest
+                </p>
+
+                <h4 class="mt-1 text-lg font-black text-slate-900">
+                  Track a guest case
+                </h4>
+
+                <p class="mt-2 text-xs leading-5 text-slate-500">
+                  Use your Reference ID and 6-digit Guest Access Code.
+                </p>
+
+                <span
+                  class="mt-5 inline-flex items-center gap-2 text-xs font-black text-actblue"
+                >
+                  Open Guest Tracking
+                  <span class="transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </a>
+
+              <!-- ACCOUNT -->
+              <div
+                class="rounded-[22px] border border-actblue/10 bg-actblue/[0.035] p-5 transition hover:-translate-y-1 hover:border-actblue/20 hover:bg-white hover:shadow-[0_12px_30px_rgba(23,32,51,0.07)]"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-xl bg-actblue text-white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+                    />
+                  </svg>
+                </div>
+
+                <p
+                  class="mt-4 text-[10px] font-black uppercase tracking-[0.13em] text-actblue"
+                >
+                  ACT Account
+                </p>
+
+                <h4 class="mt-1 text-lg font-black text-slate-900">
+                  Open your dashboard
+                </h4>
+
+                <p class="mt-2 text-xs leading-5 text-slate-500">
+                  View reports, claims, notifications, and active return cases.
+                </p>
+
+                <a
+                  href="login.html"
+                  data-auth-link
+                  class="group mt-5 inline-flex items-center gap-2 text-xs font-black text-actblue"
+                >
+                  Continue
+                  <span class="transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+              </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-actblue text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-16">
+        <div class="grid md:grid-cols-3 gap-12 lg:gap-16">
+          <!-- Brand -->
+          <div>
+            <div class="flex flex-col items-start">
+              <img
+                src="images/act_logo.png"
+                alt="ACT Logo"
+                class="w-24 h-24 object-contain mb-5"
+              />
+
+              <h2 class="text-2xl font-black tracking-tight">
+                Lost &amp;
+                <span class="text-actyellow"> Found </span>
+              </h2>
+
+              <p class="mt-3 max-w-xs text-sm text-blue-200 leading-6">
+                Helping campus belongings find their way home.
+              </p>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Need Help?</h3>
+            </div>
+
+            <div class="space-y-4 text-sm text-blue-100">
+              <!-- School -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-5h6v5M8 10h.01M12 10h.01M16 10h.01"
+                  />
+                </svg>
+
+                <p>Asian College of Technology</p>
+              </div>
+
+              <!-- Address -->
+              <div class="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0 mt-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 21s7-5.5 7-12a7 7 0 10-14 0c0 6.5 7 12 7 12z"
+                  />
+
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+
+                <p class="leading-6">
+                  Pantaleon del Rosario St,<br />
+                  Cebu City, 6000 Cebu
+                </p>
+              </div>
+
+              <!-- Phone -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"
+                  />
+                </svg>
+
+                <p>+63 (32) 238 2381</p>
+              </div>
+
+              <!-- Email -->
+              <div class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 text-actyellow shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V6.75z"
+                  />
+
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.5 6l8.5 6.5L20.5 6"
+                  />
+                </svg>
+
+                <p>registrar@act.edu.ph</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Information -->
+          <div>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-1.5 h-7 bg-actyellow rounded-full"></div>
+
+              <h3 class="font-extrabold text-lg">Information</h3>
+            </div>
+
+            <p class="max-w-md text-sm text-blue-100 leading-7">
+              ACT Lost &amp; Found makes it easier for students to report
+              missing belongings, discover found items, and help reconnect them
+              with their rightful owners.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="border-t border-blue-800 mt-12 pt-6 text-center">
+          <p class="text-sm text-blue-200">
+            © 2026 ACT Lost &amp; Found. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="session.js"></script>
+    <script>
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      menuButton.addEventListener("click", () => {
+        const opening = mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuButton.setAttribute("aria-expanded", String(opening));
+      });
+
+      /* ==========================================
+        HELP SECTION REVEALS
+      ========================================== */
+
+      const helpScenes = document.querySelectorAll(".help-scene");
+
+      const helpSceneObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              helpSceneObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.16,
+        },
+      );
+
+      helpScenes.forEach((scene) => {
+        helpSceneObserver.observe(scene);
+      });
+    </script>
+  </body>
+</html>
